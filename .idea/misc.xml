@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/drawable/gradient_black.xml" value="0.263" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/drawable/gradient_black_rev.xml" value="0.263" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/drawable/influ_name_background.xml" value="0.3035" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/drawable/item_message_out.xml" value="0.3035" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/drawable/message_in_background.xml" value="0.3035" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/font/ava_font.xml" value="0.294921875" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout-sw600dp/bottom_sheet_showcase.xml" value="0.18" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout-sw600dp/item_post.xml" value="0.272265625" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_add_influencer.xml" value="0.25" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_auth.xml" value="0.33" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_ban_user.xml" value="0.29713552800342025" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_create_post.xml" value="0.33" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_debug_app.xml" value="0.297990594271056" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_full_photo_viewer.xml" value="0.297990594271056" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_main.xml" value="0.36302083333333335" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_mod_chat.xml" value="0.17" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_moderation.xml" value="0.297990594271056" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_password_reset.xml" value="0.297990594271056" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_permissions.xml" value="0.33" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_pin_setup.xml" value="0.297990594271056" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_premium.xml" value="0.33" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_profile.xml" value="0.297990594271056" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_recovery_pin_questions_setup.xml" value="0.297990594271056" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_settings.xml" value="0.297990594271056" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_showcase.xml" value="0.31476449275362317" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_splash.xml" value="0.36302083333333335" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_unlock_app.xml" value="0.297990594271056" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_user_profile.xml" value="0.18" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/bottom_sheet_premium_faq.xml" value="0.33" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/bottom_sheet_showcase.xml" value="0.18" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/content_drawer.xml" value="0.3619791666666667" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/fragment_celebrities.xml" value="0.297990594271056" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/fragment_home.xml" value="0.297990594271056" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/item_influencer.xml" value="0.33" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/item_message_in.xml" value="0.297990594271056" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/item_message_out.xml" value="0.29713552800342025" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/item_popular_post.xml" value="0.297990594271056" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/item_post.xml" value="0.33" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/menu/post_popup_menu.xml" value="0.297990594271056" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.18" />
+      </ProjectState>
+    </option>
+  </component>
+</project>

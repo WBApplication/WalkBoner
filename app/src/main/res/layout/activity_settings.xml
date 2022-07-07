@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<de.dlyt.yanndroid.oneui.layout.ToolbarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/settings_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:navigationIcon="@drawable/ic_oui_back"
+    app:title="Ustawienia">
+
+    <de.dlyt.yanndroid.oneui.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="54dp"
+            android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                android:text="Bezpieczeństwo"
+                android:textColor="@color/primary_color"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+                android:id="@+id/pin_lock_button"
+                android:background="@drawable/oui_drawer_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:padding="16dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Blokada PIN"
+                        android:textColor="@color/sesl_primary_text"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginTop="4dp"
+                        android:text="Pytaj o kod PIN, aby odblokować aplikację."
+                        android:textSize="12sp"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_oui_back"
+                    android:rotation="180"/>
+            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+
+            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+                android:id="@+id/password_change_button"
+                android:background="@drawable/oui_drawer_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:padding="16dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Zmień Hasło"
+                        android:textColor="@color/sesl_primary_text"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginTop="4dp"
+                        android:text="Zmień hasło do konta WalkBoner."
+                        android:textSize="12sp"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_oui_back"
+                    android:rotation="180"/>
+            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="14dp"
+                android:text="Wyświetlanie"
+                android:textStyle="bold"
+                android:textColor="@color/primary_color"
+                android:textSize="18sp"/>
+
+            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+                android:background="@drawable/oui_drawer_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:padding="16dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ukryj Miniatury"
+                        android:textColor="@color/sesl_primary_text"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginTop="4dp"
+                        android:text="Ukryj miniatury, pokazując obraz z logiem WalkBoner."
+                        android:textSize="12sp"/>
+                </LinearLayout>
+
+                <de.dlyt.yanndroid.oneui.widget.Switch
+                    android:id="@+id/discrete_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+
+            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+                android:id="@+id/moderation_button"
+                android:background="@drawable/oui_drawer_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:padding="16dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Moderacja"
+                        android:textColor="@color/sesl_primary_text"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginTop="4dp"
+                        android:text="Narzędzia dla moderacji"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_oui_back"
+                    android:rotation="180"/>
+            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+        </LinearLayout>
+    </de.dlyt.yanndroid.oneui.widget.NestedScrollView>
+</de.dlyt.yanndroid.oneui.layout.ToolbarLayout>

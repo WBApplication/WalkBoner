@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<de.dlyt.yanndroid.oneui.layout.ToolbarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:expandable="false"
+    app:navigationIcon="@drawable/ic_oui_back"
+    app:title="Blokada PIN">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="42dp"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/pin_enabled_linear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/oui_drawer_background"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center"
+                    android:text="Pytania Zabezpieczające"
+                    android:textColor="@color/sesl_primary_text"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:gravity="left|center"
+                    android:text="Pierwsza i ostatnia litera nazwiska"
+                    android:textColor="@color/primary_color"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:padding="8dp"
+                    android:hint="Kowalski = ki"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:gravity="left|center"
+                    android:text="Dzień oraz miesiąć urodzenia"
+                    android:textColor="@color/primary_color"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:padding="8dp"
+                    android:hint="05.09"/>
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/ButtonStyle.Colored"
+                    android:id="@+id/save_pin_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Zapisz"/>
+            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:gravity="center"
+                android:text="Odpowiedzi nie można potem zmienić"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+</de.dlyt.yanndroid.oneui.layout.ToolbarLayout>

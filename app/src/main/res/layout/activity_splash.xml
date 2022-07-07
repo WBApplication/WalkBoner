@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/logo_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:textColor="@color/sesl_primary_text"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/important_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Trwa to dłużej niż oczekiwano!\nPonawianie próby"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="#ED2F21"
+            android:visibility="gone"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/banned_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="38dp"
+            android:gravity="center"
+            android:text="Urządzenie Zbanowane"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#ED2F21"
+            android:visibility="visible"/>
+    </LinearLayout>
+</RelativeLayout>

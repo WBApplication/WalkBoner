@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/premium" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Premium"
+        android:textColor="@color/primary_color"
+        android:textSize="26sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="Co Daje?"
+        android:textColor="@color/sesl_primary_text"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|left"
+        android:paddingHorizontal="26dp"
+        android:text="- Nielimitowany dostęp do wszystkich albumów premium bez potrzeby oglądania reklam\n\n- Pobieranie zdjęć z albumów bez limitów dziennych\n\n- Specjalny dodatek na twoim profilu, informujący innych użytkowników o posiadaniu przez ciebie konta Premium\n\n- Pierwszeństwo przy akceptacji przez moderacje dodanych przez ciebie materiałów\n\n- Wspierasz nas, dokładając się do opłat za serwer"
+        android:textColor="@color/sesl_primary_text"
+        android:textSize="16sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="Ile Koszuje?"
+        android:textColor="@color/sesl_primary_text"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:gravity="center"
+        android:text="10,99 zł"
+        android:textColor="@color/primary_color"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="za miesiąc"
+        android:textColor="@color/primary_color"
+        android:textSize="16sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buy_button"
+        style="@style/ButtonStyle.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:text="Kup" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/faq_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:text="FAQ" />
+</LinearLayout>

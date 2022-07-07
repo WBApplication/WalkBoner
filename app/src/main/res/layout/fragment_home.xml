@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<de.dlyt.yanndroid.oneui.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_swipe_refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <de.dlyt.yanndroid.oneui.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/main_linear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- HOTTEST PART START -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="420dp"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/hot_person_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/test" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_black" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/hot_person_view_count_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:shadowColor="#000000"
+                        android:shadowDx="1.5"
+                        android:shadowDy="1.3"
+                        android:shadowRadius="10"
+                        android:text="400\nWyświetleń"
+                        android:textColor="#FFF"
+                        android:textSize="36sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:text="Teraz HOT 🥵🔥"
+                        android:textColor="#FFF"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:background="@drawable/gradient_black_rev">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/hot_person_name_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="16dp"
+                                android:gravity="center"
+                                android:text="Mamiko"
+                                android:textColor="#FFF"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+            <!-- HOTTEST PART END -->
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/my_profile_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:text="Mój Profil" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/create_post_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:text="Utwórz Post" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/celebrity_button"
+                        style="@style/ButtonStyle.Colored"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:text="Influencerki" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/onlyfans_leaks_button"
+                        style="@style/ButtonStyle.Colored"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:text="OnlyFans Leaks" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/hot_tiktoks_button"
+                        style="@style/ButtonStyle.Colored"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:text="🔥 TikToki" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+                android:id="@+id/tip_linear"
+                android:animateLayoutChanges="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="38dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/primary_color"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:visibility="gone">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Witaj!"
+                    android:textColor="#FFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Są rzeczy, które powinieneś wiedzieć, zanim zaczniesz używać aplikacji WalkBoner."
+                    android:textColor="#FFF"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/close_tip_button"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:gravity="start|center"
+                        android:text="Zamknij"
+                        android:textColor="#FFF"
+                        android:textSize="18sp" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/open_tip_button"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:gravity="end|center"
+                        android:text="Przeczytaj"
+                        android:textColor="#FFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:gravity="start|center"
+                android:text="Najlepsze Posty"
+                android:textColor="@color/primary_color"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <de.dlyt.yanndroid.oneui.view.RecyclerView
+                android:id="@+id/popular_posts_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:gravity="start|center"
+                android:text="Najnowsze Posty"
+                android:textColor="@color/primary_color"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <de.dlyt.yanndroid.oneui.view.RecyclerView
+                android:id="@+id/posts_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </de.dlyt.yanndroid.oneui.widget.NestedScrollView>
+</de.dlyt.yanndroid.oneui.widget.SwipeRefreshLayout>

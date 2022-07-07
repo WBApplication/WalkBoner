@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <de.dlyt.yanndroid.oneui.widget.ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"/>
+
+    <LinearLayout
+        android:id="@+id/enter_pin_linear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Odblokuj"
+            android:textColor="@color/sesl_primary_text"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <in.aabhasjindal.otptextview.OtpTextView
+            android:id="@+id/otp_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="12dp"
+            android:textColor="@color/sesl_primary_text"
+            app:bar_active_color="@color/primary_color"
+            app:bar_enabled="true"
+            app:bar_error_color="@android:color/holo_red_light"
+            app:bar_height="2dp"
+            app:bar_success_color="@android:color/holo_green_light"
+            app:height="40dp"
+            app:length="6"
+            app:otp=""
+            app:otp_text_size="24dp"
+            app:width="40dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/forgot_pin_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Zapomniałem numer PIN"
+            android:textColor="@color/primary_color"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<de.dlyt.yanndroid.oneui.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="36dp"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="FAQ"
+            android:textColor="@color/sesl_primary_text"
+            android:textStyle="bold"
+            android:textSize="44sp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Premium"
+            android:textColor="@color/primary_color"
+            android:textSize="16sp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="left|top"
+            android:text="Kiedy aktywuje się Premium?"
+            android:textColor="@color/sesl_primary_text"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="left|top"
+            android:text="Niestety, serwer z którego korzystamy (Google Firebase) nie oferuje funkcji sklepu internetowego - do tego potrzebujemy osobny serwer, który wykrywał by przelew od użytkownika i automatycznie informował serwer aplikacji... A to kosztuje :(\nNa chwilę obecną jest to robione ręcznie, a czas oczekiwania na realizację jest dosyć losowy - może to trwać od 5 minut, do kilku godzin. Duże opóźnienia będą rekompensowane dodatkowym, darmowym okresem Premium."
+            android:textColor="@color/sesl_primary_text"
+            android:textSize="16sp"/>
+    </LinearLayout>
+</de.dlyt.yanndroid.oneui.widget.NestedScrollView>
