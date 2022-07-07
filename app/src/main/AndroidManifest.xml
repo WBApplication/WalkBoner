@@ -45,6 +45,7 @@
         <activity android:name=".AddInfluencerActivity" />
         <activity android:name=".AppDebugActivity" />
         <activity android:name=".UserProfileActivity" />
+        <activity android:name=".PasswordResetActivity" />
     </application>
 
 </manifest>

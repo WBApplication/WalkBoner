@@ -41,27 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void setup() {
-        Authentication authentication = new Authentication(new AuthenticationListener() {
-            @Override
-            public void UserAlreadyLoggedIn(boolean pinRequired) {
-
-            }
-
-            @Override
-            public void UserRequiredToBeLogged() {
-
-            }
-
-            @Override
-            public void OnLogin(boolean isSuccess, boolean pinRequired, @Nullable String reason) {
-
-            }
-
-            @Override
-            public void OnRegister(boolean isSuccess, @Nullable String reason) {
-
-            }
-        });
+        Authentication authentication = new Authentication(null);
 
         authentication.getUserData(new UserInfoListener() {
             @Override
@@ -89,6 +69,11 @@ public class SettingsActivity extends AppCompatActivity {
 
         pinLockButton.setOnClickListener(view -> {
             startActivity(new Intent(SettingsActivity.this, PinSetupActivity.class));
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        });
+
+        passwordChangeButton.setOnClickListener(view -> {
+            startActivity(new Intent(SettingsActivity.this, PasswordResetActivity.class));
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });
 

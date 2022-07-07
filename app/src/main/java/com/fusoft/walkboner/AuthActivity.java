@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.fusoft.walkboner.auth.Authentication;
 import com.fusoft.walkboner.auth.AuthenticationListener;
+import com.fusoft.walkboner.settings.Settings;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -76,7 +77,9 @@ public class AuthActivity extends AppCompatActivity {
                     toggleInputs(true);
                     showMessage(reason);
                 } else {
+                    new Settings(AuthActivity.this).setPasswordHashed(passwordEdt.getText().toString());
                     redirectUser(pinRequired);
+                    /* DO NOT PLACE OTHER METHODS AFTER redirectUser(boolean) */
                 }
             }
 
