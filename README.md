@@ -14,22 +14,18 @@ Celem aplikacji jest archiwizacja, publikacja lub tworzenie albumów zdjęć zna
 
 Aplikacja korzysta z następujących bibliotek:
 
-- [OneUI by Yanndroid](https://github.com/OneUIProject/OneUI-Design-Library) (UI)
+- [OneUI | Yanndroid](https://github.com/OneUIProject/OneUI-Design-Library) (UI)
 
-- [Firebase by Google](https://firebase.google.com/) (Serwer)
+- [Firebase | Google](https://firebase.google.com/) (Serwer)
 
-- [Glide by Bumptech](https://github.com/bumptech/glide) (Ładowanie Obrazów)
+- [Glide | Bumptech](https://github.com/bumptech/glide) (Ładowanie Obrazów)
 
-- [Lottie by Airbnb](https://github.com/airbnb/lottie-android) (Animowane Grafiki)
+- [Lottie | Airbnb](https://github.com/airbnb/lottie-android) (Animowane Grafiki)
 
-- [RollingText by YvesCheung](https://github.com/YvesCheung/RollingText) (
+- [RollingText | YvesCheung](https://github.com/YvesCheung/RollingText) (
 Animacja Zmiany Tekstu)
 
-- [ReadMoreTextView by PRND](https://github.com/PRNDcompany/ReadMoreTextView) (Zwijanie Długiego Tekstu)
-
-- [BlurShadowImageView by Virtualvivek](https://github.com/virtualvivek/BlurShadowImageView) (Rozmazany Cień Obrazu | Nie Używane)
-
-- [BlurView by Dimezis](https://github.com/Dimezis/BlurView) (Okno Rozmazujące Tło | Nie Używane)
+- [ReadMoreTextView | PRND](https://github.com/PRNDcompany/ReadMoreTextView) (Zwijanie Długiego Tekstu)
 
 # Raportowanie Błędów
 
@@ -37,7 +33,7 @@ Zwykle błędy są raportowane automatycznie - jednak aby się to stało, po wys
 
 # Pomoc w usprawnianiu aplikacji
 
-Każda pomoc jest mile widziana! Jeśli znasz poprawkę dla błedu w zakładce [Issues](https://github.com/WBApplication/WalkBoner/issues) chętnie jej się przyjrzymy. W przypadku pomysłu na nową funkcję, utwórz wątek w zakładce [Issues](https://github.com/WBApplication/WalkBoner/issues) i opisz działanie funkcji.
+Jeśli znasz poprawkę dla błedu w zakładce [Issues](https://github.com/WBApplication/WalkBoner/issues) chętnie jej się przyjrzymy. W przypadku pomysłu na nową funkcję, utwórz wątek w zakładce [Issues](https://github.com/WBApplication/WalkBoner/issues) i opisz działanie funkcji.
 
 # Kompilacja
 
