@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.fusoft.walkboner.auth.UserInfoListener;
 import com.fusoft.walkboner.models.User;
 import com.fusoft.walkboner.utils.Profile;
+import com.fusoft.walkboner.views.Avatar;
 import com.fusoft.walkboner.views.dialogs.ErrorDialog;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -24,7 +25,7 @@ import kr.co.prnd.readmore.ReadMoreTextView;
 
 public class ProfileActivity extends AppCompatActivity {
     private ToolbarLayout profileToolbar;
-    private ImageView profileAvatarImage;
+    private Avatar profileAvatarImage;
     private MaterialTextView profileNicknameText;
     private ImageView verifiedImage;
     private ReadMoreTextView profileDescriptionText;
@@ -45,7 +46,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void initView() {
         profileToolbar = (ToolbarLayout) findViewById(R.id.profileToolbar);
-        profileAvatarImage = (ImageView) findViewById(R.id.profile_avatar_image);
+        profileAvatarImage = (Avatar) findViewById(R.id.profile_avatar_image);
         profileNicknameText = (MaterialTextView) findViewById(R.id.profile_nickname_text);
         verifiedImage = (ImageView) findViewById(R.id.verified_image);
         profileDescriptionText = (ReadMoreTextView) findViewById(R.id.profile_description_text);
@@ -71,8 +72,18 @@ public class ProfileActivity extends AppCompatActivity {
                 Log.e("ProfileActivity", "DataReceived");
                 loading.dismiss();
 
+                if (user.isUserBanned()) {
+                    profileAvatarImage.setAvatarOwnerPrivileges(Avatar.BANNED);
+                } else if (user.isUserAdmin()) {
+                    profileAvatarImage.setAvatarOwnerPrivileges(Avatar.ADMIN);
+                } else if (user.isUserModerator()) {
+                    profileAvatarImage.setAvatarOwnerPrivileges(Avatar.MODERATOR);
+                } else {
+                    profileAvatarImage.setAvatarOwnerPrivileges(Avatar.USER);
+                }
+
                 if (!user.getUserAvatar().contentEquals("default")) {
-                    Glide.with(ProfileActivity.this).load(user.getUserAvatar()).into(profileAvatarImage);
+                    profileAvatarImage.setImageFromUrl(user.getUserAvatar());
                 }
 
                 if (user.isUserBanned()) {

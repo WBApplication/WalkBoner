@@ -6,11 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.fusoft.walkboner.R;
+import com.fusoft.walkboner.database.GetUserDetails;
 import com.fusoft.walkboner.models.Message;
+import com.fusoft.walkboner.models.User;
+import com.fusoft.walkboner.views.Avatar;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import de.dlyt.yanndroid.oneui.view.RecyclerView;
 
@@ -29,31 +37,95 @@ public class ModChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private class MessageInViewHolder extends RecyclerView.ViewHolder {
 
-        TextView messageTV,dateTV;
+        TextView messageTV, dateTV;
+        Avatar senderAvatarImage;
+
         MessageInViewHolder(final View itemView) {
             super(itemView);
             messageTV = itemView.findViewById(R.id.sender_message_text);
             dateTV = itemView.findViewById(R.id.sender_name_date_text);
+            senderAvatarImage = itemView.findViewById(R.id.sender_avatar_image);
         }
+
         void bind(int position) {
             Message messageModel = list.get(position);
-            messageTV.setText(messageModel.getMessage());
-            dateTV.setText("Mamiko" + "·" + DateFormat.getTimeInstance(DateFormat.SHORT).format(Long.parseLong(messageModel.getSendedAt())));
+            GetUserDetails.getByUid(messageModel.getSenderUid(), new GetUserDetails.UserDetailsListener() {
+                @Override
+                public void OnReceived(User user) {
+                    if (user.isUserBanned()) {
+                        senderAvatarImage.setAvatarOwnerPrivileges(Avatar.BANNED);
+                    } else if (user.isUserAdmin()) {
+                        senderAvatarImage.setAvatarOwnerPrivileges(Avatar.ADMIN);
+                    } else if (user.isUserModerator()) {
+                        senderAvatarImage.setAvatarOwnerPrivileges(Avatar.MODERATOR);
+                    } else {
+                        senderAvatarImage.setAvatarOwnerPrivileges(Avatar.USER);
+                    }
+
+                    if (!user.getUserAvatar().contentEquals("default")) {
+                        senderAvatarImage.setImageFromUrl(user.getUserAvatar());
+                    }
+
+                    messageTV.setText(messageModel.getMessage());
+
+                    if (!isMessageOlderThanOneDay(messageModel.getSendedAt())) {
+                        dateTV.setText(user.getUserName() + " · " + DateFormat.getTimeInstance(DateFormat.SHORT).format(Long.parseLong(messageModel.getSendedAt())));
+                    } else {
+                        Date date = new Date(Long.parseLong(messageModel.getSendedAt()));
+                        dateTV.setText(user.getUserName() + " · " + new SimpleDateFormat("HH:mm dd/MM").format(date));
+                    }
+                }
+
+                @Override
+                public void OnError(String reason) {
+
+                }
+            });
         }
+    }
+
+    private boolean isMessageOlderThanOneDay(String messageTime) {
+        long oneDayDuration = 86400000;
+        long messageSendedAtAfterDay = Long.parseLong(messageTime) + oneDayDuration;
+        long currentTime = new Timestamp(System.currentTimeMillis()).getTime();
+
+        if (currentTime > messageSendedAtAfterDay) {
+            return true;
+        }
+
+        return false;
     }
 
     private class MessageOutViewHolder extends RecyclerView.ViewHolder {
 
-        TextView messageTV,dateTV;
+        TextView messageTV, dateTV;
+
         MessageOutViewHolder(final View itemView) {
             super(itemView);
             messageTV = itemView.findViewById(R.id.sender_message_text);
             dateTV = itemView.findViewById(R.id.sender_name_date_text);
         }
+
         void bind(int position) {
             Message messageModel = list.get(position);
-            messageTV.setText(messageModel.getMessage());
-            dateTV.setText("Mamiko" + " · " + DateFormat.getTimeInstance(DateFormat.SHORT).format(Long.parseLong(messageModel.getSendedAt())));
+            GetUserDetails.getByUid(messageModel.getSenderUid(), new GetUserDetails.UserDetailsListener() {
+                @Override
+                public void OnReceived(User user) {
+                    messageTV.setText(messageModel.getMessage());
+
+                    if (!isMessageOlderThanOneDay(messageModel.getSendedAt())) {
+                        dateTV.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(Long.parseLong(messageModel.getSendedAt())));
+                    } else {
+                        Date date = new Date(Long.parseLong(messageModel.getSendedAt()));
+                        dateTV.setText(new SimpleDateFormat("HH:mm dd/MM").format(date));
+                    }
+                }
+
+                @Override
+                public void OnError(String reason) {
+
+                }
+            });
         }
     }
 

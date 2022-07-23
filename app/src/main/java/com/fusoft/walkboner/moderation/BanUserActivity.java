@@ -1,4 +1,4 @@
-package com.fusoft.walkboner;
+package com.fusoft.walkboner.moderation;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.fusoft.walkboner.R;
 import com.fusoft.walkboner.auth.UserInfoListener;
 import com.fusoft.walkboner.database.funcions.BanDuration;
 import com.fusoft.walkboner.database.funcions.BanUser;

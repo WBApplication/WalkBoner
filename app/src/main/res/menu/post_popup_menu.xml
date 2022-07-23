@@ -5,4 +5,8 @@
         android:id="@+id/report_popup_button"
         android:title="Zgłoś" />
 
+    <item
+        android:id="@+id/delete_popup_button"
+        android:title="Usuń"
+        android:visible="false"/>
 </menu>

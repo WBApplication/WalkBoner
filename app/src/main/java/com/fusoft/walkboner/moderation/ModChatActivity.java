@@ -1,14 +1,14 @@
-package com.fusoft.walkboner;
+package com.fusoft.walkboner.moderation;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.fusoft.walkboner.R;
 import com.fusoft.walkboner.adapters.recyclerview.ModChatAdapter;
 import com.fusoft.walkboner.auth.Authentication;
 import com.fusoft.walkboner.auth.AuthenticationListener;
@@ -22,7 +22,6 @@ import com.google.firebase.firestore.Query;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
 import de.dlyt.yanndroid.oneui.sesl.recyclerview.LinearLayoutManager;

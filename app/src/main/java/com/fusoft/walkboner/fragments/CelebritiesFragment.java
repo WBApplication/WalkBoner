@@ -1,4 +1,4 @@
-package com.fusoft.walkboner;
+package com.fusoft.walkboner.fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -15,6 +15,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.fusoft.walkboner.AddInfluencerActivity;
+import com.fusoft.walkboner.MainActivity;
+import com.fusoft.walkboner.R;
 import com.fusoft.walkboner.adapters.recyclerview.InfluencersAdapter;
 import com.fusoft.walkboner.database.funcions.GetInfluencers;
 import com.fusoft.walkboner.database.funcions.InfluencersListener;
@@ -24,9 +27,11 @@ import com.fusoft.walkboner.utils.AnimateChanges;
 import java.util.List;
 
 import de.dlyt.yanndroid.oneui.sesl.recyclerview.GridLayoutManager;
+import de.dlyt.yanndroid.oneui.sesl.recyclerview.LinearLayoutManager;
 import de.dlyt.yanndroid.oneui.view.RecyclerView;
 import de.dlyt.yanndroid.oneui.widget.ProgressBar;
 import de.dlyt.yanndroid.oneui.widget.RoundLinearLayout;
+import de.dlyt.yanndroid.oneui.widget.SwipeRefreshLayout;
 
 public class CelebritiesFragment extends Fragment {
 
@@ -36,6 +41,7 @@ public class CelebritiesFragment extends Fragment {
     private LottieAnimationView lottieAnim;
     private InfluencersAdapter adapter;
     private RoundLinearLayout addInfluencerButton;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private MainActivity activity;
     private LinearLayout mainLinear;
@@ -64,9 +70,28 @@ public class CelebritiesFragment extends Fragment {
         mainLinear = (LinearLayout) mRootView.findViewById(R.id.main_linear);
         AnimateChanges.forLinear(mainLinear);
         loadingProgressBar = (ProgressBar) mRootView.findViewById(R.id.loading_progress_bar);
+        swipeRefreshLayout = mRootView.findViewById(R.id.influencers_swipe_refresh);
 
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         celebritiesRecyclerView.setLayoutManager(layoutManager);
+
+        loadData();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData();
+            }
+        });
+
+        addInfluencerButton.setOnClickListener(v -> openActivity());
+    }
+
+    private void loadData() {
+        loadingProgressBar.setVisibility(View.VISIBLE);
+        celebritiesRecyclerView.setVisibility(View.GONE);
+        addInfluencerButton.setVisibility(View.GONE);
+        celebritiesRecyclerView.setAdapter(null);
 
         GetInfluencers getter = new GetInfluencers(GetInfluencers.ORDER_MOST_VIEWED, new InfluencersListener() {
             @Override
@@ -77,6 +102,9 @@ public class CelebritiesFragment extends Fragment {
                 loadingProgressBar.setVisibility(View.GONE);
                 celebritiesRecyclerView.setVisibility(View.VISIBLE);
                 addInfluencerButton.setVisibility(View.VISIBLE);
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
 
             @Override
@@ -84,8 +112,6 @@ public class CelebritiesFragment extends Fragment {
 
             }
         });
-
-        addInfluencerButton.setOnClickListener(v -> openActivity());
     }
 
     private void openActivity() {

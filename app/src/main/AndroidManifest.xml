@@ -3,8 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.fusoft.walkboner">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <uses-permission
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
@@ -35,9 +38,9 @@
         <activity android:name=".SettingsActivity" />
         <activity android:name=".CreatePostActivity" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".ModerationActivity" />
-        <activity android:name=".BanUserActivity" />
-        <activity android:name=".ModChatActivity" />
+        <activity android:name=".moderation.ModerationActivity" />
+        <activity android:name=".moderation.BanUserActivity" />
+        <activity android:name=".moderation.ModChatActivity" />
         <activity android:name=".PremiumActivity" />
         <activity android:name=".PinSetupActivity" />
         <activity android:name=".UnlockAppActivity" />
@@ -46,6 +49,8 @@
         <activity android:name=".AppDebugActivity" />
         <activity android:name=".UserProfileActivity" />
         <activity android:name=".PasswordResetActivity" />
+        <activity android:name=".BiometricUnlockActivity" />
+        <activity android:name=".moderation.AcceptInfluencersProfilesActivity" />
     </application>
 
 </manifest>

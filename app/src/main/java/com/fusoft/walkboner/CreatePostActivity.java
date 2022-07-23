@@ -56,6 +56,7 @@ public class CreatePostActivity extends AppCompatActivity {
 
     private Uri imageStoragePath;
     private String imageUrl = "";
+    private String documentUid = "";
 
     private boolean allowComments = true;
 
@@ -161,6 +162,9 @@ public class CreatePostActivity extends AppCompatActivity {
                     public void OnImageUploaded(String imageUrlString) {
                         imageUrl = imageUrlString;
                         firestore.collection("posts").add(defaultMap()).addOnSuccessListener(documentReference -> {
+                            HashMap<String, Object> map = new HashMap<>();
+                            map.put("documentUid", documentReference.getId());
+                            firestore.collection("posts").document(documentReference.getId()).update(map);
                             finish();
                         }).addOnFailureListener(e -> {
                             new ErrorDialog().SimpleErrorDialog(CreatePostActivity.this, e.getMessage());
@@ -233,6 +237,7 @@ public class CreatePostActivity extends AppCompatActivity {
         map.put("postUid", UidGenerator.Generate());
         map.put("postDescription", descriptionEdt.getText().toString());
         map.put("postImage", imageUrl);
+        map.put("documentUid", "");
         map.put("createdAt", String.valueOf(timestamp.getTime()));
         map.put("showsCelebrity", "celebrityUid");
         map.put("allowComments", String.valueOf(allowComments));

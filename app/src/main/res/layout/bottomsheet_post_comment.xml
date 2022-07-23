@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_negative"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="8dp"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:layout_marginHorizontal="160dp"
+        android:layout_gravity="center"
+        android:layout_marginVertical="12dp"
+        app:cardBackgroundColor="#33000000"
+        app:cardCornerRadius="90dp"
+        app:cardElevation="0dp"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Komentarze:"
+        android:textSize="20sp"
+        android:textColor="@color/sesl_primary_text"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:id="@+id/loading_comments_linear"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <de.dlyt.yanndroid.oneui.widget.ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginVertical="8dp"
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <com.fusoft.walkboner.views.Avatar
+                android:id="@+id/new_comment_avatar_image"
+                android:layout_width="34dp"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:layout_marginLeft="8dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/new_comment_content_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Napisz Komentarz"
+                android:padding="8dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/new_comment_send_button"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_oui3_send"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <de.dlyt.yanndroid.oneui.view.RecyclerView
+        android:id="@+id/comments_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

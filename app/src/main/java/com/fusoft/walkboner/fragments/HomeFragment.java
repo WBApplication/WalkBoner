@@ -1,4 +1,4 @@
-package com.fusoft.walkboner;
+package com.fusoft.walkboner.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.fusoft.walkboner.CreatePostActivity;
+import com.fusoft.walkboner.MainActivity;
+import com.fusoft.walkboner.R;
+import com.fusoft.walkboner.UserProfileActivity;
 import com.fusoft.walkboner.adapters.recyclerview.PopularPostsAdapter;
 import com.fusoft.walkboner.adapters.recyclerview.PostsAdapter;
 import com.fusoft.walkboner.auth.Authentication;
@@ -19,7 +23,10 @@ import com.fusoft.walkboner.database.funcions.GetPopularPosts;
 import com.fusoft.walkboner.database.funcions.GetPosts;
 import com.fusoft.walkboner.models.Post;
 import com.fusoft.walkboner.models.User;
+import com.fusoft.walkboner.settings.Settings;
 import com.fusoft.walkboner.utils.AnimateChanges;
+import com.fusoft.walkboner.views.dialogs.DisclaimerDialog;
+import com.fusoft.walkboner.views.dialogs.InfoDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -27,6 +34,8 @@ import java.util.List;
 
 import de.dlyt.yanndroid.oneui.sesl.recyclerview.GridLayoutManager;
 import de.dlyt.yanndroid.oneui.sesl.recyclerview.LinearLayoutManager;
+import de.dlyt.yanndroid.oneui.sesl.recyclerview.PagerSnapHelper;
+import de.dlyt.yanndroid.oneui.sesl.recyclerview.SnapHelper;
 import de.dlyt.yanndroid.oneui.view.RecyclerView;
 import de.dlyt.yanndroid.oneui.widget.RoundLinearLayout;
 import de.dlyt.yanndroid.oneui.widget.SwipeRefreshLayout;
@@ -35,9 +44,6 @@ public class HomeFragment extends Fragment {
 
     View mRootView;
 
-    private ImageView hotPersonImage;
-    private MaterialTextView hotPersonViewCountText;
-    private MaterialTextView hotPersonNameText;
     private MaterialButton myProfileButton;
     private MaterialButton celebrityButton;
     private MaterialButton onlyfansLeaksButton;
@@ -57,6 +63,8 @@ public class HomeFragment extends Fragment {
     private MaterialTextView openTipButton;
     private LinearLayout mainLinear;
 
+    private Settings settings;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -73,9 +81,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void initView() {
-        hotPersonImage = (ImageView) mRootView.findViewById(R.id.hot_person_image);
-        hotPersonViewCountText = (MaterialTextView) mRootView.findViewById(R.id.hot_person_view_count_text);
-        hotPersonNameText = (MaterialTextView) mRootView.findViewById(R.id.hot_person_name_text);
         myProfileButton = (MaterialButton) mRootView.findViewById(R.id.my_profile_button);
         celebrityButton = (MaterialButton) mRootView.findViewById(R.id.celebrity_button);
         onlyfansLeaksButton = (MaterialButton) mRootView.findViewById(R.id.onlyfans_leaks_button);
@@ -89,6 +94,7 @@ public class HomeFragment extends Fragment {
         openTipButton = (MaterialTextView) mRootView.findViewById(R.id.open_tip_button);
         mainLinear = (LinearLayout) mRootView.findViewById(R.id.main_linear);
         AnimateChanges.forLinear(tipLinear);
+        settings = new Settings(getActivity());
 
         authentication = new Authentication(null);
         authentication.getUserData(new UserInfoListener() {
@@ -120,6 +126,9 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         postsRecyclerView.setLayoutManager(layoutManager);
 
+        SnapHelper pagerSnapHelper = new PagerSnapHelper();
+        pagerSnapHelper.attachToRecyclerView(postsRecyclerView);
+
         loadPosts();
         loadPopularPosts();
 
@@ -137,7 +146,17 @@ public class HomeFragment extends Fragment {
         });
 
         createPostButton.setOnClickListener(view -> {
-            mainActivity.openActivity(CreatePostActivity.class, false);
+            if (settings.showCreatingPostDisclaimer()) {
+                new DisclaimerDialog().Dialog(getActivity(), "Tworz Posty!", "Dziel sie z uzytkownikami swoimi zdjeciami influencerek lub innych osob!\nPamietaj jednak o przestrzeganiu zasad, poniewaz nie zastosowanie sie do nich moze zakonczyc sie banem!", new DisclaimerDialog.DisclaimerDialogInterface() {
+                    @Override
+                    public void OnDismiss() {
+                        settings.disableCreatingPostDisclaimer();
+                        mainActivity.openActivity(CreatePostActivity.class, false);
+                    }
+                });
+            } else {
+                mainActivity.openActivity(CreatePostActivity.class, false);
+            }
         });
     }
 

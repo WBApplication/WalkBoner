@@ -8,10 +8,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.fusoft.walkboner.auth.Authentication;
-import com.fusoft.walkboner.auth.AuthenticationListener;
 import com.fusoft.walkboner.auth.UserInfoListener;
 import com.fusoft.walkboner.models.User;
-import com.fusoft.walkboner.utils.Profile;
+import com.fusoft.walkboner.moderation.ModerationActivity;
+import com.fusoft.walkboner.security.BiometricUnlock;
+import com.fusoft.walkboner.views.dialogs.InfoDialog;
 
 import de.dlyt.yanndroid.oneui.layout.ToolbarLayout;
 import de.dlyt.yanndroid.oneui.widget.RoundLinearLayout;
@@ -22,6 +23,7 @@ public class SettingsActivity extends AppCompatActivity {
     private RoundLinearLayout pinLockButton;
     private RoundLinearLayout passwordChangeButton, moderationButton;
     private Switch discreteSwitch;
+    private RoundLinearLayout biometricLockButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class SettingsActivity extends AppCompatActivity {
         passwordChangeButton = (RoundLinearLayout) findViewById(R.id.password_change_button);
         discreteSwitch = (Switch) findViewById(R.id.discrete_switch);
         moderationButton = findViewById(R.id.moderation_button);
+        biometricLockButton = (RoundLinearLayout) findViewById(R.id.biometric_lock_button);
     }
 
     private void setup() {
@@ -79,6 +82,30 @@ public class SettingsActivity extends AppCompatActivity {
 
         settingsToolbar.setNavigationButtonOnClickListener(v -> {
             finish();
+        });
+
+        biometricLockButton.setOnClickListener(v -> {
+            BiometricUnlock.checkForHardware(SettingsActivity.this, new BiometricUnlock.HardwareListener() {
+                @Override
+                public void OnResponse(Boolean success, String response) {
+                    if (success) {
+                        startActivity(new Intent(SettingsActivity.this, BiometricUnlockActivity.class));
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                    } else {
+                        new InfoDialog().MakeDialog(SettingsActivity.this, response, "Zamknij", null, new InfoDialog.InfoDialogInterfaceListener(){
+                            @Override
+                            public void OnPositiveButtonClicked() {
+
+                            }
+
+                            @Override
+                            public void OnNegativeButtonClicked() {
+
+                            }
+                        });
+                    }
+                }
+            });
         });
     }
 }

@@ -42,12 +42,15 @@ dependencies {
     implementation 'io.github.yanndroid:oneui:2.4.0'
     implementation 'com.airbnb.android:lottie:5.2.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'androidx.biometric:biometric:1.1.0'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.github.Dimezis:BlurView:version-2.0.0'
     implementation 'kr.co.prnd:readmore-textview:1.0.0'
     implementation 'com.github.bumptech.glide:glide:4.13.2'
     implementation 'com.github.virtualvivek:BlurShadowImageView:4.0'
+    implementation 'com.mikhaellopez:circularimageview:4.3.0'
+    implementation files('C:/Users/hesam/AndroidStudioProjects/WalkBoner/app/libs/unity-ads.aar')
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
     implementation project(path: ':otptextview')
     testImplementation 'junit:junit:4.13.2'

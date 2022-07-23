@@ -38,12 +38,20 @@
                 android:layout_height="match_parent" />
         </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/biometric_enabled_disclaimer_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"
+            android:text="Blokada PIN jest pomijana kiedy masz włączoną blokadę biometryczną."/>
+
         <LinearLayout
             android:id="@+id/pin_enabled_linear"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
                 android:layout_width="match_parent"

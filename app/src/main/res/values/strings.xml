@@ -3,7 +3,7 @@
 
     <string name="discord_invite_url">EMPTY</string>
 
-    <string name="storage_url">firebase_storage_url</string>
+    <string name="storage_url">EMPTY</string>
 
     <string name="sesl_font_family_regular">sans-serif</string>
 </resources>

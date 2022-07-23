@@ -141,7 +141,7 @@ public class AddInfluencerActivity extends AppCompatActivity {
         } else {
             map.put("influencerLastName", lastNameEdittext.getText().toString());
         }
-        map.put("influencerNickNanme", nickNameEdittext.getText().toString());
+        map.put("influencerNickName", nickNameEdittext.getText().toString());
         map.put("influencerDescription", "");
         map.put("influencerAvatar", uploadedImagePath);
         map.put("influencerInstagramLink", instagramUrlEdittext.getText().toString());

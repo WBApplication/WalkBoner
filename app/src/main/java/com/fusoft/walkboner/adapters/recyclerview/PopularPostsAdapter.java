@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityOptionsCompat;
@@ -22,6 +23,7 @@ import com.fusoft.walkboner.ProfileActivity;
 import com.fusoft.walkboner.R;
 import com.fusoft.walkboner.models.Post;
 import com.fusoft.walkboner.models.User;
+import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -29,6 +31,7 @@ import java.util.List;
 
 import de.dlyt.yanndroid.oneui.view.RecyclerView;
 import de.dlyt.yanndroid.oneui.widget.ProgressBar;
+import de.dlyt.yanndroid.oneui.widget.RoundLinearLayout;
 
 public class PopularPostsAdapter extends RecyclerView.Adapter<PopularPostsAdapter.ViewHolder> {
 
@@ -89,6 +92,8 @@ public class PopularPostsAdapter extends RecyclerView.Adapter<PopularPostsAdapte
 
                         holder.postImage.setVisibility(View.VISIBLE);
                         holder.loadingBar.setVisibility(View.GONE);
+                        holder.likes_top_linear.setVisibility(View.VISIBLE);
+                        holder.likes_amount_text.setText(String.valueOf(post.getPostLikes().size()));
 
                         return false;
                     }
@@ -129,12 +134,16 @@ public class PopularPostsAdapter extends RecyclerView.Adapter<PopularPostsAdapte
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView postImage;
         ProgressBar loadingBar;
+        LinearLayout likes_top_linear;
+        MaterialTextView likes_amount_text;
 
         ViewHolder(View itemView) {
             super(itemView);
             postImage = itemView.findViewById(R.id.image);
             postImage.setVisibility(View.INVISIBLE);
             loadingBar = itemView.findViewById(R.id.loading_progress_bar);
+            likes_top_linear = itemView.findViewById(R.id.likes_top_linear);
+            likes_amount_text = itemView.findViewById(R.id.likes_amount_text);
             itemView.setOnClickListener(this);
         }
 

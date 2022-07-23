@@ -47,17 +47,17 @@ public class GetInfluencers {
                     influencer.setInfluencerYouTubeLink(doc.getString("influencerYouTubeLink"));
                     influencer.setInfluencerTikTokLink(doc.getString("influencerTikTokLink"));
                     influencer.setInfluencerModeratorUid(doc.getString("influencerModeratorUid"));
-                    influencer.setVerified(Boolean.parseBoolean(doc.getString("isVerified")));
-                    influencer.setPremium(Boolean.parseBoolean(doc.getString("isPremium")));
-                    influencer.setHidden(Boolean.parseBoolean(doc.getString("isHidden")));
-                    influencer.setInfluencerHasInstagram(Boolean.parseBoolean(doc.getString("hasInstagram")));
-                    influencer.setInfluencerHasYouTube(Boolean.parseBoolean(doc.getString("hasYouTube")));
-                    influencer.setInfluencerHasTikTok(Boolean.parseBoolean(doc.getString("hasTikTok")));
-                    influencer.setMaintained(Boolean.parseBoolean(doc.getString("isMaintained")));
-                    influencer.setInfluencerAddedAt(Long.parseLong(doc.getString("influencerAddedAt")));
-                    influencer.setMaintainedTo(Long.parseLong(doc.getString("maintainedTo")));
+                    influencer.setVerified(Boolean.parseBoolean(doc.get("isVerified").toString()));
+                    influencer.setPremium(Boolean.parseBoolean(doc.get("isPremium").toString()));
+                    influencer.setHidden(Boolean.parseBoolean(doc.get("isHidden").toString()));
+                    influencer.setInfluencerHasInstagram(Boolean.parseBoolean(doc.get("hasInstagram").toString()));
+                    influencer.setInfluencerHasYouTube(Boolean.parseBoolean(doc.get("hasYouTube").toString()));
+                    influencer.setInfluencerHasTikTok(Boolean.parseBoolean(doc.get("hasTikTok").toString()));
+                    influencer.setMaintained(Boolean.parseBoolean(doc.get("isMaintained").toString()));
+                    influencer.setInfluencerAddedAt(Long.parseLong(doc.get("influencerAddedAt").toString()));
+                    influencer.setMaintainedTo(Long.parseLong(doc.get("maintainedTo").toString()));
                     influencer.setUserFollowing(false);
-                    influencer.setViewsCount(Integer.parseInt(doc.getString("viewsCount")));
+                    influencer.setViewsCount(Integer.parseInt(doc.get("viewsCount").toString()));
 
                     List<String> followersList = new ArrayList<>();
                     firestore.collection("influencers").document(doc.getId()).collection("followers").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

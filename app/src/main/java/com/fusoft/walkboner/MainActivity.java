@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.fusoft.walkboner.adapters.viewpager.MainViewPager;
 import com.fusoft.walkboner.auth.Authentication;
 import com.fusoft.walkboner.auth.AuthenticationListener;
+import com.unity3d.ads.IUnityAdsInitializationListener;
 
 import de.dlyt.yanndroid.oneui.layout.DrawerLayout;
 import de.dlyt.yanndroid.oneui.view.Toast;

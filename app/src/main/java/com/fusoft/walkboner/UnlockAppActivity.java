@@ -9,7 +9,10 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricPrompt;
 
+import com.fusoft.walkboner.security.BiometricUnlock;
+import com.fusoft.walkboner.settings.Settings;
 import com.fusoft.walkboner.views.dialogs.ErrorDialog;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,6 +38,7 @@ public class UnlockAppActivity extends AppCompatActivity {
     private FirebaseUser user;
 
     private String userPIN;
+    private Settings settings;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,7 +51,6 @@ public class UnlockAppActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
 
         initView();
-        setup();
     }
 
     private void initView() {
@@ -55,9 +58,39 @@ public class UnlockAppActivity extends AppCompatActivity {
         forgotPinButton = (MaterialTextView) findViewById(R.id.forgot_pin_button);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         enterPinLinear = (LinearLayout) findViewById(R.id.enter_pin_linear);
+
+        settings = new Settings(UnlockAppActivity.this);
+
+        if (settings.isBiometricUnlockEnabled()) {
+            setupBiometric();
+        } else {
+            setupPIN();
+        }
     }
 
-    private void setup() {
+    private void setupBiometric() {
+        BiometricUnlock.requestUnlock(UnlockAppActivity.this, new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+            }
+
+            @Override
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                startActivity(new Intent(UnlockAppActivity.this, MainActivity.class));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                finish();
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+            }
+        });
+    }
+
+    private void setupPIN() {
         firestore.collection("users").whereEqualTo("userUid", user.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {

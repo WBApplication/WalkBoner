@@ -2,4 +2,6 @@
 <resources>
     <color name="edit_text_background">#151515</color>
     <color name="image_background">#151515</color>
+    <color name="black_negative">#000</color>
+    <color name="item_post_details_background">#66000000</color>
 </resources>

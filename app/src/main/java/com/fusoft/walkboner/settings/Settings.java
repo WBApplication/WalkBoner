@@ -20,4 +20,20 @@ public class Settings {
     public void setPasswordHashed(String password) {
         settings.edit().putString("password", Encrypt.EncryptSHAPassword(password)).apply();
     }
+
+    public boolean isBiometricUnlockEnabled() {
+        return settings.getBoolean("isBiometricUnlock", false);
+    }
+
+    public void toggleBiometricUnlock(boolean on) {
+        settings.edit().putBoolean("isBiometricUnlock", on).apply();
+    }
+
+    public boolean showCreatingPostDisclaimer() {
+        return settings.getBoolean("showCreatingPostDisclaimer", true);
+    }
+
+    public void disableCreatingPostDisclaimer() {
+        settings.edit().putBoolean("showCreatingPostDisclaimer", false).apply();
+    }
 }

@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.fusoft.walkboner.settings.Settings;
 import com.fusoft.walkboner.views.dialogs.ErrorDialog;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,6 +41,9 @@ public class PinSetupActivity extends AppCompatActivity {
     private FirebaseFirestore firestore;
     private FirebaseAuth auth;
     private FirebaseUser user;
+    private MaterialTextView biometricEnabledDisclaimerText;
+
+    private Settings settings;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,9 +59,13 @@ public class PinSetupActivity extends AppCompatActivity {
         pinToggleSwitch = (Switch) findViewById(R.id.pin_toggle_switch);
         pinEnabledLinear = (LinearLayout) findViewById(R.id.pin_enabled_linear);
         savePinButton = (MaterialButton) findViewById(R.id.save_pin_button);
+        biometricEnabledDisclaimerText = (MaterialTextView) findViewById(R.id.biometric_enabled_disclaimer_text);
+        biometricEnabledDisclaimerText.setVisibility(View.GONE);
         savePinButton.setEnabled(false);
         settingsSecurityQuestionsButton = (MaterialButton) findViewById(R.id.settings_security_questions_button);
         otpView = findViewById(R.id.otp_view);
+
+        settings = new Settings(PinSetupActivity.this);
 
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -68,6 +76,10 @@ public class PinSetupActivity extends AppCompatActivity {
         loading.setProgressStyle(ProgressDialog.STYLE_CIRCLE);
         loading.setCancelable(false);
         loading.setCanceledOnTouchOutside(false);
+
+        if (settings.isBiometricUnlockEnabled()) {
+            biometricEnabledDisclaimerText.setVisibility(View.VISIBLE);
+        }
     }
 
     private void error(String reason) {

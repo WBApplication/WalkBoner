@@ -77,6 +77,8 @@ public class InfluencersAdapter extends RecyclerView.Adapter<InfluencersAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         Influencer influencer = mData.get(position);
 
+        holder.influencerNickText.setText(influencer.getInfluencerNickName());
+
         Glide.with(context).load(influencer.getInfluencerAvatar()).into(new CustomTarget<Drawable>() {
             @Override
             public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
@@ -109,10 +111,12 @@ public class InfluencersAdapter extends RecyclerView.Adapter<InfluencersAdapter.
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView influencerImage;
+        MaterialTextView influencerNickText;
 
         ViewHolder(View itemView) {
             super(itemView);
             influencerImage = itemView.findViewById(R.id.influencer_image);
+            influencerNickText = itemView.findViewById(R.id.influencer_nick_text);
             itemView.setOnClickListener(this);
         }
 

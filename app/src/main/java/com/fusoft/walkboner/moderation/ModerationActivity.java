@@ -1,4 +1,4 @@
-package com.fusoft.walkboner;
+package com.fusoft.walkboner.moderation;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.fusoft.walkboner.R;
 import com.fusoft.walkboner.moderation.utils.CounterListener;
 import com.fusoft.walkboner.moderation.utils.GetInfluencersToModerateCount;
 import com.fusoft.walkboner.moderation.utils.GetReportsToModerateCount;
@@ -91,6 +92,10 @@ public class ModerationActivity extends AppCompatActivity {
 
         banUserButton.setOnClickListener(v -> {
             openActivity(BanUserActivity.class);
+        });
+        
+        moderateNewInfluencersButton.setOnClickListener(v -> {
+            openActivity(AcceptInfluencersProfilesActivity.class);
         });
     }
 

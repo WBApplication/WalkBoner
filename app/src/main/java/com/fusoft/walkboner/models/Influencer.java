@@ -214,4 +214,31 @@ public class Influencer {
     public void setFollowers(List<String> followers) {
         this.followers = followers;
     }
+
+    public HashMap<String, Object> toMap() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("influencerUid", influencerUid);
+        map.put("influencerAddedBy", influencerAddedBy);
+        map.put("influencerFirstName", influencerFirstName);
+        map.put("influencerLastName", influencerLastName);
+        map.put("influencerNickName", influencerNickName);
+        map.put("influencerDescription", influencerDescription);
+        map.put("influencerAvatar", influencerAvatar);
+        map.put("influencerInstagramLink", influencerInstagramLink);
+        map.put("influencerYouTubeLink", influencerYouTubeLink);
+        map.put("influencerTikTokLink", influencerTikTokLink);
+        map.put("influencerModeratorUid", influencerModeratorUid);
+        map.put("isVerified", isVerified);
+        map.put("isPremium", isPremium);
+        map.put("isHidden", isHidden);
+        map.put("hasInstagram", influencerHasInstagram);
+        map.put("hasYouTube", influencerHasYouTube);
+        map.put("hasTikTok", influencerHasTikTok);
+        map.put("isMaintained", isMaintained);
+        map.put("isUserFollowing", isUserFollowing);
+        map.put("influencerAddedAt", influencerAddedAt);
+        map.put("maintainedTo", maintainedTo);
+        map.put("viewsCount", viewsCount);
+        return map;
+    }
 }

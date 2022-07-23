@@ -3,6 +3,7 @@ package com.fusoft.walkboner.adapters.recyclerview;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +24,13 @@ import com.fusoft.walkboner.FullPhotoViewerActivity;
 import com.fusoft.walkboner.MainActivity;
 import com.fusoft.walkboner.ProfileActivity;
 import com.fusoft.walkboner.R;
+import com.fusoft.walkboner.auth.Authentication;
 import com.fusoft.walkboner.database.funcions.LikePost;
 import com.fusoft.walkboner.models.Post;
 import com.fusoft.walkboner.models.User;
 import com.fusoft.walkboner.utils.Profile;
+import com.fusoft.walkboner.views.Avatar;
+import com.fusoft.walkboner.views.bottomsheets.PostCommentsBSD;
 import com.fusoft.walkboner.views.dialogs.ReportDialog;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textview.MaterialTextView;
@@ -55,6 +59,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     private List<Post> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private HeartClickListener mHeartListener;
     private Context context;
     private int prevLikesCount = 0;
 
@@ -138,8 +143,18 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     }
                 }).into(holder.postImage);
 
+                if (userData.isUserBanned()) {
+                    holder.personAvatarImage.setAvatarOwnerPrivileges(Avatar.BANNED);
+                } else if (userData.isUserAdmin()) {
+                    holder.personAvatarImage.setAvatarOwnerPrivileges(Avatar.ADMIN);
+                } else if (userData.isUserModerator()) {
+                    holder.personAvatarImage.setAvatarOwnerPrivileges(Avatar.MODERATOR);
+                } else {
+                    holder.personAvatarImage.setAvatarOwnerPrivileges(Avatar.USER);
+                }
+
                 if (!userData.getUserAvatar().contentEquals("default")) {
-                    Glide.with(context).load(userData.getUserAvatar()).into(holder.personAvatarImage);
+                    holder.personAvatarImage.setImageFromUrl(userData.getUserAvatar());
                 }
 
                 PopupMenu popupMenu = new PopupMenu(holder.moreButton);
@@ -162,8 +177,17 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     }
                 });
 
+                Authentication authentication = new Authentication(null);
+                if (post.getUserUid().contentEquals(authentication.getCurrentUserUid())) {
+                    popupMenu.getMenu().findItem(R.id.delete_popup_button).setVisible(true);
+                }
+
                 holder.moreButton.setOnClickListener(view -> {
                     popupMenu.show();
+                });
+
+                holder.commentsButton.setOnClickListener(v -> {
+                    PostCommentsBSD.show(post.getPostDocumentUid(), context);
                 });
 
                 new LikePost().LikeWatcher(post.getPostDocumentUid(), (userLiked, likesAmount) -> {
@@ -194,12 +218,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     @Override
                     public void onSingleClick(View view) {
                         holder.postLikeButton.setEnabled(false);
+                        if (mHeartListener != null) {
+                            mHeartListener.onHeartClick(position);
+                        }
+
                         if (post.isUserLikedPost()) {
                             LikePost.UnLike(post.getPostDocumentUid());
                         } else {
                             LikePost.Like(post.getPostDocumentUid());
                         }
-
                     }
                 });
             }
@@ -225,23 +252,22 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     }
 
     private void openProfile(String uid) {
-        MainActivity mainActivity = ((MainActivity) context);
-
-        Intent intent = new Intent(mainActivity, ProfileActivity.class);
+        Intent intent = new Intent(context, ProfileActivity.class);
         intent.putExtra("userUid", uid);
-        mainActivity.startActivity(intent);
-        mainActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        context.startActivity(intent);
     }
 
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView postImage, personAvatarImage, postLikeButton, moreButton;
+        Avatar personAvatarImage;
+        ImageView postImage, postLikeButton, moreButton;
         RollingTextView likesCounterText;
         MaterialTextView personNickText, personMentionNickText, postLikeText;
         ReadMoreTextView postDescriptionText;
         ConstraintLayout imageHolder;
         ProgressBar loadingBar;
+        ImageView commentsButton;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -257,6 +283,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             imageHolder = itemView.findViewById(R.id.image_holder);
             loadingBar = itemView.findViewById(R.id.loading_bar);
             likesCounterText = itemView.findViewById(R.id.likes_counter_text);
+            commentsButton = itemView.findViewById(R.id.post_comments_button);
             itemView.setOnClickListener(this);
         }
 
@@ -276,8 +303,21 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         this.mClickListener = itemClickListener;
     }
 
+    public void removeFromList(int position) {
+        mData.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void setHeartClickListener(HeartClickListener heartClickListener) {
+        this.mHeartListener = heartClickListener;
+    }
+
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
         void onItemClick(View view, int position);
+    }
+
+    public interface HeartClickListener {
+        void onHeartClick(int position);
     }
 }

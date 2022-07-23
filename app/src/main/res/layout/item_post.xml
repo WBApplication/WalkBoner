@@ -58,11 +58,10 @@
                         android:layout_height="30dp"
                         app:cardCornerRadius="90dp">
 
-                        <ImageView
+                        <com.fusoft.walkboner.views.Avatar
                             android:id="@+id/person_avatar_image"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/face_man_profile" />
+                            android:layout_height="match_parent" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
@@ -152,13 +151,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="14dp">
 
-        <ImageView
-            android:id="@+id/post_like_button"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:src="@drawable/ic_oui_like_off" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/post_like_button"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/ic_oui_like_off" />
+
+            <ImageView
+                android:id="@+id/post_comments_button"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/comments"
+                app:tint="@color/sesl_primary_text" />
+        </LinearLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/person_mention_nick_text"

@@ -27,60 +27,77 @@ public class GetUserLikedPosts {
 
     List<Post> posts = new ArrayList<>();
 
+    int a = 0;
+
+    private void log(String message) {
+        Log.e("UPostsLog", "______________");
+        Log.e("UPostsLog", message);
+    }
+
     public void get(Context context, UserLikedPostsListener listener) {
+        log("Getting User Liked Posts From Database...");
         firestore.collection("users").whereEqualTo("userUid", user.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                Log.e("GetUserLikePosts", "Znaleziono użytkownika");
-                DocumentSnapshot doc = queryDocumentSnapshots.getDocuments().get(0);
-                doc.getReference().collection("likedPosts").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                log("User Finded!");
+                DocumentSnapshot userDocument = queryDocumentSnapshots.getDocuments().get(0);
+
+                userDocument.getReference().collection("likedPosts").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots1) {
-                        Log.e("GetUserLikePosts", "Znaleziono polubione posty użytkownika");
-                        for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots1.getDocuments()) {
-                            Toast.makeText(context, "Post", Toast.LENGTH_LONG).show();
-                            firestore.collection("posts").whereEqualTo("postUid", documentSnapshot.getString("postUid")).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        log("Finded Liked Posts with size " + queryDocumentSnapshots.getDocuments().size());
+                        for (DocumentSnapshot likedPostsUserDocument : queryDocumentSnapshots.getDocuments()) {
+                            log("Getting post data for post with UID " + likedPostsUserDocument.getString("postUid"));
+                            firestore.collection("posts").document(likedPostsUserDocument.getString("postUid")).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                 @Override
-                                public void onSuccess(QuerySnapshot queryDocumentSnapshots2) {
-                                    Log.e("GetUserLikePosts", "Dodano Post");
-                                    for (DocumentSnapshot document : queryDocumentSnapshots2.getDocuments()) {
-                                        Post post = new Post();
-                                        post.setUserUid(document.get("userUid").toString());
-                                        post.setPostUid(document.get("postUid").toString());
-                                        post.setPostDescription(document.get("postDescription").toString());
-                                        post.setPostImage(document.get("postImage").toString());
-                                        post.setCreatedAt(document.get("createdAt").toString());
-                                        post.setShowsCelebrity(document.get("showsCelebrity").toString());
-                                        post.setAllowComments(Boolean.parseBoolean(document.get("allowComments").toString()));
-                                        post.setUserLikedPost(false);
-                                        post.setPostDocumentUid(document.getId());
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    log("Finded Post with UID " + documentSnapshot.getString("postUid"));
+                                    Post post = new Post();
+                                    post.setUserUid(documentSnapshot.getString("userUid"));
+                                    post.setPostUid(documentSnapshot.getString("postUid"));
+                                    post.setPostDocumentUid(documentSnapshot.getId());
+                                    post.setPostDescription(documentSnapshot.getString("postDescription"));
+                                    post.setPostImage(documentSnapshot.getString("postImage"));
+                                    post.setCreatedAt(documentSnapshot.getString("createdAt"));
+                                    post.setShowsCelebrity(documentSnapshot.getString("showsCelebrity"));
+                                    post.setAllowComments(Boolean.parseBoolean(documentSnapshot.getString("allowComments")));
+                                    post.setUserLikedPost(true);
 
-                                        List<String> likesList = new ArrayList<>();
-                                        // Get Likes
-                                        firestore.collection("posts").document(document.getId()).collection("likes").get().addOnSuccessListener(queryDocumentSnapshots3 -> {
-                                            for (DocumentSnapshot docLikes : queryDocumentSnapshots3.getDocuments()) {
-                                                likesList.add(docLikes.getString("userUid"));
-                                                if (docLikes.getString("userUid").contentEquals(user.getUid())) {
-                                                    post.setUserLikedPost(true);
-                                                }
+                                    List<String> likesList = new ArrayList<>();
+                                    firestore.collection("posts").document(documentSnapshot.getId()).collection("likes").get().addOnSuccessListener(queryDocumentSnapshots1 -> {
+                                        for (DocumentSnapshot docLikes : queryDocumentSnapshots1.getDocuments()) {
+                                            likesList.add(docLikes.getString("userUid"));
+                                            if (docLikes.getString("userUid").contentEquals(user.getUid())) {
+                                                post.setUserLikedPost(true);
                                             }
-                                        });
-                                        post.setPostLikes(likesList);
-                                        posts.add(post);
-                                    }
-                                    Log.e("GetUserLikePosts", "Loading " + posts.size());
+                                        }
+                                    });
+                                    post.setPostLikes(likesList);
+                                    log("Post with description | " + post.getPostDescription() + " | finded!");
+                                    posts.add(post);
                                     listener.OnLoaded(posts);
-
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    listener.OnError(e.getMessage());
+                                    log("Błąd 82: " + e.getMessage());
+                                    listener.OnError("Nie udało się uzyskać szczegółów posta: " + e.getMessage());
                                 }
                             });
                         }
+                        log("listener invoked");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        listener.OnError("Nie udało się przechwycić polubionych postów użytkownika:\n" + e.getMessage());
                     }
                 });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                listener.OnError("Nie znaleziono użytkownika:\n" + e.getMessage());
             }
         });
     }

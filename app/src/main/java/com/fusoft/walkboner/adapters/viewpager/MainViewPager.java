@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 
-import com.fusoft.walkboner.CelebritiesFragment;
-import com.fusoft.walkboner.HomeFragment;
+import com.fusoft.walkboner.fragments.CelebritiesFragment;
+import com.fusoft.walkboner.fragments.HomeFragment;
 
 import de.dlyt.yanndroid.oneui.sesl.viewpager2.adapter.FragmentStateAdapter;
 
