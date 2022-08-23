@@ -34,6 +34,7 @@ Zwykle błędy są raportowane automatycznie - jednak aby się to stało, po wys
 # Pomoc w usprawnianiu aplikacji
 
 Jeśli znasz poprawkę dla błedu w zakładce [Issues](https://github.com/WBApplication/WalkBoner/issues) chętnie jej się przyjrzymy. W przypadku pomysłu na nową funkcję, utwórz wątek w zakładce [Issues](https://github.com/WBApplication/WalkBoner/issues) i opisz działanie funkcji.
+Aktualnie aplikacją zawiera sporo tzw. Memory Leaks.
 
 # Kompilacja
 
