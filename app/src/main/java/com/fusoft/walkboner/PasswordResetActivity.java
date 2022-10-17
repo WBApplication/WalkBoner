@@ -43,7 +43,7 @@ public class PasswordResetActivity extends AppCompatActivity {
         newPasswordEdittext = (EditText) findViewById(R.id.new_password_edittext);
         confirmNewPasswordEdittext = (EditText) findViewById(R.id.confirm_new_password_edittext);
         changeButton = (MaterialButton) findViewById(R.id.change_button);
-        changeButton.setEnabled(false);
+        changeButton.setEnabled(true);
 
         loading = new ProgressDialog(PasswordResetActivity.this);
         loading.setIndeterminate(true);
@@ -61,32 +61,38 @@ public class PasswordResetActivity extends AppCompatActivity {
             loading.show();
 
             if (Encrypt.EncryptSHAPassword(currentPasswordEdittext.getText().toString()).contentEquals(new Settings(PasswordResetActivity.this).getPasswordHashed())) {
-                FirebaseAuth auth = FirebaseAuth.getInstance();
-                FirebaseUser user = auth.getCurrentUser();
-                user.updatePassword(newPasswordEdittext.getText().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        loading.dismiss();
-                        new SuccessDialog().MakeDialog(PasswordResetActivity.this, "Twoje hasło zostało zmienone!", "Zamknij", new SuccessDialog.InfoDialogInterfaceListener() {
-                            @Override
-                            public void OnDismissed() {
-                                finish();
-                            }
-                        });
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        loading.dismiss();
-                        new ErrorDialog().ErrorDialog(PasswordResetActivity.this, "Wystąpił błąd:\n" + e.getMessage(), new ErrorDialog.DialogInterfaceListener() {
-                            @Override
-                            public void OnDismissed() {
-                                finish();
-                            }
-                        });
-                    }
-                });
+                if (validate()) {
+                    FirebaseAuth auth = FirebaseAuth.getInstance();
+                    FirebaseUser user = auth.getCurrentUser();
+                    user.updatePassword(newPasswordEdittext.getText().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            loading.dismiss();
+                            new SuccessDialog().MakeDialog(PasswordResetActivity.this, "Twoje hasło zostało zmienone!", "Zamknij", new SuccessDialog.InfoDialogInterfaceListener() {
+                                @Override
+                                public void OnDismissed() {
+                                    finish();
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            loading.dismiss();
+                            new ErrorDialog().ErrorDialog(PasswordResetActivity.this, "Wystąpił błąd:\n" + e.getMessage(), new ErrorDialog.DialogInterfaceListener() {
+                                @Override
+                                public void OnDismissed() {
+                                    finish();
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    loading.dismiss();
+                    new ErrorDialog().SimpleErrorDialog(PasswordResetActivity.this, "Coś poszło nie tak:\n- Któreś z pól jest puste,\n- Powtórzone hasło nie zgadza się z nowym hasłem");
+                }
             } else {
+                loading.dismiss();
                 new ErrorDialog().SimpleErrorDialog(PasswordResetActivity.this, "Nieprawidłowe, aktualne hasło!");
             }
         });

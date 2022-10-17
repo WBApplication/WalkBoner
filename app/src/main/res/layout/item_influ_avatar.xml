@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<de.dlyt.yanndroid.oneui.widget.RoundLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/oui_drawer_background"
+    android:padding="12dp"
+    android:layout_margin="4dp"
+    android:orientation="vertical">
+
+    <com.fusoft.walkboner.views.Avatar
+        android:layout_width="match_parent"
+        android:layout_height="120dp"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textColor="@color/sesl_primary_text"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="Influ Name"/>
+</de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>

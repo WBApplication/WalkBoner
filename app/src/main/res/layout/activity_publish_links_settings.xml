@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<de.dlyt.yanndroid.oneui.layout.ToolbarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:expandable="false"
+    app:navigationIcon="@drawable/ic_oui_back"
+    app:title="Upubliczniaj Odnośniki">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="42dp"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+        <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/oui_drawer_background"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/publish_links_state_text"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Wyłączone"
+                android:textColor="@color/sesl_primary_text"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <de.dlyt.yanndroid.oneui.widget.Switch
+                android:id="@+id/publish_links_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/create_links_copy_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Utwórz kopię"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jeśli opcja jest wyłączona, linki będą przechowywane na twoim urządzeniu, nie będzie możliwości dodawania miniatur oraz jeśli odinstalujesz aplikację bez stworzenia kopii, utracisz wszystkie zapisane odnośniki.\n Jeśli opcja jest włączona, odnośniki będą umieszczane w bazie danych jako publiczne i inni użytkownicy będą mogli na nie reagować - będziesz miał również opcję do publikacji linków anonimowo bez podawania twojej nazwy użytkownika lub avataru.\n\nJeśli dodałeś już niepubliczne odnośniki, włączenie tej opcji usunie je."/>
+    </LinearLayout>
+</de.dlyt.yanndroid.oneui.layout.ToolbarLayout>

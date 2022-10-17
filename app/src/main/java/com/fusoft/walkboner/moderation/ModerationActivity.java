@@ -27,6 +27,17 @@ public class ModerationActivity extends AppCompatActivity {
     private OptionButton adminListButton;
     private OptionButton modsListButton;
 
+    private GetInfluencersToModerateCount moderateCount;
+    private GetReportsToModerateCount reportsCount;
+
+    @Override
+    protected void onDestroy() {
+        moderateCount = null;
+        reportsCount = null;
+
+        super.onDestroy();
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +48,9 @@ public class ModerationActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        moderateCount = new GetInfluencersToModerateCount();
+        reportsCount = new GetReportsToModerateCount();
+
         chatModButton = (OptionButton) findViewById(R.id.chat_mod_button);
         banUserButton = (OptionButton) findViewById(R.id.ban_user_button);
         unbanUserButton = (OptionButton) findViewById(R.id.unban_user_button);
@@ -51,7 +65,7 @@ public class ModerationActivity extends AppCompatActivity {
     }
 
     private void setup() {
-        new GetInfluencersToModerateCount().GetAmount(new CounterListener() {
+        moderateCount.GetAmount(new CounterListener() {
             @Override
             public void OnResponse(int amountOfInfluencersToModerate) {
                 if (amountOfInfluencersToModerate != 0) {
@@ -68,7 +82,8 @@ public class ModerationActivity extends AppCompatActivity {
 
             }
         });
-        new GetReportsToModerateCount().GetAmount(new CounterListener() {
+
+        reportsCount.GetAmount(new CounterListener() {
             @Override
             public void OnResponse(int amountOfInfluencersToModerate) {
                 if (amountOfInfluencersToModerate != 0) {

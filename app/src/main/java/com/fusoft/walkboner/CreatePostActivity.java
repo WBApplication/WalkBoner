@@ -78,27 +78,7 @@ public class CreatePostActivity extends AppCompatActivity {
 
         firestore = FirebaseFirestore.getInstance();
 
-        authentication = new Authentication(new AuthenticationListener() {
-            @Override
-            public void UserAlreadyLoggedIn(boolean pinRequired) {
-
-            }
-
-            @Override
-            public void UserRequiredToBeLogged() {
-
-            }
-
-            @Override
-            public void OnLogin(boolean isSuccess, boolean pinRequired, @Nullable String reason) {
-
-            }
-
-            @Override
-            public void OnRegister(boolean isSuccess, @Nullable String reason) {
-
-            }
-        });
+        authentication = new Authentication(null);
 
         authentication.getUserData(new UserInfoListener() {
             @Override

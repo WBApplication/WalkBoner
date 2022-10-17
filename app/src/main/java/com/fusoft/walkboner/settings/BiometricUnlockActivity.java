@@ -1,11 +1,11 @@
-package com.fusoft.walkboner;
+package com.fusoft.walkboner.settings;
 
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.fusoft.walkboner.settings.Settings;
+import com.fusoft.walkboner.R;
 import com.google.android.material.textview.MaterialTextView;
 
 import de.dlyt.yanndroid.oneui.widget.Switch;

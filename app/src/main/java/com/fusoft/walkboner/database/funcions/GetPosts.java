@@ -24,6 +24,10 @@ public class GetPosts {
 
         List<Post> posts = new ArrayList<>();
 
+        Post postHeader = new Post();
+        postHeader.setHeader(true);
+        posts.add(postHeader);
+
         firestore.collection("posts").orderBy("createdAt", Query.Direction.DESCENDING).get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
                 Post post = new Post();
@@ -36,6 +40,7 @@ public class GetPosts {
                 post.setAllowComments(Boolean.parseBoolean(document.get("allowComments").toString()));
                 post.setUserLikedPost(false);
                 post.setPostDocumentUid(document.getId());
+                post.setHeader(false);
 
                 List<String> likesList = new ArrayList<>();
                 // Get Likes

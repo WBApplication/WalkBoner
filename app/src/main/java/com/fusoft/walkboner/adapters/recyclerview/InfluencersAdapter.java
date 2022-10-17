@@ -90,6 +90,10 @@ public class InfluencersAdapter extends RecyclerView.Adapter<InfluencersAdapter.
 
             }
         });
+
+        holder.itemView.setOnClickListener(v -> {
+            if (mClickListener != null) mClickListener.onItemClick(influencer, position);
+        });
     }
 
     // total number of rows
@@ -109,7 +113,7 @@ public class InfluencersAdapter extends RecyclerView.Adapter<InfluencersAdapter.
 
 
     // stores and recycles views as they are scrolled off screen
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView influencerImage;
         MaterialTextView influencerNickText;
 
@@ -117,12 +121,6 @@ public class InfluencersAdapter extends RecyclerView.Adapter<InfluencersAdapter.
             super(itemView);
             influencerImage = itemView.findViewById(R.id.influencer_image);
             influencerNickText = itemView.findViewById(R.id.influencer_nick_text);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
         }
     }
 
@@ -132,12 +130,12 @@ public class InfluencersAdapter extends RecyclerView.Adapter<InfluencersAdapter.
     }
 
     // allows clicks events to be caught
-    void setClickListener(ItemClickListener itemClickListener) {
+    public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(Influencer influencer, int position);
     }
 }

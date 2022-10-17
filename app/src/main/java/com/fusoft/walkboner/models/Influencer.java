@@ -14,9 +14,9 @@ public class Influencer {
     private String influencerNickName;
     private String influencerDescription;
     private String influencerAvatar;
-    private String influencerInstagramLink;
-    private String influencerYouTubeLink;
-    private String influencerTikTokLink;
+    private String influencerInstagramLink = "";
+    private String influencerYouTubeLink = "";
+    private String influencerTikTokLink = "";
     private String influencerModeratorUid;
     private boolean isVerified;
     private boolean isPremium;

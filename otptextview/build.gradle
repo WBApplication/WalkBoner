@@ -3,13 +3,10 @@ group = 'com.github.aabhasjindal'
 
 android {
     compileSdkVersion 32
-    buildToolsVersion '28.0.3'
 
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 32
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

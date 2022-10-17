@@ -65,6 +65,14 @@ public class AddInfluencerActivity extends AppCompatActivity {
     private ProgressDialog loading;
 
     @Override
+    protected void onDestroy() {
+        firestore = null;
+        loading = null;
+
+        super.onDestroy();
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_influencer);
@@ -96,6 +104,24 @@ public class AddInfluencerActivity extends AppCompatActivity {
         loading.setCancelable(false);
         loading.setCanceledOnTouchOutside(false);
         loading.setProgressStyle(ProgressDialog.STYLE_CIRCLE);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (!uploadedImagePath.isEmpty()) {
+            DeleteImage.Delete(AddInfluencerActivity.this, uploadedImagePath, new DeleteImage.DeleteTask() {
+                @Override
+                public void OnDeleted() {
+                    finish();
+                }
+
+                @Override
+                public void OnError(String reason) {
+                    finish();
+                }
+            });
+        }
     }
 
     private void setup() {

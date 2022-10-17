@@ -12,6 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 
 public class LikePost {
@@ -20,8 +21,11 @@ public class LikePost {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
 
+        long timeStamp = new Timestamp(System.currentTimeMillis()).getTime();
+
         HashMap<String, Object> map = new HashMap<>();
         map.put("userUid", user.getUid());
+        map.put("likeAt", timeStamp);
         firestore.collection("posts").document(postUID).collection("likes").add(map);
         firestore.collection("users").whereEqualTo("userUid", user.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
@@ -30,6 +34,7 @@ public class LikePost {
 
                 HashMap<String, Object> mapAddPostToUserLiked = new HashMap<>();
                 mapAddPostToUserLiked.put("postUid", postUID);
+                mapAddPostToUserLiked.put("likeAt", timeStamp);
                 documentSnapshot.getReference().collection("likedPosts").add(mapAddPostToUserLiked);
             }
         });

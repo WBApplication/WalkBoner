@@ -8,11 +8,13 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
 
     <application
+        android:name=".WalkBoner"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -23,34 +25,100 @@
         android:supportsRtl="true"
         android:theme="@style/OneUI4Theme"
         tools:targetApi="31">
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
         <activity
             android:name=".SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AuthActivity" />
-        <activity android:name=".PermissionsActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".CreatePostActivity" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".moderation.ModerationActivity" />
-        <activity android:name=".moderation.BanUserActivity" />
-        <activity android:name=".moderation.ModChatActivity" />
-        <activity android:name=".PremiumActivity" />
-        <activity android:name=".PinSetupActivity" />
-        <activity android:name=".UnlockAppActivity" />
+        <activity
+            android:name=".AuthActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PermissionsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CreatePostActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".moderation.ModerationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".moderation.BanUserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".moderation.ModChatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PremiumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".settings.PinSetupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UnlockAppActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".FullPhotoViewerActivity" />
-        <activity android:name=".AddInfluencerActivity" />
-        <activity android:name=".AppDebugActivity" />
-        <activity android:name=".UserProfileActivity" />
-        <activity android:name=".PasswordResetActivity" />
-        <activity android:name=".BiometricUnlockActivity" />
-        <activity android:name=".moderation.AcceptInfluencersProfilesActivity" />
+        <activity
+            android:name=".AddInfluencerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AppDebugActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UserProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PasswordResetActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".settings.BiometricUnlockActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".moderation.AcceptInfluencersProfilesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OpenSourceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UpdateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".settings.PublishLinksActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PersonAlbumsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CreateAlbumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MediaViewerActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

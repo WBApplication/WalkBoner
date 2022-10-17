@@ -36,35 +36,45 @@
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_add_influencer.xml" value="0.25" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_auth.xml" value="0.33" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_ban_user.xml" value="0.29713552800342025" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_beta.xml" value="0.16" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_create_post.xml" value="0.33" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_debug_app.xml" value="0.297990594271056" />
-        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_full_photo_viewer.xml" value="0.297990594271056" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_full_photo_viewer.xml" value="0.16" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_main.xml" value="0.36302083333333335" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_mod_chat.xml" value="0.17" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_moderation.xml" value="0.297990594271056" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_open_source.xml" value="0.21" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_password_reset.xml" value="0.297990594271056" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_permissions.xml" value="0.33" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_pin_setup.xml" value="0.297990594271056" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_premium.xml" value="0.33" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_profile.xml" value="0.297990594271056" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_recovery_pin_questions_setup.xml" value="0.297990594271056" />
-        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_settings.xml" value="0.297990594271056" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_settings.xml" value="0.25" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_showcase.xml" value="0.31476449275362317" />
-        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_splash.xml" value="0.36302083333333335" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_splash.xml" value="0.14" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_unlock_app.xml" value="0.297990594271056" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_update.xml" value="0.2" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/activity_user_profile.xml" value="0.18" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/bottom_sheet_premium_faq.xml" value="0.33" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/bottom_sheet_showcase.xml" value="0.18" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/content_drawer.xml" value="0.3619791666666667" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/dialog_update.xml" value="0.1675929884566054" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/fragment_celebrities.xml" value="0.297990594271056" />
-        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/fragment_home.xml" value="0.297990594271056" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/fragment_home.xml" value="0.22" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/item_header.xml" value="0.1675929884566054" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/item_influ_avatar.xml" value="0.5" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/item_influencer.xml" value="0.16" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/item_message_in.xml" value="0.297990594271056" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/item_message_out.xml" value="0.29713552800342025" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/item_player.xml" value="0.15604959384352288" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/item_popular_post.xml" value="0.297990594271056" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/item_post.xml" value="0.33" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/item_post_renew.xml" value="0.1" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/view_player.xml" value="0.15604959384352288" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/layout/view_player_controller.xml" value="0.2" />
         <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/menu/post_popup_menu.xml" value="0.297990594271056" />
+        <entry key="..\:/Users/hesam/AndroidStudioProjects/WalkBoner/app/src/main/res/xml/provider_paths.xml" value="0.1" />
       </map>
     </option>
   </component>

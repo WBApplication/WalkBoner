@@ -12,6 +12,10 @@ import com.fusoft.walkboner.auth.UserInfoListener;
 import com.fusoft.walkboner.models.User;
 import com.fusoft.walkboner.moderation.ModerationActivity;
 import com.fusoft.walkboner.security.BiometricUnlock;
+import com.fusoft.walkboner.settings.BiometricUnlockActivity;
+import com.fusoft.walkboner.settings.PinSetupActivity;
+import com.fusoft.walkboner.settings.PublishLinksActivity;
+import com.fusoft.walkboner.settings.Settings;
 import com.fusoft.walkboner.views.dialogs.InfoDialog;
 
 import de.dlyt.yanndroid.oneui.layout.ToolbarLayout;
@@ -22,8 +26,21 @@ public class SettingsActivity extends AppCompatActivity {
     private ToolbarLayout settingsToolbar;
     private RoundLinearLayout pinLockButton;
     private RoundLinearLayout passwordChangeButton, moderationButton;
-    private Switch discreteSwitch;
+    private Switch discreteSwitch, snapPostsSwitch;
     private RoundLinearLayout biometricLockButton;
+    private RoundLinearLayout openSourceButton;
+    private RoundLinearLayout publishLinksButton;
+
+    private Authentication authentication;
+    private Settings settings;
+
+    @Override
+    protected void onDestroy() {
+        authentication = null;
+        settings = null;
+
+        super.onDestroy();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,16 +52,24 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        settings = new Settings(SettingsActivity.this);
+
         settingsToolbar = (ToolbarLayout) findViewById(R.id.settings_toolbar);
         pinLockButton = (RoundLinearLayout) findViewById(R.id.pin_lock_button);
         passwordChangeButton = (RoundLinearLayout) findViewById(R.id.password_change_button);
         discreteSwitch = (Switch) findViewById(R.id.discrete_switch);
+        publishLinksButton = findViewById(R.id.publish_links_button);
+
+        snapPostsSwitch = findViewById(R.id.snap_posts_switch);
+        snapPostsSwitch.setChecked(settings.shouldSnapPosts());
+
         moderationButton = findViewById(R.id.moderation_button);
         biometricLockButton = (RoundLinearLayout) findViewById(R.id.biometric_lock_button);
+        openSourceButton = (RoundLinearLayout) findViewById(R.id.open_source_button);
     }
 
     private void setup() {
-        Authentication authentication = new Authentication(null);
+        authentication = new Authentication(null);
 
         authentication.getUserData(new UserInfoListener() {
             @Override
@@ -70,6 +95,10 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        snapPostsSwitch.setOnClickListener(v -> {
+            settings.toggleSnapPosts(snapPostsSwitch.isChecked());
+        });
+
         pinLockButton.setOnClickListener(view -> {
             startActivity(new Intent(SettingsActivity.this, PinSetupActivity.class));
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
@@ -92,7 +121,7 @@ public class SettingsActivity extends AppCompatActivity {
                         startActivity(new Intent(SettingsActivity.this, BiometricUnlockActivity.class));
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     } else {
-                        new InfoDialog().MakeDialog(SettingsActivity.this, response, "Zamknij", null, new InfoDialog.InfoDialogInterfaceListener(){
+                        new InfoDialog().MakeDialog(SettingsActivity.this, response, "Zamknij", null, new InfoDialog.InfoDialogInterfaceListener() {
                             @Override
                             public void OnPositiveButtonClicked() {
 
@@ -106,6 +135,16 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                 }
             });
+        });
+
+        openSourceButton.setOnClickListener(v -> {
+            startActivity(new Intent(SettingsActivity.this, OpenSourceActivity.class));
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        });
+
+        publishLinksButton.setOnClickListener(v -> {
+            startActivity(new Intent(SettingsActivity.this, PublishLinksActivity.class));
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });
     }
 }

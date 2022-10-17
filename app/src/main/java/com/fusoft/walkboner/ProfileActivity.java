@@ -36,6 +36,13 @@ public class ProfileActivity extends AppCompatActivity {
     private ProgressDialog loading;
 
     @Override
+    protected void onDestroy() {
+        loading = null;
+
+        super.onDestroy();
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);

@@ -40,6 +40,14 @@
             android:layout_marginVertical="4dp"
             app:icon="@drawable/ic_oui3_crown"
             app:text="Influencerki" />
+
+        <de.dlyt.yanndroid.oneui.widget.OptionButton
+            android:id="@+id/saved_links_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            app:icon="@drawable/ic_oui3_save"
+            app:text="Odnośniki" />
     </de.dlyt.yanndroid.oneui.view.OptionGroup>
 
     <View

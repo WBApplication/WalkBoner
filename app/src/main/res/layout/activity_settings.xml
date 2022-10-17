@@ -150,6 +150,55 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="14dp"
+                android:text="Odnośniki"
+                android:textStyle="bold"
+                android:textColor="@color/primary_color"
+                android:textSize="18sp"/>
+
+            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+                android:id="@+id/publish_links_button"
+                android:background="@drawable/oui_drawer_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:padding="16dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Upubliczniaj Odnośniki"
+                        android:textColor="@color/sesl_primary_text"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginTop="4dp"
+                        android:text="Upubliczniaj dodawane linki."
+                        android:textSize="12sp"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_oui_back"
+                    android:rotation="180"/>
+            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="14dp"
                 android:text="Wyświetlanie"
                 android:textStyle="bold"
                 android:textColor="@color/primary_color"
@@ -194,6 +243,45 @@
             </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
 
             <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+                android:background="@drawable/oui_drawer_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:padding="16dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Przyciągaj Posty"
+                        android:textColor="@color/sesl_primary_text"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginTop="4dp"
+                        android:text="Przyciągaj posty do góry ekranu"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+
+                <de.dlyt.yanndroid.oneui.widget.Switch
+                    android:id="@+id/snap_posts_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:checked="true"/>
+            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+
+            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
                 android:id="@+id/moderation_button"
                 android:background="@drawable/oui_drawer_background"
                 android:layout_width="match_parent"
@@ -224,6 +312,47 @@
                         android:layout_weight="1"
                         android:layout_marginTop="4dp"
                         android:text="Narzędzia dla moderacji"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_oui_back"
+                    android:rotation="180"/>
+            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+
+            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+                android:id="@+id/open_source_button"
+                android:background="@drawable/oui_drawer_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:padding="16dp"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Open Source"
+                        android:textColor="@color/sesl_primary_text"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginTop="4dp"
+                        android:text="Biblioteki Open Source"
                         android:textSize="12sp"/>
                 </LinearLayout>
 

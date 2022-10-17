@@ -13,6 +13,7 @@ public class Post {
     private boolean allowComments;
     private boolean userLikedPost;
     private List<String> postLikes;
+    private boolean isHeader;
 
     public String getUserUid() {
         return userUid;
@@ -92,5 +93,13 @@ public class Post {
 
     public void setPostLikes(List<String> postLikes) {
         this.postLikes = postLikes;
+    }
+
+    public boolean isHeader() {
+        return isHeader;
+    }
+
+    public void setHeader(boolean header) {
+        isHeader = header;
     }
 }

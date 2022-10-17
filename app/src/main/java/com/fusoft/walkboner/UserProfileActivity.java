@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.fusoft.walkboner.adapters.recyclerview.PostsAdapter;
+import com.fusoft.walkboner.adapters.recyclerview.ProfilePostsAdapter;
 import com.fusoft.walkboner.auth.Authentication;
 import com.fusoft.walkboner.auth.UserInfoListener;
 import com.fusoft.walkboner.database.ImageUploadListener;
@@ -64,6 +65,23 @@ public class UserProfileActivity extends AppCompatActivity {
     private ProgressDialog loading;
 
     private Authentication authentication;
+    private FirebaseFirestore firestore;
+    private GetUserLikedPosts likedPostsGetter;
+    private GetUserPosts userPostsGetter;
+
+    private ProfilePostsAdapter adapter;
+
+    @Override
+    protected void onDestroy() {
+        authentication = null;
+        loading = null;
+        firestore = null;
+        likedPostsGetter = null;
+        userPostsGetter = null;
+        adapter = null;
+
+        super.onDestroy();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,6 +93,9 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        likedPostsGetter = new GetUserLikedPosts();
+        userPostsGetter = new GetUserPosts();
+
         profileDetailsLoadingLinear = (LinearLayout) findViewById(R.id.profile_details_loading_linear);
         profileDetailsLinear = (LinearLayout) findViewById(R.id.profile_details_linear);
         userNameText = (MaterialTextView) findViewById(R.id.user_name_text);
@@ -177,7 +198,7 @@ public class UserProfileActivity extends AppCompatActivity {
                     new UploadImage(UserProfileActivity.this, StorageDirectory.AVATARS_PATH, result.getData().getData(), new ImageUploadListener() {
                         @Override
                         public void OnImageUploaded(String imageUrl) {
-                            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+                            firestore = FirebaseFirestore.getInstance();
                             firestore.collection("users").whereEqualTo("userUid", authentication.getCurrentUserUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                 @Override
                                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -224,12 +245,12 @@ public class UserProfileActivity extends AppCompatActivity {
         changeContentLoadingState(true);
         switch (id) {
             case LIKED_POSTS:
-                new GetUserLikedPosts().get(UserProfileActivity.this, new GetUserLikedPosts.UserLikedPostsListener() {
+                likedPostsGetter.get(UserProfileActivity.this, new GetUserLikedPosts.UserLikedPostsListener() {
                     @Override
                     public void OnLoaded(List<Post> posts) {
                         changeContentLoadingState(false);
-                        PostsAdapter adapter = new PostsAdapter(UserProfileActivity.this, posts);
-                        adapter.setHeartClickListener(new PostsAdapter.HeartClickListener() {
+                        adapter = new ProfilePostsAdapter(UserProfileActivity.this, posts);
+                        adapter.setHeartClickListener(new ProfilePostsAdapter.HeartClickListener() {
                             @Override
                             public void onHeartClick(int position) {
                                 adapter.removeFromList(position);
@@ -245,11 +266,12 @@ public class UserProfileActivity extends AppCompatActivity {
                 });
                 break;
             case YOUR_POSTS:
-                new GetUserPosts().get(new GetPosts.PostsListener() {
+
+                userPostsGetter.get(new GetPosts.PostsListener() {
                     @Override
                     public void OnLoaded(List<Post> posts) {
                         changeContentLoadingState(false);
-                        PostsAdapter adapter = new PostsAdapter(UserProfileActivity.this, posts);
+                        adapter = new ProfilePostsAdapter(UserProfileActivity.this, posts);
                         profileRecyclerView.setAdapter(adapter);
                     }
 

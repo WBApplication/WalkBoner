@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<de.dlyt.yanndroid.oneui.layout.ToolbarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:expandable="false"
+    app:title="BETA">
+
+    <de.dlyt.yanndroid.oneui.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Jak oceniasz aplikacje?"
+                android:textColor="@color/sesl_primary_text" />
+
+            <RatingBar
+                android:id="@+id/rating_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginVertical="8dp"
+                android:numStars="5" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:text="Opisz nam swoje wrażenia z używania aplikacji"
+                android:textColor="@color/sesl_primary_text" />
+
+            <EditText
+                android:id="@+id/user_experience_edt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:gravity="top|left"
+                android:hint="Aplikacja działa poprawnie / Aplikacja działa powolnie\nAplikacja ciągle się wyłącza"
+                android:lines="5"
+                android:maxLines="5"
+                android:padding="8dp"
+                android:textSize="14sp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:text="Napisz nam swoje propozycje funkcji lub co możemy poprawić"
+                android:textColor="@color/sesl_primary_text" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="4dp"
+                android:text="Jeśli funkcja wyda nam się interesująca, dodamy ją."
+                android:textColor="@color/primary_color" />
+
+            <EditText
+                android:id="@+id/user_suggestions_edt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:gravity="top|left"
+                android:hint="Ciekawa byłaby funkcja..."
+                android:lines="5"
+                android:maxLines="5"
+                android:padding="8dp"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </de.dlyt.yanndroid.oneui.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/send_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_oui3_send"
+        app:elevation="4.0dip"
+        app:layout_location="footer" />
+</de.dlyt.yanndroid.oneui.layout.ToolbarLayout>

@@ -2,6 +2,7 @@ package com.fusoft.walkboner.fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import com.airbnb.lottie.LottieAnimationView;
 import com.fusoft.walkboner.AddInfluencerActivity;
 import com.fusoft.walkboner.MainActivity;
+import com.fusoft.walkboner.PersonAlbumsActivity;
 import com.fusoft.walkboner.R;
 import com.fusoft.walkboner.adapters.recyclerview.InfluencersAdapter;
 import com.fusoft.walkboner.database.funcions.GetInfluencers;
@@ -46,6 +48,16 @@ public class CelebritiesFragment extends Fragment {
     private MainActivity activity;
     private LinearLayout mainLinear;
     private ProgressBar loadingProgressBar;
+
+    @Override
+    public void onDestroyView() {
+        activity = null;
+        loadingProgressBar = null;
+        mRootView = null;
+        adapter = null;
+
+        super.onDestroyView();
+    }
 
     @Nullable
     @Override
@@ -105,6 +117,21 @@ public class CelebritiesFragment extends Fragment {
                 if (swipeRefreshLayout.isRefreshing()) {
                     swipeRefreshLayout.setRefreshing(false);
                 }
+
+                adapter.setClickListener(new InfluencersAdapter.ItemClickListener() {
+                    @Override
+                    public void onItemClick(Influencer influencer, int position) {
+                        Intent intent = new Intent(getActivity(), PersonAlbumsActivity.class);
+                        intent.putExtra("influencerNick", influencer.getInfluencerNickName());
+                        intent.putExtra("influencerFullName", influencer.getInfluencerFirstName() + " " + influencer.getInfluencerLastName());
+                        intent.putExtra("influencerAvatar", influencer.getInfluencerAvatar());
+                        intent.putExtra("influencerUid", influencer.getInfluencerUid());
+                        intent.putExtra("influencerYouTube", influencer.getInfluencerYouTubeLink());
+                        intent.putExtra("influencerInstagram", influencer.getInfluencerInstagramLink());
+                        startActivity(intent);
+                        intent = null;
+                    }
+                });
             }
 
             @Override

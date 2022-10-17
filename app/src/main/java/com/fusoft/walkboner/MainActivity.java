@@ -9,6 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.fusoft.walkboner.adapters.viewpager.MainViewPager;
 import com.fusoft.walkboner.auth.Authentication;
 import com.fusoft.walkboner.auth.AuthenticationListener;
+import com.fusoft.walkboner.models.SavedLink;
+import com.fusoft.walkboner.offline.LinksManager;
+import com.fusoft.walkboner.settings.Settings;
+import com.fusoft.walkboner.utils.AppUpdate;
+import com.fusoft.walkboner.views.dialogs.CreateLinkDialog;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.unity3d.ads.IUnityAdsInitializationListener;
 
 import de.dlyt.yanndroid.oneui.layout.DrawerLayout;
@@ -23,12 +29,23 @@ public class MainActivity extends AppCompatActivity {
     private OptionButton profileButton;
     private OptionButton homeButton;
     private OptionButton celebrityButton;
-    private OptionButton logoutButton, premiumButton;
+    private OptionButton logoutButton, premiumButton, savedLinksButton;
     private OptionButton debugButton;
+    private ExtendedFloatingActionButton createFab;
 
     private Authentication auth;
+    private Settings settings;
 
     private MainViewPager adapter;
+
+    @Override
+    protected void onDestroy() {
+        auth = null;
+        settings = null;
+        adapter = null;
+
+        super.onDestroy();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,19 +60,23 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (viewPager.getCurrentItem() == 0) {
             finishAndRemoveTask();
-        } else if (viewPager.getCurrentItem() == 1) {
+        } else if (viewPager.getCurrentItem() > 0) {
             changePage(0);
         }
     }
 
     private void initView() {
-        mainActivityToolbar = (DrawerLayout) findViewById(R.id.mainActivityToolbar);
-        viewPager = (ViewPager2) findViewById(R.id.viewPager);
-        profileButton = (OptionButton) findViewById(R.id.profile_button);
-        homeButton = (OptionButton) findViewById(R.id.home_button);
-        celebrityButton = (OptionButton) findViewById(R.id.celebrity_button);
-        logoutButton = (OptionButton) findViewById(R.id.logout_button);
+        settings = new Settings(MainActivity.this);
+
+        mainActivityToolbar = findViewById(R.id.mainActivityToolbar);
+        viewPager = findViewById(R.id.viewPager);
+        profileButton = findViewById(R.id.profile_button);
+        homeButton = findViewById(R.id.home_button);
+        celebrityButton = findViewById(R.id.celebrity_button);
+        logoutButton = findViewById(R.id.logout_button);
         premiumButton = findViewById(R.id.premium_button);
+        createFab = findViewById(R.id.create_fab);
+        savedLinksButton = findViewById(R.id.saved_links_button);
 
         adapter = new MainViewPager(getSupportFragmentManager(), getLifecycle());
         viewPager.setAdapter(adapter);
@@ -71,32 +92,27 @@ public class MainActivity extends AppCompatActivity {
             changePage(1);
         });
 
+        savedLinksButton.setOnClickListener(v -> {
+            changePage(2);
+        });
+
         premiumButton.setOnClickListener(v -> {
             openActivity(PremiumActivity.class, false);
         });
 
-        auth = new Authentication(new AuthenticationListener() {
+        AppUpdate.checkForUpdate(new AppUpdate.UpdateListener() {
             @Override
-            public void UserAlreadyLoggedIn(boolean pinRequired) {
+            public void OnUpdateAvailable(String version, String changeLog, String downloadUrl, boolean isRequired) {
 
             }
 
             @Override
-            public void UserRequiredToBeLogged() {
-                Toast.makeText(MainActivity.this, "Dane logowania nieaktualne.\nZaloguj się ponownie!", Toast.LENGTH_LONG).show();
-                openActivity(AuthActivity.class, true);
-            }
-
-            @Override
-            public void OnLogin(boolean isSuccess, boolean pinRequired, @Nullable String reason) {
-
-            }
-
-            @Override
-            public void OnRegister(boolean isSuccess, @Nullable String reason) {
+            public void OnError(String reason) {
 
             }
         });
+
+        auth = new Authentication(null);
         debugButton = (OptionButton) findViewById(R.id.debug_button);
     }
 
@@ -117,6 +133,44 @@ public class MainActivity extends AppCompatActivity {
         debugButton.setOnClickListener(v -> {
             openActivity(AppDebugActivity.class, false);
         });
+
+
+        LinksManager linksManager = new LinksManager(MainActivity.this);
+        createFab.setOnClickListener(v -> {
+            if (viewPager.getCurrentItem() == 0) {
+                openActivity(CreatePostActivity.class, false);
+            }
+
+            if (viewPager.getCurrentItem() == 2) {
+                CreateLinkDialog newLinkDialog = new CreateLinkDialog();
+                newLinkDialog.Show(MainActivity.this, new CreateLinkDialog.DialogListener() {
+                    @Override
+                    public void OnAddClicked(String title, String description, String url, String imageUrl) {
+                        Toast.makeText(MainActivity.this, "Added", Toast.LENGTH_SHORT).show();
+
+                        if (!settings.shouldPublishLink()) {
+                            SavedLink link = new SavedLink();
+                            link.setName(title);
+                            link.setDescription(description);
+                            link.setImageUrl("");
+                            link.setPublic(false);
+                            link.setLikes(null);
+                            link.setLinkUid("0");
+                            link.setLink(url);
+
+                            linksManager.addLink(link);
+                        }
+
+                        newLinkDialog.Dismiss();
+                    }
+
+                    @Override
+                    public void OnDismiss() {
+                        Toast.makeText(MainActivity.this, "Dismissed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 
     public void openActivity(Class toOpen, boolean finish) {
@@ -134,6 +188,8 @@ public class MainActivity extends AppCompatActivity {
                 mainActivityToolbar.setSubtitle("Strona Główna");
                 homeButton.setButtonSelected(true);
                 celebrityButton.setButtonSelected(false);
+                savedLinksButton.setButtonSelected(false);
+                toggleFab(true);
                 break;
             case 1:
                 viewPager.setCurrentItem(1, false);
@@ -141,9 +197,28 @@ public class MainActivity extends AppCompatActivity {
                 mainActivityToolbar.setExpanded(false, true);
                 homeButton.setButtonSelected(false);
                 celebrityButton.setButtonSelected(true);
+                savedLinksButton.setButtonSelected(false);
+                toggleFab(false);
+                break;
+            case 2:
+                viewPager.setCurrentItem(2, false);
+                mainActivityToolbar.setSubtitle("Odnośniki");
+                mainActivityToolbar.setExpanded(true, true);
+                homeButton.setButtonSelected(false);
+                celebrityButton.setButtonSelected(false);
+                savedLinksButton.setButtonSelected(true);
+                toggleFab(true);
                 break;
         }
 
         mainActivityToolbar.setDrawerOpen(false, true);
+    }
+
+    private void toggleFab(boolean on) {
+        if (on) {
+            createFab.show();
+        } else {
+            createFab.hide();
+        }
     }
 }

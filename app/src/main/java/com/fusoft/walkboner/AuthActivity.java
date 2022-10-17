@@ -41,6 +41,13 @@ public class AuthActivity extends AppCompatActivity {
     private Authentication auth;
 
     @Override
+    protected void onDestroy() {
+        auth = null;
+
+        super.onDestroy();
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
@@ -62,7 +69,7 @@ public class AuthActivity extends AppCompatActivity {
 
         auth = new Authentication(new AuthenticationListener() {
             @Override
-            public void UserAlreadyLoggedIn(boolean pinRequired) {
+            public void UserAlreadyLoggedIn(boolean success, boolean isBanned, boolean pinRequired, @Nullable String reason) {
 
             }
 
@@ -72,15 +79,22 @@ public class AuthActivity extends AppCompatActivity {
             }
 
             @Override
-            public void OnLogin(boolean isSuccess, boolean pinRequired, @Nullable String reason) {
+            public void OnLogin(boolean isSuccess, boolean isBanned, boolean pinRequired, @Nullable String reason) {
                 if (!isSuccess) {
                     toggleInputs(true);
                     showMessage(reason);
-                } else {
-                    new Settings(AuthActivity.this).setPasswordHashed(passwordEdt.getText().toString());
-                    redirectUser(pinRequired);
-                    /* DO NOT PLACE OTHER METHODS AFTER redirectUser(boolean) */
+                    return;
                 }
+
+                if (!isSuccess && isBanned) {
+                    toggleInputs(true);
+                    showMessage(reason);
+                    return;
+                }
+
+                new Settings(AuthActivity.this).resetSettings().setPasswordHashed(passwordEdt.getText().toString());
+                redirectUser(pinRequired);
+                /* DO NOT PLACE OTHER METHODS AFTER redirectUser(boolean) */
             }
 
             @Override
@@ -113,12 +127,19 @@ public class AuthActivity extends AppCompatActivity {
         int write_storage_result = checkSelfPermission(write_storage);
         int read_storage_result = checkSelfPermission(read_storage);
 
-
-        if (write_storage_result == PackageManager.PERMISSION_GRANTED || read_storage_result == PackageManager.PERMISSION_GRANTED) {
+        if (!isPinRequired && write_storage_result == PackageManager.PERMISSION_GRANTED || read_storage_result == PackageManager.PERMISSION_GRANTED) {
             startActivity(new Intent(AuthActivity.this, MainActivity.class));
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             finish();
-        } else {
+        }
+
+        if (isPinRequired && write_storage_result == PackageManager.PERMISSION_GRANTED || read_storage_result == PackageManager.PERMISSION_GRANTED) {
+            startActivity(new Intent(AuthActivity.this, UnlockAppActivity.class));
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            finish();
+        }
+
+        if (isPinRequired && write_storage_result == PackageManager.PERMISSION_DENIED || read_storage_result == PackageManager.PERMISSION_DENIED) {
             Intent intent = new Intent(AuthActivity.this, PermissionsActivity.class);
             intent.putExtra("isPinRequired", isPinRequired);
             startActivity(intent);
@@ -175,12 +196,14 @@ public class AuthActivity extends AppCompatActivity {
             currentModeText.setText("Logowanie");
             usernameEdt.setVisibility(View.GONE);
             doneButton.setText("Zaloguj");
+            doneButton.setEnabled(true);
             changeButton.setText("Rejestracja");
         } else {
             // Change To Register
             currentModeText.setText("Rejestracja");
             usernameEdt.setVisibility(View.VISIBLE);
             doneButton.setText("Zarejestruj");
+            doneButton.setEnabled(false);
             changeButton.setText("Zaloguj");
         }
 

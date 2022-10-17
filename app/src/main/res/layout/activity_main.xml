@@ -16,4 +16,14 @@
         android:layout_height="match_parent" />
 
     <include layout="@layout/content_drawer" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/create_fab"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:icon="@drawable/ic_oui_plus"
+        app:iconTint="#FFF"
+        app:layout_location="root"
+        android:layout_margin="16dp"
+        android:layout_gravity="end|bottom"/>
 </de.dlyt.yanndroid.oneui.layout.DrawerLayout>

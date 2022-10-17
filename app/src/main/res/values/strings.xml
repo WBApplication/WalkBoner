@@ -3,7 +3,7 @@
 
     <string name="discord_invite_url">EMPTY</string>
 
-    <string name="storage_url">EMPTY</string>
+    <string name="storage_url">FIREBASE BUCKET URL</string>
 
     <string name="sesl_font_family_regular">sans-serif</string>
 </resources>

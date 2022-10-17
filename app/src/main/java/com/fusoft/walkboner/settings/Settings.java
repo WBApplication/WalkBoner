@@ -33,7 +33,43 @@ public class Settings {
         return settings.getBoolean("showCreatingPostDisclaimer", true);
     }
 
+    public void enableCreatingPostDisclaimer() {
+        settings.edit().putBoolean("showCreatingPostDisclaimer", true).apply();
+    }
+
     public void disableCreatingPostDisclaimer() {
         settings.edit().putBoolean("showCreatingPostDisclaimer", false).apply();
+    }
+
+    public boolean skipUpdate() {
+        return settings.getBoolean("skipUpdate", false);
+    }
+
+    public void skipUpdateNextTime(boolean value) {
+        settings.edit().putBoolean("skipUpdate", value).apply();
+    }
+
+    public void toggleSnapPosts(boolean on) {
+        settings.edit().putBoolean("snapPosts", on).apply();
+    }
+
+    public boolean shouldSnapPosts() {
+        return settings.getBoolean("snapPosts", true);
+    }
+
+    public void togglePublishLink(boolean on) {
+        settings.edit().putBoolean("publishPosts", on).apply();
+    }
+
+    public boolean shouldPublishLink() {
+        return settings.getBoolean("publishPosts", false);
+    }
+
+    public Settings resetSettings() {
+        toggleBiometricUnlock(false);
+        enableCreatingPostDisclaimer();
+        toggleSnapPosts(true);
+        togglePublishLink(false);
+        return Settings.this;
     }
 }

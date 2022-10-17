@@ -1,4 +1,4 @@
-package com.fusoft.walkboner;
+package com.fusoft.walkboner.settings;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.fusoft.walkboner.settings.Settings;
+import com.fusoft.walkboner.R;
 import com.fusoft.walkboner.views.dialogs.ErrorDialog;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -169,6 +169,7 @@ public class PinSetupActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void unused) {
                                         loading.dismiss();
+                                        finish();
                                     }
                                 });
                                 return;
@@ -178,6 +179,7 @@ public class PinSetupActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
                                     loading.dismiss();
+                                    finish();
                                 }
                             });
                         }

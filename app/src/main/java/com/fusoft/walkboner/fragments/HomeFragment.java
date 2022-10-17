@@ -4,66 +4,55 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.fusoft.walkboner.CreatePostActivity;
 import com.fusoft.walkboner.MainActivity;
 import com.fusoft.walkboner.R;
-import com.fusoft.walkboner.UserProfileActivity;
-import com.fusoft.walkboner.adapters.recyclerview.PopularPostsAdapter;
 import com.fusoft.walkboner.adapters.recyclerview.PostsAdapter;
 import com.fusoft.walkboner.auth.Authentication;
 import com.fusoft.walkboner.auth.UserInfoListener;
-import com.fusoft.walkboner.database.funcions.GetPopularPosts;
 import com.fusoft.walkboner.database.funcions.GetPosts;
+import com.fusoft.walkboner.utils.StartSnap;
 import com.fusoft.walkboner.models.Post;
 import com.fusoft.walkboner.models.User;
 import com.fusoft.walkboner.settings.Settings;
-import com.fusoft.walkboner.utils.AnimateChanges;
-import com.fusoft.walkboner.views.dialogs.DisclaimerDialog;
-import com.fusoft.walkboner.views.dialogs.InfoDialog;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textview.MaterialTextView;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.List;
 
-import de.dlyt.yanndroid.oneui.sesl.recyclerview.GridLayoutManager;
 import de.dlyt.yanndroid.oneui.sesl.recyclerview.LinearLayoutManager;
-import de.dlyt.yanndroid.oneui.sesl.recyclerview.PagerSnapHelper;
 import de.dlyt.yanndroid.oneui.sesl.recyclerview.SnapHelper;
 import de.dlyt.yanndroid.oneui.view.RecyclerView;
-import de.dlyt.yanndroid.oneui.widget.RoundLinearLayout;
 import de.dlyt.yanndroid.oneui.widget.SwipeRefreshLayout;
 
 public class HomeFragment extends Fragment {
 
     View mRootView;
 
-    private MaterialButton myProfileButton;
-    private MaterialButton celebrityButton;
-    private MaterialButton onlyfansLeaksButton;
-    private MaterialButton hotTiktoksButton;
-    private MaterialButton createPostButton;
-    private RecyclerView postsRecyclerView, popularPostsRecyclerView;
+    private RecyclerView postsRecyclerView;
     private SwipeRefreshLayout homeSwipeRefreshLayout;
 
     private PostsAdapter adapter;
-    private PopularPostsAdapter popularPostsAdapter;
 
     private MainActivity mainActivity;
 
     private Authentication authentication;
-    private RoundLinearLayout tipLinear;
-    private MaterialTextView closeTipButton;
-    private MaterialTextView openTipButton;
-    private LinearLayout mainLinear;
 
     private Settings settings;
+
+    @Override
+    public void onDestroyView() {
+        authentication = null;
+        settings = null;
+        mainActivity = null;
+        adapter = null;
+        mRootView = null;
+
+        super.onDestroyView();
+    }
 
     @Nullable
     @Override
@@ -81,19 +70,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void initView() {
-        myProfileButton = (MaterialButton) mRootView.findViewById(R.id.my_profile_button);
-        celebrityButton = (MaterialButton) mRootView.findViewById(R.id.celebrity_button);
-        onlyfansLeaksButton = (MaterialButton) mRootView.findViewById(R.id.onlyfans_leaks_button);
-        hotTiktoksButton = (MaterialButton) mRootView.findViewById(R.id.hot_tiktoks_button);
         postsRecyclerView = (RecyclerView) mRootView.findViewById(R.id.posts_recycler_view);
-        createPostButton = mRootView.findViewById(R.id.create_post_button);
         homeSwipeRefreshLayout = mRootView.findViewById(R.id.home_swipe_refresh_layout);
-        popularPostsRecyclerView = mRootView.findViewById(R.id.popular_posts_recycler_view);
-        tipLinear = (RoundLinearLayout) mRootView.findViewById(R.id.tip_linear);
-        closeTipButton = (MaterialTextView) mRootView.findViewById(R.id.close_tip_button);
-        openTipButton = (MaterialTextView) mRootView.findViewById(R.id.open_tip_button);
-        mainLinear = (LinearLayout) mRootView.findViewById(R.id.main_linear);
-        AnimateChanges.forLinear(tipLinear);
         settings = new Settings(getActivity());
 
         authentication = new Authentication(null);
@@ -101,7 +79,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void OnUserDataReceived(User user) {
                 if (user.isShowFirstTimeTip()) {
-                    tipLinear.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -120,14 +97,16 @@ public class HomeFragment extends Fragment {
     private void setup() {
         mainActivity = ((MainActivity) getActivity());
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 1, GridLayoutManager.HORIZONTAL, false);
-        popularPostsRecyclerView.setLayoutManager(gridLayoutManager);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         postsRecyclerView.setLayoutManager(layoutManager);
+        postsRecyclerView.setNestedScrollingEnabled(true);
+        postsRecyclerView.seslSetGoToTopEnabled(true);
+        postsRecyclerView.seslShowGoToTopEdge(400);
 
-        SnapHelper pagerSnapHelper = new PagerSnapHelper();
-        pagerSnapHelper.attachToRecyclerView(postsRecyclerView);
+        if (settings.shouldSnapPosts()) {
+            SnapHelper linearSnapHelper = new StartSnap();
+            linearSnapHelper.attachToRecyclerView(postsRecyclerView);
+        }
 
         loadPosts();
         loadPopularPosts();
@@ -137,27 +116,27 @@ public class HomeFragment extends Fragment {
             loadPopularPosts();
         });
 
-        myProfileButton.setOnClickListener(v -> {
-            mainActivity.openActivity(UserProfileActivity.class, false);
-        });
-
-        celebrityButton.setOnClickListener(v -> {
-            mainActivity.changePage(1);
-        });
-
-        createPostButton.setOnClickListener(view -> {
-            if (settings.showCreatingPostDisclaimer()) {
-                new DisclaimerDialog().Dialog(getActivity(), "Tworz Posty!", "Dziel sie z uzytkownikami swoimi zdjeciami influencerek lub innych osob!\nPamietaj jednak o przestrzeganiu zasad, poniewaz nie zastosowanie sie do nich moze zakonczyc sie banem!", new DisclaimerDialog.DisclaimerDialogInterface() {
-                    @Override
-                    public void OnDismiss() {
-                        settings.disableCreatingPostDisclaimer();
-                        mainActivity.openActivity(CreatePostActivity.class, false);
-                    }
-                });
-            } else {
-                mainActivity.openActivity(CreatePostActivity.class, false);
-            }
-        });
+//        myProfileButton.setOnClickListener(v -> {
+//            mainActivity.openActivity(UserProfileActivity.class, false);
+//        });
+//
+//        celebrityButton.setOnClickListener(v -> {
+//            mainActivity.changePage(1);
+//        });
+//
+//        createPostButton.setOnClickListener(view -> {
+//            if (settings.showCreatingPostDisclaimer()) {
+//                new DisclaimerDialog().Dialog(getActivity(), "Tworz Posty!", "Dziel sie z uzytkownikami swoimi zdjeciami influencerek lub innych osob!\nPamietaj jednak o przestrzeganiu zasad, poniewaz nie zastosowanie sie do nich moze zakonczyc sie banem!", new DisclaimerDialog.DisclaimerDialogInterface() {
+//                    @Override
+//                    public void OnDismiss() {
+//                        settings.disableCreatingPostDisclaimer();
+//                        mainActivity.openActivity(CreatePostActivity.class, false);
+//                    }
+//                });
+//            } else {
+//                mainActivity.openActivity(CreatePostActivity.class, false);
+//            }
+//        });
     }
 
     private void loadPosts() {
@@ -181,17 +160,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadPopularPosts() {
-        GetPopularPosts.get(new GetPopularPosts.PostsListener() {
-            @Override
-            public void OnLoaded(List<Post> posts) {
-                popularPostsAdapter = new PopularPostsAdapter(getActivity(), posts);
-                popularPostsRecyclerView.setAdapter(popularPostsAdapter);
-            }
 
-            @Override
-            public void OnError(String error) {
-
-            }
-        }, 3);
     }
 }

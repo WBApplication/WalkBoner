@@ -42,7 +42,7 @@ public class GetUserLikedPosts {
                 log("User Finded!");
                 DocumentSnapshot userDocument = queryDocumentSnapshots.getDocuments().get(0);
 
-                userDocument.getReference().collection("likedPosts").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                userDocument.getReference().collection("likedPosts").orderBy("likeAt", Query.Direction.ASCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         log("Finded Liked Posts with size " + queryDocumentSnapshots.getDocuments().size());

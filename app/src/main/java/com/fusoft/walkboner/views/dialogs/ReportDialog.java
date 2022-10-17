@@ -28,27 +28,7 @@ public class ReportDialog {
 
     public static void ReportPostDialog(Context context, String postUid) {
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        Authentication authentication = new Authentication(new AuthenticationListener() {
-            @Override
-            public void UserAlreadyLoggedIn(boolean pinRequired) {
-
-            }
-
-            @Override
-            public void UserRequiredToBeLogged() {
-
-            }
-
-            @Override
-            public void OnLogin(boolean isSuccess, boolean pinRequired, @Nullable String reason) {
-
-            }
-
-            @Override
-            public void OnRegister(boolean isSuccess, @Nullable String reason) {
-
-            }
-        });
+        Authentication authentication = new Authentication(null);
 
         CharSequence[] items = {
                 "Nieodpowiedni avatar użytkownika",

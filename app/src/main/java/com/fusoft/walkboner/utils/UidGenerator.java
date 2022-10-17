@@ -12,4 +12,12 @@ public class UidGenerator {
             sb.append(ALLOWED_CHARACTERS.charAt(random.nextInt(ALLOWED_CHARACTERS.length())));
         return sb.toString();
     }
+
+    public static String Generate(int length) {
+        final Random random = new Random();
+        final StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; ++i)
+            sb.append(ALLOWED_CHARACTERS.charAt(random.nextInt(ALLOWED_CHARACTERS.length())));
+        return sb.toString();
+    }
 }

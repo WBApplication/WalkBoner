@@ -1,5 +1,7 @@
 package com.fusoft.walkboner.database.funcions.userProfile;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.fusoft.walkboner.database.funcions.GetPosts;
@@ -23,7 +25,7 @@ public class GetUserPosts {
 
         List<Post> posts = new ArrayList<>();
 
-        firestore.collection("posts").whereEqualTo("userUid", user.getUid()).get().addOnSuccessListener(queryDocumentSnapshots -> {
+        firestore.collection("posts").orderBy("createdAt", Query.Direction.DESCENDING).whereEqualTo("userUid", user.getUid()).get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
                 Post post = new Post();
                 post.setUserUid(document.get("userUid").toString());
@@ -55,6 +57,7 @@ public class GetUserPosts {
             @Override
             public void onFailure(@NonNull Exception e) {
                 listener.OnError(e.getMessage());
+                Log.e("UserPosts Error", e.getMessage());
             }
         });
     }

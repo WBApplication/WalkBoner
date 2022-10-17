@@ -7,6 +7,7 @@ import androidx.lifecycle.Lifecycle;
 
 import com.fusoft.walkboner.fragments.CelebritiesFragment;
 import com.fusoft.walkboner.fragments.HomeFragment;
+import com.fusoft.walkboner.fragments.SavedLinksFragment;
 
 import de.dlyt.yanndroid.oneui.sesl.viewpager2.adapter.FragmentStateAdapter;
 
@@ -29,12 +30,14 @@ public class MainViewPager extends FragmentStateAdapter {
                 return new HomeFragment();
             case 1:
                 return new CelebritiesFragment();
+            case 2:
+                return new SavedLinksFragment();
         }
         return null;
     }
 
     @Override
     public int getItemCount() {
-        return 2;
+        return 3;
     }
 }

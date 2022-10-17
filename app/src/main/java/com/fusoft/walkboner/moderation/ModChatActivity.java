@@ -2,6 +2,7 @@ package com.fusoft.walkboner.moderation;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -16,6 +17,8 @@ import com.fusoft.walkboner.auth.UserInfoListener;
 import com.fusoft.walkboner.models.Message;
 import com.fusoft.walkboner.models.User;
 import com.fusoft.walkboner.utils.UidGenerator;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -25,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.dlyt.yanndroid.oneui.sesl.recyclerview.LinearLayoutManager;
+import de.dlyt.yanndroid.oneui.utils.OnSingleClickListener;
 import de.dlyt.yanndroid.oneui.view.RecyclerView;
 import de.dlyt.yanndroid.oneui.view.Toast;
 
@@ -35,10 +39,24 @@ public class ModChatActivity extends AppCompatActivity {
     private ImageView sendButton;
 
     private ArrayList<Message> messagesList = new ArrayList<>();
+    HashMap<String, Object> messagesMap;
 
     private ModChatAdapter adapter;
     private FirebaseFirestore firestore;
     private User userData;
+    private UserInfoListener userInfoListener;
+
+    @Override
+    protected void onDestroy() {
+        messagesList.clear();
+        messagesList = null;
+        firestore = null;
+        adapter = null;
+        messagesMap = null;
+        userInfoListener = null;
+
+        super.onDestroy();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,29 +79,9 @@ public class ModChatActivity extends AppCompatActivity {
         layoutManager.setReverseLayout(true);
         chatRecyclerView.setLayoutManager(layoutManager);
 
-        Authentication authentication = new Authentication(new AuthenticationListener() {
-            @Override
-            public void UserAlreadyLoggedIn(boolean pinRequired) {
+        Authentication authentication = new Authentication(null);
 
-            }
-
-            @Override
-            public void UserRequiredToBeLogged() {
-
-            }
-
-            @Override
-            public void OnLogin(boolean isSuccess, boolean pinRequired, @Nullable String reason) {
-
-            }
-
-            @Override
-            public void OnRegister(boolean isSuccess, @Nullable String reason) {
-
-            }
-        });
-
-        authentication.getUserData(new UserInfoListener() {
+        userInfoListener = new UserInfoListener() {
             @Override
             public void OnUserDataReceived(User user) {
                 Log.e("ModChatActivity", "User Data Loaded...");
@@ -103,23 +101,36 @@ public class ModChatActivity extends AppCompatActivity {
             public void OnError(String reason) {
 
             }
-        });
+        };
 
-        sendButton.setOnClickListener(v -> {
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        authentication.getUserData(userInfoListener);
 
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("senderUid", userData.getUserUid());
-            map.put("senderAvatar", userData.getUserAvatar());
-            map.put("messageUid", UidGenerator.Generate());
-            map.put("message", messageEdittext.getText().toString());
-            map.put("image", "null");
-            map.put("sendedAt", String.valueOf(timestamp.getTime()));
-            map.put("type", Message.TYPE_TEXT);
+        sendButton.setOnClickListener(new OnSingleClickListener() {
+            @Override
+            public void onSingleClick(View view) {
+                boolean isTextEmpty = messageEdittext.getText().toString().isEmpty();
+                //boolean isTextIsNotOnlyWhiteSpace = messageEdittext.getText().toString().matches("\\w*");
 
-            firestore.collection("modsChat").add(map);
+                if (!isTextEmpty) {
+                    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-            messageEdittext.setText("");
+                    messagesMap = new HashMap<>();
+
+                    messagesMap.put("senderUid", userData.getUserUid());
+                    messagesMap.put("senderAvatar", userData.getUserAvatar());
+                    messagesMap.put("messageUid", UidGenerator.Generate());
+                    messagesMap.put("message", messageEdittext.getText().toString());
+                    messagesMap.put("image", "null");
+                    messagesMap.put("sendedAt", String.valueOf(timestamp.getTime()));
+                    messagesMap.put("type", Message.TYPE_TEXT);
+
+                    firestore.collection("modsChat").add(messagesMap).addOnSuccessListener(documentReference -> {
+                        messagesMap = null;
+                    });
+
+                    messageEdittext.setText("");
+                }
+            }
         });
     }
 
@@ -127,6 +138,7 @@ public class ModChatActivity extends AppCompatActivity {
         Log.e("ModChatActivity", "Loading Messages...");
         firestore = FirebaseFirestore.getInstance();
         firestore.collection("modsChat").orderBy("sendedAt", Query.Direction.DESCENDING).addSnapshotListener((value, error) -> {
+            if (messagesList != null || !messagesList.isEmpty())
             messagesList.clear();
 
             if (value == null) {

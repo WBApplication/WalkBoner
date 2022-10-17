@@ -1,5 +1,6 @@
 package com.fusoft.walkboner.auth;
 
+import android.text.format.DateFormat;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SnapshotMetadata;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,6 +37,8 @@ public class Authentication {
     }
 
     public Authentication(AuthenticationListener listener) {
+        log("Initialized");
+
         this.listener = listener;
 
         firestore = FirebaseFirestore.getInstance();
@@ -42,32 +46,83 @@ public class Authentication {
         user = auth.getCurrentUser();
 
         if (auth.getCurrentUser() != null) {
+            log("User Already Logged");
             user = auth.getCurrentUser();
 
-            firestore.collection("users").whereEqualTo("userUid", user.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            log("Getting User Data...");
+            getUserData(new UserInfoListener() {
                 @Override
-                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                        documentSnapshot.getReference().collection("pin").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                            @Override
-                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
-                                    if (isListenerAvailable()) {
-                                        listener.UserAlreadyLoggedIn(Boolean.parseBoolean(doc.getString("ENABLED")));
+                public void OnUserDataReceived(User userData) {
+                    log("---> Success!");
+                    log("Checking if PIN is Required...");
+                    firestore.collection("users").whereEqualTo("userUid", user.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                                documentSnapshot.getReference().collection("pin").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                        if (queryDocumentSnapshots.isEmpty()) {
+                                            if (isListenerAvailable()) {
+                                                if (userData.isUserBanned()) {
+                                                    log("---> Success");
+                                                    log("---> PIN Is Not Required but user is banned");
+                                                    listener.UserAlreadyLoggedIn(true, userData.isUserBanned(), false, "Urządzenie Zbanowane\nPowód:\n" + userData.getUserBanReason() + "\n\nZbanowano do: " + getDate(Long.parseLong(userData.getUserBannedTo())) + "\n\nJeśli uważasz, że nie powinieneś dostać bana, odwołaj się na serwerze Discord\n\nTwój Identyfikator\n(kliknij by skopiować)\n" + userData.getUserUid());
+                                                } else {
+                                                    log("---> Success");
+                                                    log("---> PIN Is Not Required");
+                                                    listener.UserAlreadyLoggedIn(true, false, false, null);
+                                                }
+                                            }
+                                        } else {
+                                            if (isListenerAvailable()) {
+                                                DocumentSnapshot doc = queryDocumentSnapshots.getDocuments().get(0);
+                                                if (userData.isUserBanned()) {
+                                                    log("---> Success");
+                                                    log("---> PIN Is Required but user is banned");
+                                                    listener.UserAlreadyLoggedIn(true, userData.isUserBanned(), Boolean.parseBoolean(doc.getString("ENABLED")), "Urządzenie Zbanowane\nPowód:\n" + userData.getUserBanReason() + "\n\nZbanowano do: " + getDate(Long.parseLong(userData.getUserBannedTo())) + "\n\nJeśli uważasz, że nie powinieneś dostać bana, odwołaj się na serwerze Discord\n\nTwój Identyfikator\n(kliknij by skopiować)\n" + userData.getUserUid());
+                                                } else {
+                                                    log("---> Success");
+                                                    log("---> PIN Is Required");
+                                                    listener.UserAlreadyLoggedIn(true, false, Boolean.parseBoolean(doc.getString("ENABLED")), null);
+                                                }
+                                            }
+                                        }
                                     }
-                                }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        log("---> Failure");
+                                        log("---> Line 83");
+                                        if (isListenerAvailable()) {
+                                            listener.UserAlreadyLoggedIn(false, false, false, e.getMessage());
+                                        }
+                                    }
+                                });
                             }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            log("---> Failure");
+                            log("---> Line 95");
+                            if (isListenerAvailable()) {
+                                listener.UserAlreadyLoggedIn(false, false, false, e.getMessage());
                             }
-                        });
-                    }
+                        }
+                    });
                 }
-            }).addOnFailureListener(new OnFailureListener() {
+
                 @Override
-                public void onFailure(@NonNull Exception e) {
+                public void OnUserNotFinded() {
+                    listener.UserAlreadyLoggedIn(false, false, false, "Nie znaleźliśmy takiego użytkownika w bazie! Napisz do nas na Discordzie!");
+                }
+
+                @Override
+                public void OnError(String reason) {
+                    if (isListenerAvailable()) {
+                        listener.UserAlreadyLoggedIn(false, false, false, reason);
+                    }
                 }
             });
         } else {
@@ -77,7 +132,68 @@ public class Authentication {
         }
     }
 
+    public boolean isLoggedIn() {
+        return user != null;
+    }
+
     public void login(String email, String password) {
+        auth.signInWithEmailAndPassword(email, password).addOnSuccessListener(authResult -> {
+            user = authResult.getUser();
+
+            getUserData(new UserInfoListener() {
+                @Override
+                public void OnUserDataReceived(User userData) {
+                    firestore.collection("users").whereEqualTo("userUid", userData.getUserUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            DocumentSnapshot userSnapshot = queryDocumentSnapshots.getDocuments().get(0);
+                            userSnapshot.getReference().collection("pin").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                    DocumentSnapshot pin = queryDocumentSnapshots.getDocuments().get(0);
+                                    if (isListenerAvailable()) {
+                                        if (userData.isUserBanned()) {
+                                            listener.OnLogin(false, true, Boolean.parseBoolean(pin.getString("ENABLED")), "Urządzenie Zbanowane\nPowód:\n" + userData.getUserBanReason() + "\n\nZbanowano do: " + getDate(Long.parseLong(userData.getUserBannedTo())) + "\n\nJeśli uważasz, że nie powinieneś dostać bana, odwołaj się na serwerze Discord\n\nTwój Identyfikator\n(kliknij by skopiować)\n" + userData.getUserUid());
+                                        } else {
+                                            listener.OnLogin(true, false, Boolean.parseBoolean(pin.getString("ENABLED")), null);
+                                        }
+                                    }
+                                    return;
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    if (isListenerAvailable()) {
+                                        listener.OnLogin(false, false, false, e.getMessage());
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+
+                @Override
+                public void OnUserNotFinded() {
+                    if (isListenerAvailable()) {
+                        listener.OnLogin(false, false, false, "Nie znaleziono użytkownika w naszej bazie. Daj nam o tym znać na Discordzie!");
+                    }
+                }
+
+                @Override
+                public void OnError(String reason) {
+                    if (isListenerAvailable()) {
+                        listener.OnLogin(false, false, false, reason);
+                    }
+                }
+            });
+        }).addOnFailureListener(e -> {
+            if (isListenerAvailable()) {
+                listener.OnLogin(false, false, false, e.getMessage());
+            }
+        });
+    }
+
+    /*public void login(String email, String password) {
         auth.signInWithEmailAndPassword(email, password).addOnSuccessListener(authResult -> {
             user = authResult.getUser();
             firestore.collection("users").whereEqualTo("userUid", user.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -121,7 +237,7 @@ public class Authentication {
                 listener.OnLogin(false, false, e.getMessage());
             }
         });
-    }
+    }*/
 
     public void register(String email, String username, String password) {
         auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(authResult -> {
@@ -206,5 +322,16 @@ public class Authentication {
         map.put("createdAt", String.valueOf(timestamp.getTime()));
 
         return map;
+    }
+
+    private String getDate(long time) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(time);
+        String date = DateFormat.format("HH:mm dd-MM-yyyy", cal).toString();
+        return date;
+    }
+
+    private void log(String message) {
+        Log.d("Authentication", message);
     }
 }
