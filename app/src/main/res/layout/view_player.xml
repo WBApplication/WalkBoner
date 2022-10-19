@@ -10,7 +10,8 @@
         android:layout_height="match_parent"
         app:controller_layout_id="@layout/view_player_controller"
         app:hide_on_touch="true"
-        app:resize_mode="fill"
-        app:show_timeout="2000"
-        app:use_controller="true" />
+        app:resize_mode="fit"
+        app:show_timeout="1000"
+        app:use_controller="true"
+        app:animation_enabled="true"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

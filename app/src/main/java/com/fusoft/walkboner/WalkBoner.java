@@ -3,6 +3,7 @@ package com.fusoft.walkboner;
 import android.app.Application;
 
 import com.fusoft.walkboner.security.Encrypt;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.appcheck.FirebaseAppCheck;
 import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory;
@@ -14,6 +15,7 @@ public class WalkBoner extends Application {
         Encrypt.setContext(this);
         FileDownloader.setup(this);
         FirebaseApp.initializeApp(this);
+        MobileAds.initialize(this);
         FirebaseAppCheck firebaseAppCheck = FirebaseAppCheck.getInstance();
         firebaseAppCheck.installAppCheckProviderFactory(
                 SafetyNetAppCheckProviderFactory.getInstance());

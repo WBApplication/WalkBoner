@@ -1,6 +1,7 @@
 package com.fusoft.walkboner;
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
 import java.util.List;
 
+import de.dlyt.yanndroid.oneui.sesl.viewpager2.widget.SeslViewPager2;
 import de.dlyt.yanndroid.oneui.view.ViewPager2;
 
 public class MediaViewerActivity extends AppCompatActivity {
@@ -28,6 +30,8 @@ public class MediaViewerActivity extends AppCompatActivity {
     private WormDotsIndicator tabIndicator;
     private LinearLayout topViewLinear;
     private ImageView moreMenuButton;
+
+    private MediaViewerViewPager adapter;
 
     private Authentication auth;
 
@@ -55,10 +59,34 @@ public class MediaViewerActivity extends AppCompatActivity {
     private void setup() {
         List<AlbumImage> images = new Gson().fromJson(getIntent().getStringExtra("albumImages"), new TypeToken<List<AlbumImage>>() {}.getType());
 
-        MediaViewerViewPager adapter = new MediaViewerViewPager(getSupportFragmentManager(), getLifecycle(), images);
+        adapter = new MediaViewerViewPager(getSupportFragmentManager(), getLifecycle(), images);
         imagesViewpager.setAdapter(adapter);
 
         tabIndicator.attachTo(imagesViewpager);
+
+        if (isSingleMedia()) {
+            imagesViewpager.setUserInputEnabled(false);
+            topViewLinear.setAlpha(0f);
+        }
+
+        if (images.get(0).getImageUrl().contains("mp4")) {
+            moreMenuButton.setVisibility(View.GONE);
+        }
+
+        imagesViewpager.registerOnPageChangeCallback(new SeslViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                if (images.get(position).getImageUrl().contains("mp4")) {
+                    moreMenuButton.setVisibility(View.GONE);
+                    toggleImageAttention(true);
+                } else {
+                    moreMenuButton.setVisibility(View.VISIBLE);
+                    toggleImageAttention(false);
+                }
+
+                super.onPageSelected(position);
+            }
+        });
 
         moreMenuButton.setOnClickListener(v -> {
             SetAvatar.Set(auth.getCurrentUserUid(), images.get(imagesViewpager.getCurrentItem()).getImageUrl(), new SetAvatar.OnAvatarListener() {
@@ -75,19 +103,19 @@ public class MediaViewerActivity extends AppCompatActivity {
         });
     }
 
-    public boolean isImageHaveAttention() {
-        return imagesViewpager.isUserInputEnabled();
+    private boolean isSingleMedia() {
+        return adapter.getItemCount() == 1;
     }
 
     public void toggleImageAttention(boolean on) {
-        if (on) {
-            imagesViewpager.setUserInputEnabled(false);
-            //topLinearAnim.cancel();
-            topLinearAnim.alpha(0f).setInterpolator(new DecelerateInterpolator()).setDuration(300).start();
-        } else {
-            imagesViewpager.setUserInputEnabled(true);
-            //topLinearAnim.cancel();
-            topLinearAnim.alpha(1f).setInterpolator(new DecelerateInterpolator()).setDuration(300).start();
+        if (!isSingleMedia()) {
+            if (on) {
+                imagesViewpager.setUserInputEnabled(false);
+                topLinearAnim.alpha(0f).setInterpolator(new DecelerateInterpolator()).setDuration(300).start();
+            } else {
+                imagesViewpager.setUserInputEnabled(true);
+                topLinearAnim.alpha(1f).setInterpolator(new DecelerateInterpolator()).setDuration(300).start();
+            }
         }
     }
 }

@@ -21,7 +21,7 @@ public class PermissionsActivity extends AppCompatActivity {
     private MaterialButton skipButton;
     private MaterialButton acceptButton;
 
-    private String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+    private String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class PermissionsActivity extends AppCompatActivity {
 
     private void setup() {
         acceptButton.setOnClickListener(view -> {
-            if (ContextCompat.checkSelfPermission(PermissionsActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED && ContextCompat.checkSelfPermission(PermissionsActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            if (ContextCompat.checkSelfPermission(PermissionsActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(PermissionsActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(PermissionsActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                 ActivityCompat.requestPermissions(PermissionsActivity.this, permissions, 100);
             } else {
                 AlertDialog.Builder errorDialog = new AlertDialog.Builder(PermissionsActivity.this);
@@ -63,8 +63,7 @@ public class PermissionsActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
-                                           @NonNull int[] grantResults)
-    {
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == 100) {
@@ -72,8 +71,7 @@ public class PermissionsActivity extends AppCompatActivity {
             // Checking whether user granted the permission or not.
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 redirectUser();
-            }
-            else {
+            } else {
                 AlertDialog.Builder errorDialog = new AlertDialog.Builder(PermissionsActivity.this);
                 errorDialog.setTitle("Błąd");
                 errorDialog.setMessage("Coś poszło nie tak...\nJeśli zezwoliłeś, a widzisz ten dialog, zgłoś to na Discordzie.\n\nMożesz pominąć przyznanie pozwoleń.");

@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -74,11 +75,22 @@ public class SplashActivity extends AppCompatActivity {
             public void UserAlreadyLoggedIn(boolean success, boolean isBanned, boolean pinRequired, @Nullable String reason) {
                 String write_storage = android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
                 String read_storage = Manifest.permission.READ_EXTERNAL_STORAGE;
+                String camera = Manifest.permission.CAMERA;
                 int write_storage_result = checkSelfPermission(write_storage);
                 int read_storage_result = checkSelfPermission(read_storage);
+                int camera_result = checkSelfPermission(camera);
+                boolean write_granted = write_storage_result == PackageManager.PERMISSION_GRANTED;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // On API Level > 28 WRITE_EXTERNAL_STORAGE is always False
+                    write_granted = true;
+                }
+                boolean read_granted = read_storage_result == PackageManager.PERMISSION_GRANTED;
+                boolean camera_granted = camera_result == PackageManager.PERMISSION_GRANTED;
 
                 log("<- SplashActivity ->");
                 log("Listener Triggered");
+                log("Write Permission Granted: " + write_granted);
+                log("Read Permission Granted: " + read_granted);
+                log("Camera Permission Granted: " + camera_granted);
 
                 if (success) {
                     log("Successfully to this time");
@@ -86,7 +98,7 @@ public class SplashActivity extends AppCompatActivity {
                     if (pinRequired || settings.isBiometricUnlockEnabled()) {
                         log("Pin is Required => Boolean Value: " + pinRequired);
                         log("Biometric Required? => Boolean Value: " + settings.isBiometricUnlockEnabled());
-                        if (write_storage_result == PackageManager.PERMISSION_DENIED || read_storage_result == PackageManager.PERMISSION_DENIED) {
+                        if (!write_granted || !read_granted || !camera_granted) {
                             log("Also Permissions needed");
                             Intent intent = new Intent(SplashActivity.this, PermissionsActivity.class);
                             intent.putExtra("isPinRequired", true);
@@ -94,7 +106,7 @@ public class SplashActivity extends AppCompatActivity {
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                             log("Redirecting to PermissionsActivity");
                             finish();
-                        } else if (write_storage_result == PackageManager.PERMISSION_GRANTED || read_storage_result == PackageManager.PERMISSION_GRANTED) {
+                        } else {
                             log("Permissions already granted");
                             startActivity(new Intent(SplashActivity.this, UnlockAppActivity.class));
                             log("Redirecting to UnlockAppActivity");
@@ -102,7 +114,7 @@ public class SplashActivity extends AppCompatActivity {
                         }
                     } else {
                         log("Pin is not Required");
-                        if (write_storage_result == PackageManager.PERMISSION_DENIED || read_storage_result == PackageManager.PERMISSION_DENIED) {
+                        if (!write_granted || !read_granted || !camera_granted) {
                             log("Also Permissions needed");
                             Intent intent = new Intent(SplashActivity.this, PermissionsActivity.class);
                             startActivity(intent);

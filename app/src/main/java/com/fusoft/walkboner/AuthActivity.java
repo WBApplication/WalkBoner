@@ -4,6 +4,7 @@ import android.Manifest;
 import android.animation.LayoutTransition;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -21,6 +22,7 @@ import com.fusoft.walkboner.auth.AuthenticationListener;
 import com.fusoft.walkboner.settings.Settings;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import de.dlyt.yanndroid.oneui.view.Toast;
 
@@ -39,10 +41,12 @@ public class AuthActivity extends AppCompatActivity {
     private boolean isRegister = true;
 
     private Authentication auth;
+    private FirebaseAnalytics analytics;
 
     @Override
     protected void onDestroy() {
         auth = null;
+        if (analytics != null) analytics = null;
 
         super.onDestroy();
     }
@@ -103,6 +107,11 @@ public class AuthActivity extends AppCompatActivity {
                     toggleInputs(true);
                     showMessage(reason);
                 } else {
+                    analytics = FirebaseAnalytics.getInstance(AuthActivity.this);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Param.VALUE, "Android Version: " + Build.VERSION.SDK_INT);
+                    analytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle);
+
                     redirectUser(false);
                 }
             }
@@ -124,22 +133,27 @@ public class AuthActivity extends AppCompatActivity {
     private void redirectUser(boolean isPinRequired) {
         String write_storage = android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
         String read_storage = Manifest.permission.READ_EXTERNAL_STORAGE;
+        String camera = Manifest.permission.CAMERA;
         int write_storage_result = checkSelfPermission(write_storage);
         int read_storage_result = checkSelfPermission(read_storage);
+        int camera_result = checkSelfPermission(camera);
+        boolean write_granted = write_storage_result == PackageManager.PERMISSION_GRANTED;
+        boolean read_granted = read_storage_result == PackageManager.PERMISSION_GRANTED;
+        boolean camera_granted = camera_result == PackageManager.PERMISSION_GRANTED;
 
-        if (!isPinRequired && write_storage_result == PackageManager.PERMISSION_GRANTED || read_storage_result == PackageManager.PERMISSION_GRANTED) {
+        if (!isPinRequired && write_granted || read_granted || camera_granted) {
             startActivity(new Intent(AuthActivity.this, MainActivity.class));
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             finish();
         }
 
-        if (isPinRequired && write_storage_result == PackageManager.PERMISSION_GRANTED || read_storage_result == PackageManager.PERMISSION_GRANTED) {
+        if (isPinRequired && write_granted || read_granted || camera_granted) {
             startActivity(new Intent(AuthActivity.this, UnlockAppActivity.class));
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             finish();
         }
 
-        if (isPinRequired && write_storage_result == PackageManager.PERMISSION_DENIED || read_storage_result == PackageManager.PERMISSION_DENIED) {
+        if (isPinRequired && !write_granted || !read_granted || !camera_granted) {
             Intent intent = new Intent(AuthActivity.this, PermissionsActivity.class);
             intent.putExtra("isPinRequired", isPinRequired);
             startActivity(intent);
@@ -196,14 +210,12 @@ public class AuthActivity extends AppCompatActivity {
             currentModeText.setText("Logowanie");
             usernameEdt.setVisibility(View.GONE);
             doneButton.setText("Zaloguj");
-            doneButton.setEnabled(true);
             changeButton.setText("Rejestracja");
         } else {
             // Change To Register
             currentModeText.setText("Rejestracja");
             usernameEdt.setVisibility(View.VISIBLE);
             doneButton.setText("Zarejestruj");
-            doneButton.setEnabled(false);
             changeButton.setText("Zaloguj");
         }
 

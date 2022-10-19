@@ -12,10 +12,10 @@ import com.fusoft.walkboner.auth.AuthenticationListener;
 import com.fusoft.walkboner.models.SavedLink;
 import com.fusoft.walkboner.offline.LinksManager;
 import com.fusoft.walkboner.settings.Settings;
+import com.fusoft.walkboner.uniload.UniloadActivity;
 import com.fusoft.walkboner.utils.AppUpdate;
 import com.fusoft.walkboner.views.dialogs.CreateLinkDialog;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.unity3d.ads.IUnityAdsInitializationListener;
 
 import de.dlyt.yanndroid.oneui.layout.DrawerLayout;
 import de.dlyt.yanndroid.oneui.view.Toast;
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private OptionButton homeButton;
     private OptionButton celebrityButton;
     private OptionButton logoutButton, premiumButton, savedLinksButton;
-    private OptionButton debugButton;
+    private OptionButton debugButton, uniloadButton;
     private ExtendedFloatingActionButton createFab;
 
     private Authentication auth;
@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         premiumButton = findViewById(R.id.premium_button);
         createFab = findViewById(R.id.create_fab);
         savedLinksButton = findViewById(R.id.saved_links_button);
+        uniloadButton = findViewById(R.id.uniload_button);
 
         adapter = new MainViewPager(getSupportFragmentManager(), getLifecycle());
         viewPager.setAdapter(adapter);
@@ -98,6 +99,10 @@ public class MainActivity extends AppCompatActivity {
 
         premiumButton.setOnClickListener(v -> {
             openActivity(PremiumActivity.class, false);
+        });
+
+        uniloadButton.setOnClickListener(v -> {
+            openActivity(UniloadActivity.class, false);
         });
 
         AppUpdate.checkForUpdate(new AppUpdate.UpdateListener() {

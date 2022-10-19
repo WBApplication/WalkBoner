@@ -25,12 +25,18 @@ import com.fusoft.walkboner.database.funcions.GetInfluencers;
 import com.fusoft.walkboner.database.funcions.InfluencersListener;
 import com.fusoft.walkboner.models.Influencer;
 import com.fusoft.walkboner.utils.AnimateChanges;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
 
 import java.util.List;
 
 import de.dlyt.yanndroid.oneui.sesl.recyclerview.GridLayoutManager;
 import de.dlyt.yanndroid.oneui.sesl.recyclerview.LinearLayoutManager;
 import de.dlyt.yanndroid.oneui.view.RecyclerView;
+import de.dlyt.yanndroid.oneui.view.Toast;
 import de.dlyt.yanndroid.oneui.widget.ProgressBar;
 import de.dlyt.yanndroid.oneui.widget.RoundLinearLayout;
 import de.dlyt.yanndroid.oneui.widget.SwipeRefreshLayout;
@@ -44,9 +50,10 @@ public class CelebritiesFragment extends Fragment {
     private InfluencersAdapter adapter;
     private RoundLinearLayout addInfluencerButton;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private AdView adView;
 
     private MainActivity activity;
-    private LinearLayout mainLinear;
+    private LinearLayout mainLinear, adLinear;
     private ProgressBar loadingProgressBar;
 
     @Override
@@ -83,6 +90,23 @@ public class CelebritiesFragment extends Fragment {
         AnimateChanges.forLinear(mainLinear);
         loadingProgressBar = (ProgressBar) mRootView.findViewById(R.id.loading_progress_bar);
         swipeRefreshLayout = mRootView.findViewById(R.id.influencers_swipe_refresh);
+        adLinear = mRootView.findViewById(R.id.ad_linear);
+
+        adView = new AdView(getActivity());
+        adView.setAdSize(AdSize.BANNER);
+        adView.setAdUnitId("ca-app-pub-5168974918674183/1577192356");
+        adView.setVisibility(View.GONE);
+        adLinear.addView(adView);
+
+        AdRequest adReq = new AdRequest.Builder().build();
+        adView.loadAd(adReq);
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                adView.setVisibility(View.VISIBLE);
+                super.onAdLoaded();
+            }
+        });
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         celebritiesRecyclerView.setLayoutManager(layoutManager);

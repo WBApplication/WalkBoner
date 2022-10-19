@@ -26,12 +26,17 @@ import com.fusoft.walkboner.database.UploadImage;
 import com.fusoft.walkboner.database.funcions.GetPosts;
 import com.fusoft.walkboner.database.funcions.userProfile.GetUserLikedPosts;
 import com.fusoft.walkboner.database.funcions.userProfile.GetUserPosts;
+import com.fusoft.walkboner.database.funcions.userProfile.SetDescription;
 import com.fusoft.walkboner.models.Post;
 import com.fusoft.walkboner.models.User;
 import com.fusoft.walkboner.utils.GetPathFromUri;
 import com.fusoft.walkboner.views.Avatar;
+import com.fusoft.walkboner.views.dialogs.ChangeProfileDescriptionDialog;
+import com.github.drjacky.imagepicker.ImagePicker;
+import com.github.drjacky.imagepicker.constant.ImageProvider;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -56,6 +61,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private LinearLayout contentLinear;
     private RecyclerView profileRecyclerView;
     private TabLayout profileTablayout;
+    private MaterialButton editDescriptionButton;
 
     private static final int LIKED_POSTS = 0;
     private static final int YOUR_POSTS = 1;
@@ -105,6 +111,7 @@ public class UserProfileActivity extends AppCompatActivity {
         contentLinear = (LinearLayout) findViewById(R.id.content_linear);
         profileRecyclerView = (RecyclerView) findViewById(R.id.profile_recycler_view);
         profileTablayout = (TabLayout) findViewById(R.id.profile_tablayout);
+        editDescriptionButton = findViewById(R.id.edit_description_button);
 
         loading = new ProgressDialog(UserProfileActivity.this);
         loading.setIndeterminate(true);
@@ -177,14 +184,42 @@ public class UserProfileActivity extends AppCompatActivity {
         image.setOnClickListener(v -> {
             imageChooser();
         });
+
+        editDescriptionButton.setOnClickListener(v -> {
+            ChangeProfileDescriptionDialog.Show(UserProfileActivity.this, new ChangeProfileDescriptionDialog.ProfileDescriptionDialogListener() {
+                @Override
+                public void OnChange(String newDescription) {
+                    loading.show();
+
+                    SetDescription.Set(authentication.getCurrentUserUid(), newDescription, new SetDescription.OnDescriptionChanged() {
+                        @Override
+                        public void OnChanged() {
+                            loading.dismiss();
+                            readMoreDescriptionText.setText(newDescription);
+                        }
+
+                        @Override
+                        public void OnError(String reason) {
+                            loading.dismiss();
+                            Toast.makeText(UserProfileActivity.this, reason, Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+
+                @Override
+                public void OnDismiss() {
+
+                }
+            });
+        });
     }
 
     private void imageChooser() {
-        Intent i = new Intent();
-        i.setType("image/*");
-        i.setAction(Intent.ACTION_GET_CONTENT);
-
-        activityResultLauncher.launch(i);
+        activityResultLauncher.launch(ImagePicker.with(UserProfileActivity.this)
+                .crop(1f, 1f)
+                .provider(ImageProvider.GALLERY)
+                .createIntent()
+        );
     }
 
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(

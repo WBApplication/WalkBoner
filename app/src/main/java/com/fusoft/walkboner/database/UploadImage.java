@@ -32,9 +32,12 @@ public class UploadImage {
             listener.OnError("Zdjęcie które wybrałeś, nie istnieje lub zostało usunięte.");
         }
 
+        String fileExtension = GetPathFromUri.getPath(context, imagePath).toString().substring(GetPathFromUri.getPath(context, imagePath).toString().lastIndexOf("."));
+        Log.e("Upload Image", "UploadImage: File Extension " + fileExtension);
+
         FirebaseStorage storage = FirebaseStorage.getInstance(context.getString(R.string.storage_url));
         StorageReference storageRef = storage.getReference();
-        StorageReference mountainsRef = storageRef.child(storageDirectory + uid + ".jpg");
+        StorageReference mountainsRef = storageRef.child(storageDirectory + uid + fileExtension);
 
         UploadTask uploadTask = mountainsRef.putStream(stream);
         uploadTask.addOnFailureListener(exception ->

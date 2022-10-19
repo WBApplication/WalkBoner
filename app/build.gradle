@@ -55,8 +55,10 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:2.18.1'
     implementation 'com.github.MikeOrtiz:TouchImageView:3.2.1'
     implementation 'com.google.code.gson:gson:2.9.1'
-    implementation 'com.google.firebase:firebase-appcheck-safetynet:16.0.0'
-    implementation files('C:/Users/hesam/AndroidStudioProjects/WalkBoner/app/libs/unity-ads.aar')
+    implementation 'com.google.firebase:firebase-appcheck-safetynet:16.1.0'
+    implementation 'com.github.Drjacky:ImagePicker:2.3.20'
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation 'com.google.android.gms:play-services-ads:21.3.0'
     implementation project(path: ':otptextview')
     implementation project(path: ':dotsindicator')
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'

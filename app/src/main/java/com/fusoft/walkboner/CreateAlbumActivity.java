@@ -20,6 +20,8 @@ import com.fusoft.walkboner.database.StorageDirectory;
 import com.fusoft.walkboner.database.UploadImage;
 import com.fusoft.walkboner.utils.GetPathFromUri;
 import com.fusoft.walkboner.utils.UidGenerator;
+import com.github.drjacky.imagepicker.ImagePicker;
+import com.github.drjacky.imagepicker.constant.ImageProvider;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -181,6 +183,7 @@ public class CreateAlbumActivity extends AppCompatActivity {
                 map.put("albumMainImage", imagesUrls.get(0));
                 map.put("createdBy", user.getUid());
                 map.put("mediaAmount", imagesUrls.size());
+                map.put("isPremium", false);
 
                 queryDocumentSnapshots.getDocuments().get(0).getReference().collection("albums").add(map).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -208,8 +211,11 @@ public class CreateAlbumActivity extends AppCompatActivity {
     }
 
     private void imageChooser() {
+        String[] mimeTypes = {"image/*", "video/*"};
+
         Intent i = new Intent();
-        i.setType("image/*");
+        i.setType("*/*");
+        i.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
         i.setAction(Intent.ACTION_GET_CONTENT);
 
         activityResultLauncher.launch(i);

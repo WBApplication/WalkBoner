@@ -28,6 +28,7 @@ import com.bumptech.glide.request.target.Target;
 import com.fusoft.walkboner.FullPhotoViewerActivity;
 import com.fusoft.walkboner.MediaViewerActivity;
 import com.fusoft.walkboner.R;
+import com.fusoft.walkboner.views.Player;
 import com.google.android.material.textview.MaterialTextView;
 import com.ortiz.touchview.OnTouchCoordinatesListener;
 import com.ortiz.touchview.OnTouchImageViewListener;
@@ -36,9 +37,12 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 public class MediaFragment extends Fragment {
+    private final String TAG = "MediaPlayer";
+    
     View mRootView;
 
     private TouchImageView image;
+    private Player player;
     private LinearLayout errorLinear, loadingLinear;
     private MaterialTextView errorReasonText;
 
@@ -46,6 +50,9 @@ public class MediaFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+        player.DestroyPlayer();
+        player = null;
+
         super.onDestroyView();
     }
 
@@ -80,29 +87,26 @@ public class MediaFragment extends Fragment {
 
     private void initView() {
         image = mRootView.findViewById(R.id.image);
+        player = mRootView.findViewById(R.id.player);
         errorLinear = (LinearLayout) mRootView.findViewById(R.id.error_linear);
         errorReasonText = (MaterialTextView) mRootView.findViewById(R.id.error_reason_text);
         loadingLinear = mRootView.findViewById(R.id.loading_progress_bar);
     }
 
     private void setup() {
-        Picasso.get()
-                .load(getImageUrl())
-                .into(image, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        Log.d("Teest", "Picasso: Image loaded");
-                        loadingLinear.setVisibility(View.GONE);
-                    }
+        if (getImageUrl().contains("mp4")) {
+            Log.d(TAG, "setup: Media is VIDEO");
+            image.setVisibility(View.GONE);
+            player.setVisibility(View.VISIBLE);
 
-                    @Override
-                    public void onError(Exception e) {
-                        Log.d("Teest", "Picasso: Image load error");
-                        loadingLinear.setVisibility(View.GONE);
-                        errorLinear.setVisibility(View.VISIBLE);
-                        errorReasonText.setText(e.getMessage());
-                    }
-                });
+            loadVideo();
+        } else {
+            Log.d(TAG, "setup: Media is PICTURE");
+            image.setVisibility(View.VISIBLE);
+            player.setVisibility(View.GONE);
+
+            loadImage();
+        }
 
         image.setOnTouchImageViewListener(new OnTouchImageViewListener() {
             @Override
@@ -122,5 +126,56 @@ public class MediaFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void loadVideo() {
+        player.setListener(new Player.VideoListener() {
+            @Override
+            public void OnLoaded() {
+                loadingLinear.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void OnStateChanged(boolean isPlaying) {
+                if (isPlaying) {
+                    if (getActivity() != null && getActivity() instanceof MediaViewerActivity) {
+                        ((MediaViewerActivity) getActivity()).toggleImageAttention(true);
+                    }
+                } else {
+                    if (getActivity() != null && getActivity() instanceof MediaViewerActivity) {
+                        ((MediaViewerActivity) getActivity()).toggleImageAttention(false);
+                    }
+                }
+            }
+
+            @Override
+            public void OnError(String reason) {
+                loadingLinear.setVisibility(View.GONE);
+                errorLinear.setVisibility(View.VISIBLE);
+                errorReasonText.setText(reason);
+            }
+        });
+
+        player.playFromUrl(getImageUrl());
+    }
+
+    private void loadImage() {
+        Picasso.get()
+                .load(getImageUrl())
+                .into(image, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d("Teest", "Picasso: Image loaded");
+                        loadingLinear.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Log.d("Teest", "Picasso: Image load error");
+                        loadingLinear.setVisibility(View.GONE);
+                        errorLinear.setVisibility(View.VISIBLE);
+                        errorReasonText.setText(e.getMessage());
+                    }
+                });
     }
 }
