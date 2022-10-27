@@ -3,10 +3,6 @@
 <div align="center">
 <h1>WalkBoner</h1>
 
-🔞
-
-**Soft / Kontent Dla Dorosłych**
-
 WalkBoner jest to aplikacja na systemy Android, czerpiąca inspirację z Instagrama, a także ze [strony Reddit](https://www.reddit.com/r/SexyPolishYoutuber/), która zyskała spore community.
 
 Celem aplikacji jest archiwizacja, publikacja lub tworzenie albumów zdjęć znanych influencerów.
