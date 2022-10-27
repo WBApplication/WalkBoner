@@ -65,11 +65,20 @@ public class Settings {
         return settings.getBoolean("publishPosts", false);
     }
 
+    public boolean isPrivateMode() {
+        return settings.getBoolean("privateMode", false);
+    }
+
+    public void setPrivateMode(boolean on) {
+        settings.edit().putBoolean("privateMode", on).apply();
+    }
+
     public Settings resetSettings() {
         toggleBiometricUnlock(false);
         enableCreatingPostDisclaimer();
         toggleSnapPosts(true);
         togglePublishLink(false);
+        setPrivateMode(false);
         return Settings.this;
     }
 }

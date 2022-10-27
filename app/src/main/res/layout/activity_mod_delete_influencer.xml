@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<de.dlyt.yanndroid.oneui.layout.ToolbarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar_delete_mod"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:expandable="false"
+    app:navigationIcon="@drawable/ic_oui_arrow_left"
+    app:title="Usuń Influencera">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Usuwając influencera tak naprawdę go ukrywasz - jeśli usunięcie będzię bezpodstawne, influencer zostanie przywrócony, a moderator może ponieść konsekwencje opisane w regulaminie moderatorskim.\nW przeciwnym razie, influencer zostanie permanentnie usunięty podczas modernizacji serwera." />
+
+        <de.dlyt.yanndroid.oneui.view.RecyclerView
+            android:id="@+id/influencers_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/confirm_linear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/person_nick_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Mamiko"
+                android:textColor="@color/sesl_primary_text"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/person_added_by_uid_text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="start|center"
+                    android:text="Dodany Przez (UID): XXXXXXXXXXXXX"
+                    android:textColor="@color/sesl_primary_text" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_oui4_copy" />
+            </LinearLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Wybierz Powód Usunięcia:"
+                android:textColor="@color/sesl_primary_text"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/reasons_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp">
+
+                <RadioButton
+                    android:id="@+id/troll_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Troll" />
+
+                <RadioButton
+                    android:id="@+id/incorrect_person_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Postać Niepoprawna" />
+
+                <RadioButton
+                    android:id="@+id/not_interesting_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Brak Zainteresowania" />
+
+                <RadioButton
+                    android:id="@+id/false_person_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Fikcyjna Postać (wymyślona przez użytkownika)" />
+
+                <RadioButton
+                    android:id="@+id/different_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Inny:" />
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/delete_reason_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:gravity="start|top"
+                android:hint="Powód"
+                android:imeOptions="actionDone"
+                android:maxLines="2"
+                android:minLines="2"
+                android:padding="8dp"
+                android:enabled="false"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/delete_button"
+                style="@style/ButtonStyle.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@android:color/holo_red_light"
+                android:text="Usuń" />
+        </LinearLayout>
+    </LinearLayout>
+</de.dlyt.yanndroid.oneui.layout.ToolbarLayout>

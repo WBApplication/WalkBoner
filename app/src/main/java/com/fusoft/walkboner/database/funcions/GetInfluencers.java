@@ -79,7 +79,7 @@ public class GetInfluencers {
 
                     influencer.setFollowers(followersList);
 
-                    influencers.add(influencer);
+                    if (!influencer.isHidden()) influencers.add(influencer);
                 }
 
                 listener.OnDataReceived(influencers);

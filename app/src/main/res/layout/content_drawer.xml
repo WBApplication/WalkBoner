@@ -20,6 +20,14 @@
             app:icon="@drawable/face_man_profile"
             app:text="Mój Profil" />
 
+        <de.dlyt.yanndroid.oneui.widget.OptionButton
+            android:id="@+id/notifications_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="4dp"
+            app:icon="@drawable/bell"
+            app:text="Powiadomienia" />
+
         <de.dlyt.yanndroid.oneui.menu.widget.MenuDivider
             android:layout_width="match_parent"
             android:layout_height="4dp"

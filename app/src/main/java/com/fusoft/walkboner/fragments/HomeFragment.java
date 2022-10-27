@@ -148,7 +148,7 @@ public class HomeFragment extends Fragment {
                 }
 
                 //Collections.reverse(posts);
-                adapter = new PostsAdapter(getActivity(), posts);
+                adapter = new PostsAdapter(getActivity(), posts, settings);
                 postsRecyclerView.setAdapter(adapter);
             }
 

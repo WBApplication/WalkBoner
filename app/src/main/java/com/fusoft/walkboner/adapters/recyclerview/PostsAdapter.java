@@ -14,6 +14,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityOptionsCompat;
 
@@ -33,6 +34,7 @@ import com.fusoft.walkboner.database.funcions.GetPopularPosts;
 import com.fusoft.walkboner.database.funcions.LikePost;
 import com.fusoft.walkboner.models.Post;
 import com.fusoft.walkboner.models.User;
+import com.fusoft.walkboner.settings.Settings;
 import com.fusoft.walkboner.utils.Profile;
 import com.fusoft.walkboner.views.Avatar;
 import com.fusoft.walkboner.views.bottomsheets.PostCommentsBSD;
@@ -67,16 +69,20 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private ItemClickListener mClickListener;
     private HeartClickListener mHeartListener;
     private Context context;
+
+    private Settings settings;
+
     private int prevLikesCount = 0;
 
     private int BEST_POSTS_ITEM = 0;
     private int POST_ITEM = 1;
 
     // data is passed into the constructor
-    public PostsAdapter(Context context, List<Post> data) {
+    public PostsAdapter(Context context, List<Post> data, Settings settings) {
         this.context = context;
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
+        this.settings = settings;
     }
 
     // inflates the row layout from xml when needed
@@ -113,7 +119,7 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             GetPopularPosts.get(new GetPopularPosts.PostsListener() {
                 @Override
                 public void OnLoaded(List<Post> posts) {
-                    PopularPostsAdapter popularPostsAdapter = new PopularPostsAdapter(context, posts);
+                    PopularPostsAdapter popularPostsAdapter = new PopularPostsAdapter(context, posts, settings);
                     popularPostsRecyclerView.setAdapter(popularPostsAdapter);
                 }
 
@@ -208,7 +214,7 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
                     RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE);
 
-                    Glide.with(context).load(post.getPostImage()).apply(requestOptions).addListener(new RequestListener<Drawable>() {
+                    RequestListener<Drawable> glideListener = new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                             return false;
@@ -216,16 +222,21 @@ public class PostsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
                         @Override
                         public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                            float radius = 20f;
-                            // ViewGroup you want to start blur from. Choose root as close to BlurView in hierarchy as possible.
                             postImage.setVisibility(View.VISIBLE);
                             loadingBar.setVisibility(View.GONE);
 
-                            ViewGroup rootView = (ViewGroup) imageHolder;
-
                             return false;
                         }
-                    }).into(postImage);
+                    };
+
+                    if (settings.isPrivateMode()) { // If PrivateMode -> load private image
+                        postImage.setVisibility(View.VISIBLE);
+                        loadingBar.setVisibility(View.GONE);
+
+                        Glide.with(context).load(AppCompatResources.getDrawable(context, R.drawable.walkboner_private)).into(postImage);
+                    } else {
+                        Glide.with(context).load(post.getPostImage()).apply(requestOptions).addListener(glideListener).into(postImage);
+                    }
 
                     if (userData.isUserBanned()) {
                         personAvatarImage.setAvatarOwnerPrivileges(Avatar.BANNED);

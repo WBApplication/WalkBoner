@@ -2,6 +2,7 @@ package com.fusoft.walkboner.database.funcions;
 
 import androidx.annotation.NonNull;
 
+import com.fusoft.walkboner.moderation.ModLogger;
 import com.fusoft.walkboner.utils.UniqueDeviceIdentity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -12,7 +13,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.HashMap;
 
 public class BanUser {
-    public static void Ban(String UID, String bannedTo, String banReason, BanUserListener listener) {
+    public static void Ban(String userName, String UID, String bannedTo, String banReason, BanUserListener listener) {
         String phoneUID = UniqueDeviceIdentity.getUniqueID();
 
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -32,6 +33,8 @@ public class BanUser {
                         mapNew.put("isBanned", "true");
                         mapNew.put("bannedTo", bannedTo);
                         mapNew.put("banReason", banReason);
+                        String[] attrs = {userName, UID, bannedTo, banReason};
+                        ModLogger.Log(firestore, ModLogger.ActionType.BANNED_USER, attrs);
                         firestore.collection("users").document(doc.getId()).update(mapNew);
                         listener.OnUserBanned();
                     }

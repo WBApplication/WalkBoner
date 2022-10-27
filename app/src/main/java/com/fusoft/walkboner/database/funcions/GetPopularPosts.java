@@ -24,7 +24,7 @@ public class GetPopularPosts {
 
         List<Post> posts = new ArrayList<>();
 
-        a = 1;
+        a = 0;
 
         firestore.collection("posts").orderBy("likesAmount", Query.Direction.DESCENDING).get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {

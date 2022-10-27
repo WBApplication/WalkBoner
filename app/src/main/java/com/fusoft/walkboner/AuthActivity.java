@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.fusoft.walkboner.auth.Authentication;
 import com.fusoft.walkboner.auth.AuthenticationListener;
+import com.fusoft.walkboner.models.User;
 import com.fusoft.walkboner.settings.Settings;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
@@ -73,7 +74,7 @@ public class AuthActivity extends AppCompatActivity {
 
         auth = new Authentication(new AuthenticationListener() {
             @Override
-            public void UserAlreadyLoggedIn(boolean success, boolean isBanned, boolean pinRequired, @Nullable String reason) {
+            public void UserAlreadyLoggedIn(boolean success, boolean isBanned, boolean pinRequired, @Nullable String reason, @Nullable User userData) {
 
             }
 

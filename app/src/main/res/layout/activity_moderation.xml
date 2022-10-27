@@ -176,6 +176,20 @@
                     app:icon="@drawable/ic_oui4_delete"/>
             </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
 
+            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp">
+
+                <de.dlyt.yanndroid.oneui.widget.OptionButton
+                    android:id="@+id/delete_influencer_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/oui_drawer_background"
+                    app:text="Usuń Influencera"
+                    app:icon="@drawable/ic_oui4_delete"/>
+            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -261,6 +275,20 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/oui_drawer_background"
                     app:text="Lista Moderatorów"
+                    app:icon="@drawable/ic_oui_list"/>
+            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+
+            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp">
+
+                <de.dlyt.yanndroid.oneui.widget.OptionButton
+                    android:id="@+id/mod_logs_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/oui_drawer_background"
+                    app:text="Logi Moderatorskie"
                     app:icon="@drawable/ic_oui_list"/>
             </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
         </LinearLayout>

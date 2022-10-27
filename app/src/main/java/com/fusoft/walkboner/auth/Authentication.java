@@ -67,11 +67,11 @@ public class Authentication {
                                                 if (userData.isUserBanned()) {
                                                     log("---> Success");
                                                     log("---> PIN Is Not Required but user is banned");
-                                                    listener.UserAlreadyLoggedIn(true, userData.isUserBanned(), false, "Urządzenie Zbanowane\nPowód:\n" + userData.getUserBanReason() + "\n\nZbanowano do: " + getDate(Long.parseLong(userData.getUserBannedTo())) + "\n\nJeśli uważasz, że nie powinieneś dostać bana, odwołaj się na serwerze Discord\n\nTwój Identyfikator\n(kliknij by skopiować)\n" + userData.getUserUid());
+                                                    listener.UserAlreadyLoggedIn(true, userData.isUserBanned(), false, "Urządzenie Zbanowane\nPowód:\n" + userData.getUserBanReason() + "\n\nZbanowano do: " + getDate(Long.parseLong(userData.getUserBannedTo())) + "\n\nJeśli uważasz, że nie powinieneś dostać bana, odwołaj się na serwerze Discord\n\nTwój Identyfikator\n(kliknij by skopiować)\n" + userData.getUserUid(), null);
                                                 } else {
                                                     log("---> Success");
                                                     log("---> PIN Is Not Required");
-                                                    listener.UserAlreadyLoggedIn(true, false, false, null);
+                                                    listener.UserAlreadyLoggedIn(true, false, false, null, userData);
                                                 }
                                             }
                                         } else {
@@ -80,11 +80,11 @@ public class Authentication {
                                                 if (userData.isUserBanned()) {
                                                     log("---> Success");
                                                     log("---> PIN Is Required but user is banned");
-                                                    listener.UserAlreadyLoggedIn(true, userData.isUserBanned(), Boolean.parseBoolean(doc.getString("ENABLED")), "Urządzenie Zbanowane\nPowód:\n" + userData.getUserBanReason() + "\n\nZbanowano do: " + getDate(Long.parseLong(userData.getUserBannedTo())) + "\n\nJeśli uważasz, że nie powinieneś dostać bana, odwołaj się na serwerze Discord\n\nTwój Identyfikator\n(kliknij by skopiować)\n" + userData.getUserUid());
+                                                    listener.UserAlreadyLoggedIn(true, userData.isUserBanned(), Boolean.parseBoolean(doc.getString("ENABLED")), "Urządzenie Zbanowane\nPowód:\n" + userData.getUserBanReason() + "\n\nZbanowano do: " + getDate(Long.parseLong(userData.getUserBannedTo())) + "\n\nJeśli uważasz, że nie powinieneś dostać bana, odwołaj się na serwerze Discord\n\nTwój Identyfikator\n(kliknij by skopiować)\n" + userData.getUserUid(), null);
                                                 } else {
                                                     log("---> Success");
                                                     log("---> PIN Is Required");
-                                                    listener.UserAlreadyLoggedIn(true, false, Boolean.parseBoolean(doc.getString("ENABLED")), null);
+                                                    listener.UserAlreadyLoggedIn(true, false, Boolean.parseBoolean(doc.getString("ENABLED")), null, userData);
                                                 }
                                             }
                                         }
@@ -95,7 +95,7 @@ public class Authentication {
                                         log("---> Failure");
                                         log("---> Line 83");
                                         if (isListenerAvailable()) {
-                                            listener.UserAlreadyLoggedIn(false, false, false, e.getMessage());
+                                            listener.UserAlreadyLoggedIn(false, false, false, e.getMessage(), null);
                                         }
                                     }
                                 });
@@ -107,7 +107,7 @@ public class Authentication {
                             log("---> Failure");
                             log("---> Line 95");
                             if (isListenerAvailable()) {
-                                listener.UserAlreadyLoggedIn(false, false, false, e.getMessage());
+                                listener.UserAlreadyLoggedIn(false, false, false, e.getMessage(), null);
                             }
                         }
                     });
@@ -115,13 +115,13 @@ public class Authentication {
 
                 @Override
                 public void OnUserNotFinded() {
-                    listener.UserAlreadyLoggedIn(false, false, false, "Nie znaleźliśmy takiego użytkownika w bazie! Napisz do nas na Discordzie!");
+                    listener.UserAlreadyLoggedIn(false, false, false, "Nie znaleźliśmy takiego użytkownika w bazie! Napisz do nas na Discordzie!", null);
                 }
 
                 @Override
                 public void OnError(String reason) {
                     if (isListenerAvailable()) {
-                        listener.UserAlreadyLoggedIn(false, false, false, reason);
+                        listener.UserAlreadyLoggedIn(false, false, false, reason, null);
                     }
                 }
             });

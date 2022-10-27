@@ -22,6 +22,7 @@ public class ModerationActivity extends AppCompatActivity {
     private OptionButton moderateNewInfluencersButton;
     private OptionButton deletePostButton;
     private OptionButton deleteAlbumButton;
+    private OptionButton deleteInfluencerButton;
     private OptionButton reportedPostsButton;
     private OptionButton findUserButton;
     private OptionButton adminListButton;
@@ -29,6 +30,7 @@ public class ModerationActivity extends AppCompatActivity {
 
     private GetInfluencersToModerateCount moderateCount;
     private GetReportsToModerateCount reportsCount;
+    private OptionButton modLogsButton;
 
     @Override
     protected void onDestroy() {
@@ -62,6 +64,8 @@ public class ModerationActivity extends AppCompatActivity {
         findUserButton = (OptionButton) findViewById(R.id.find_user_button);
         adminListButton = (OptionButton) findViewById(R.id.admin_list_button);
         modsListButton = (OptionButton) findViewById(R.id.mods_list_button);
+        deleteInfluencerButton = (OptionButton) findViewById(R.id.delete_influencer_button);
+        modLogsButton = (OptionButton) findViewById(R.id.mod_logs_button);
     }
 
     private void setup() {
@@ -108,9 +112,17 @@ public class ModerationActivity extends AppCompatActivity {
         banUserButton.setOnClickListener(v -> {
             openActivity(BanUserActivity.class);
         });
-        
+
         moderateNewInfluencersButton.setOnClickListener(v -> {
             openActivity(AcceptInfluencersProfilesActivity.class);
+        });
+
+        deleteInfluencerButton.setOnClickListener(v -> {
+            openActivity(DeleteInfluencerActivity.class);
+        });
+
+        modLogsButton.setOnClickListener(v -> {
+            openActivity(ModLoggerActivity.class);
         });
     }
 

@@ -13,109 +13,38 @@
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_margin="12dp"
+            android:layout_weight="1"
             app:cardCornerRadius="20dp"
             app:cardElevation="5dp">
 
-            <ImageView
-                android:id="@+id/influencer_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/test" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/influencer_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/black_negative_transparent"
+                    android:padding="8dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/influencer_nick_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="top|center"
+                        android:textColor="@color/sesl_primary_text"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </RelativeLayout>
         </androidx.cardview.widget.CardView>
-
-        <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:background="@drawable/oui_drawer_background"
-            android:layout_margin="12dp"
-            android:orientation="vertical">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/influencer_nick_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:gravity="top|center"
-                android:textColor="@color/sesl_primary_text"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
-                        android:src="@drawable/ic_oui_like_on"
-                        app:tint="@color/sesl_primary_text" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/likes_count_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/sesl_primary_text"
-                        android:text="0"
-                        android:textSize="16sp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
-                        android:src="@drawable/albums"
-                        app:tint="@color/sesl_primary_text" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/album_count_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/sesl_primary_text"
-                        android:text="0"
-                        android:textSize="16sp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
-                        android:src="@drawable/ic_ouid_image"/>
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/image_count_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/sesl_primary_text"
-                        android:text="0"
-                        android:textSize="16sp"/>
-                </LinearLayout>
-            </LinearLayout>
-        </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
     </LinearLayout>
 </FrameLayout>

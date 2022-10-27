@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.fusoft.walkboner.adapters.viewpager.MainViewPager;
 import com.fusoft.walkboner.auth.Authentication;
 import com.fusoft.walkboner.auth.AuthenticationListener;
+import com.fusoft.walkboner.database.funcions.GetNotifications;
+import com.fusoft.walkboner.models.Notification;
 import com.fusoft.walkboner.models.SavedLink;
 import com.fusoft.walkboner.offline.LinksManager;
 import com.fusoft.walkboner.settings.Settings;
@@ -16,6 +18,8 @@ import com.fusoft.walkboner.uniload.UniloadActivity;
 import com.fusoft.walkboner.utils.AppUpdate;
 import com.fusoft.walkboner.views.dialogs.CreateLinkDialog;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+
+import java.util.List;
 
 import de.dlyt.yanndroid.oneui.layout.DrawerLayout;
 import de.dlyt.yanndroid.oneui.view.Toast;
@@ -29,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private OptionButton profileButton;
     private OptionButton homeButton;
     private OptionButton celebrityButton;
-    private OptionButton logoutButton, premiumButton, savedLinksButton;
+    private OptionButton logoutButton, premiumButton, savedLinksButton, notificationsButton;
     private OptionButton debugButton, uniloadButton;
     private ExtendedFloatingActionButton createFab;
 
@@ -78,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         createFab = findViewById(R.id.create_fab);
         savedLinksButton = findViewById(R.id.saved_links_button);
         uniloadButton = findViewById(R.id.uniload_button);
+        notificationsButton = findViewById(R.id.notifications_button);
 
         adapter = new MainViewPager(getSupportFragmentManager(), getLifecycle());
         viewPager.setAdapter(adapter);
@@ -105,6 +110,12 @@ public class MainActivity extends AppCompatActivity {
             openActivity(UniloadActivity.class, false);
         });
 
+        notificationsButton.setOnClickListener(v -> {
+            mainActivityToolbar.setNavigationButtonBadge(0);
+            notificationsButton.setCounterEnabled(false);
+            openActivity(NotificationsActivity.class, false);
+        });
+
         AppUpdate.checkForUpdate(new AppUpdate.UpdateListener() {
             @Override
             public void OnUpdateAvailable(String version, String changeLog, String downloadUrl, boolean isRequired) {
@@ -122,6 +133,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setup() {
+        GetNotifications.Get(auth.getCurrentUserUid(), false, new GetNotifications.NotificationsListener() {
+            @Override
+            public void OnSuccess(@Nullable List<Notification> notifications) {
+                if (notifications != null) {
+                    int newNotificationsAmount = 0;
+                    for (Notification notification : notifications) {
+                        if (!notification.isChecked()) {
+                            newNotificationsAmount++;
+                        }
+                    }
+                    mainActivityToolbar.setNavigationButtonBadge(newNotificationsAmount);
+                    notificationsButton.setCounterEnabled(true);
+                    notificationsButton.setCounter(newNotificationsAmount);
+                }
+            }
+
+            @Override
+            public void OnError(String reason) {
+
+            }
+        });
+
         profileButton.setOnClickListener(v -> {
             openActivity(UserProfileActivity.class, false);
         });

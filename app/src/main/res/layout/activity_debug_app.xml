@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginHorizontal="46dp"
-    android:layout_marginTop="16dp">
+    android:layout_marginTop="16dp"
+    android:orientation="vertical">
 
     <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
         android:layout_width="match_parent"
@@ -17,5 +18,18 @@
             android:background="@drawable/oui_drawer_background"
             app:icon="@drawable/bug"
             app:text="Crashlytics Startup" />
+    </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+
+    <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.dlyt.yanndroid.oneui.widget.OptionButton
+            android:id="@+id/notify_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/oui_drawer_background"
+            app:icon="@drawable/bell"
+            app:text="Test Notification" />
     </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
 </LinearLayout>

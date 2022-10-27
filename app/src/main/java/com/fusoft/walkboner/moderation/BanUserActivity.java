@@ -158,7 +158,7 @@ public class BanUserActivity extends AppCompatActivity {
             if (bannedTo == null || bannedTo.isEmpty() || banReason.isEmpty()) {
                 Toast.makeText(BanUserActivity.this, "Uzupełnij wszystkie dane", Toast.LENGTH_SHORT).show();
             } else {
-                BanUser.Ban(currentUser.getUserUid(), bannedTo, banReason, new BanUserListener() {
+                BanUser.Ban(currentUser.getUserName(), currentUser.getUserUid(), bannedTo, banReason, new BanUserListener() {
                     @Override
                     public void OnUserBanned() {
                         Toast.makeText(BanUserActivity.this, "Pomyślnie zbanowano użytkownika", Toast.LENGTH_SHORT).show();

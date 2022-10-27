@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityOptionsCompat;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +24,7 @@ import com.fusoft.walkboner.ProfileActivity;
 import com.fusoft.walkboner.R;
 import com.fusoft.walkboner.models.Post;
 import com.fusoft.walkboner.models.User;
+import com.fusoft.walkboner.settings.Settings;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -39,12 +41,14 @@ public class PopularPostsAdapter extends RecyclerView.Adapter<PopularPostsAdapte
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
     private Context context;
+    private Settings settings;
 
     // data is passed into the constructor
-    public PopularPostsAdapter(Context context, List<Post> data) {
+    public PopularPostsAdapter(Context context, List<Post> data, Settings settings) {
         this.context = context;
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
+        this.settings = settings;
     }
 
     // inflates the row layout from xml when needed
@@ -79,7 +83,7 @@ public class PopularPostsAdapter extends RecyclerView.Adapter<PopularPostsAdapte
                     context.startActivity(intent, options.toBundle());
                 });
 
-                Glide.with(context).load(post.getPostImage()).addListener(new RequestListener<Drawable>() {
+                RequestListener<Drawable> glideListener = new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                         return false;
@@ -87,9 +91,6 @@ public class PopularPostsAdapter extends RecyclerView.Adapter<PopularPostsAdapte
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        float radius = 20f;
-                        // ViewGroup you want to start blur from. Choose root as close to BlurView in hierarchy as possible.
-
                         holder.postImage.setVisibility(View.VISIBLE);
                         holder.loadingBar.setVisibility(View.GONE);
                         holder.likes_top_linear.setVisibility(View.VISIBLE);
@@ -97,7 +98,18 @@ public class PopularPostsAdapter extends RecyclerView.Adapter<PopularPostsAdapte
 
                         return false;
                     }
-                }).into(holder.postImage);
+                };
+
+                if (settings.isPrivateMode()) { //If PrivateMode -> load private image
+                    Glide.with(context).load(AppCompatResources.getDrawable(context, R.drawable.walkboner_private)).into(holder.postImage);
+
+                    holder.postImage.setVisibility(View.VISIBLE);
+                    holder.loadingBar.setVisibility(View.GONE);
+                    holder.likes_top_linear.setVisibility(View.VISIBLE);
+                    holder.likes_amount_text.setText(String.valueOf(post.getPostLikes().size()));
+                } else {
+                    Glide.with(context).load(post.getPostImage()).addListener(glideListener).into(holder.postImage);
+                }
             }
         });
     }

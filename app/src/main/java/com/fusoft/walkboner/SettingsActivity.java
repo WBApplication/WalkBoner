@@ -58,6 +58,8 @@ public class SettingsActivity extends AppCompatActivity {
         pinLockButton = (RoundLinearLayout) findViewById(R.id.pin_lock_button);
         passwordChangeButton = (RoundLinearLayout) findViewById(R.id.password_change_button);
         discreteSwitch = (Switch) findViewById(R.id.discrete_switch);
+        discreteSwitch.setChecked(settings.isPrivateMode());
+
         publishLinksButton = findViewById(R.id.publish_links_button);
 
         snapPostsSwitch = findViewById(R.id.snap_posts_switch);
@@ -97,6 +99,10 @@ public class SettingsActivity extends AppCompatActivity {
 
         snapPostsSwitch.setOnClickListener(v -> {
             settings.toggleSnapPosts(snapPostsSwitch.isChecked());
+        });
+
+        discreteSwitch.setOnClickListener(v -> {
+            settings.setPrivateMode(discreteSwitch.isChecked());
         });
 
         pinLockButton.setOnClickListener(view -> {

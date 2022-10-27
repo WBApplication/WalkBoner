@@ -160,7 +160,34 @@ public class MediaFragment extends Fragment {
     }
 
     private void loadImage() {
-        Picasso.get()
+        Glide.with(image)
+                .load(getImageUrl())
+                .placeholder(R.drawable.transparent_background)
+                .error(R.drawable.transparent_background)
+                .addListener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        loadingLinear.setVisibility(View.GONE);
+                        errorLinear.setVisibility(View.VISIBLE);
+                        if (e != null) {
+                            errorReasonText.setText("GlideException: " + e.getMessage());
+                        } else {
+                            errorReasonText.setText("GlideException: Nieznany Błąd");
+                        }
+
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        loadingLinear.setVisibility(View.GONE);
+
+                        return false;
+                    }
+                })
+                .into(image);
+
+        /*Picasso.get()
                 .load(getImageUrl())
                 .into(image, new Callback() {
                     @Override
@@ -176,6 +203,6 @@ public class MediaFragment extends Fragment {
                         errorLinear.setVisibility(View.VISIBLE);
                         errorReasonText.setText(e.getMessage());
                     }
-                });
+                });*/
     }
 }

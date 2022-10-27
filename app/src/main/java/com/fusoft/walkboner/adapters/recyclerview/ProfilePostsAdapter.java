@@ -304,6 +304,7 @@ public class ProfilePostsAdapter extends RecyclerView.Adapter<ProfilePostsAdapte
     public void removeFromList(int position) {
         mData.remove(position);
         notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mData.size());
     }
 
     public void setHeartClickListener(HeartClickListener heartClickListener) {

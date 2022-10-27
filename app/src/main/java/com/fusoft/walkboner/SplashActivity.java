@@ -4,6 +4,8 @@ import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -26,6 +28,8 @@ import com.fusoft.walkboner.auth.UserInfoListener;
 import com.fusoft.walkboner.database.funcions.UnbanUser;
 import com.fusoft.walkboner.database.funcions.UnbanUserListener;
 import com.fusoft.walkboner.models.User;
+import com.fusoft.walkboner.moderation.ModLogger;
+import com.fusoft.walkboner.services.NotificationsService;
 import com.fusoft.walkboner.settings.Settings;
 import com.fusoft.walkboner.utils.AppUpdate;
 import com.fusoft.walkboner.utils.UidGenerator;
@@ -72,8 +76,8 @@ public class SplashActivity extends AppCompatActivity {
 
         authentication = new Authentication(new AuthenticationListener() {
             @Override
-            public void UserAlreadyLoggedIn(boolean success, boolean isBanned, boolean pinRequired, @Nullable String reason) {
-                String write_storage = android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+            public void UserAlreadyLoggedIn(boolean success, boolean isBanned, boolean pinRequired, @Nullable String reason, @Nullable User userData) {
+                String write_storage = Manifest.permission.WRITE_EXTERNAL_STORAGE;
                 String read_storage = Manifest.permission.READ_EXTERNAL_STORAGE;
                 String camera = Manifest.permission.CAMERA;
                 int write_storage_result = checkSelfPermission(write_storage);
@@ -94,6 +98,21 @@ public class SplashActivity extends AppCompatActivity {
 
                 if (success) {
                     log("Successfully to this time");
+
+                    ModLogger.modUid = userData.getUserUid();
+                    ModLogger.modUserName = userData.getUserName();
+
+                    if(!isNotificationsServiceRunning()) {
+                        Intent serviceIntent = new Intent(SplashActivity.this,
+                                NotificationsService.class);
+                        serviceIntent.putExtra("userUid", userData.getUserUid());
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            Toast.makeText(SplashActivity.this, "Tworzenie Service", Toast.LENGTH_SHORT).show();
+                            startForegroundService(serviceIntent);
+
+                            if (isNotificationsServiceRunning()) Toast.makeText(SplashActivity.this, "Service działa w tle!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
                     if (pinRequired || settings.isBiometricUnlockEnabled()) {
                         log("Pin is Required => Boolean Value: " + pinRequired);
@@ -185,6 +204,16 @@ public class SplashActivity extends AppCompatActivity {
         setup();
     }
 
+    private boolean isNotificationsServiceRunning() {
+        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for(ActivityManager.RunningServiceInfo service: activityManager.getRunningServices(Integer.MAX_VALUE)) {
+            if(NotificationsService.class.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void initView() {
         logoText = (MaterialTextView) findViewById(R.id.logo_text);
         bannedText = findViewById(R.id.banned_text);
@@ -207,46 +236,6 @@ public class SplashActivity extends AppCompatActivity {
         logoText.setScaleX(0.8f);
         logoText.setScaleY(0.8f);
         logoText.animate().alpha(1f).scaleX(1).scaleY(1).setDuration(500).setInterpolator(new AccelerateDecelerateInterpolator()).start();
-    }
-
-    /*private void redirectUser() {
-
-        String write_storage = android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-        String read_storage = Manifest.permission.READ_EXTERNAL_STORAGE;
-        int write_storage_result = checkSelfPermission(write_storage);
-        int read_storage_result = checkSelfPermission(read_storage);
-
-        if (userData != null && userData.isUserBanned()) {
-
-        } else {
-            if (isUpdateAvailable && !settings.skipUpdate()) {
-                startActivity(new Intent(SplashActivity.this, UpdateActivity.class));
-                finish();
-            } else if (!isLoggedIn) {
-
-            } else if (isLoggedIn && write_storage_result == PackageManager.PERMISSION_DENIED || read_storage_result == PackageManager.PERMISSION_DENIED) {
-                Intent intent = new Intent(SplashActivity.this, PermissionsActivity.class);
-                intent.putExtra("isPinRequired", isPinRequired);
-                startActivity(intent);
-            } else if (isLoggedIn && isPinRequired) {
-                startActivity(new Intent(SplashActivity.this, UnlockAppActivity.class));
-            } else if (isLoggedIn && !isPinRequired && settings.isBiometricUnlockEnabled()) {
-                startActivity(new Intent(SplashActivity.this, UnlockAppActivity.class));
-            } else if (isLoggedIn && !isPinRequired) {
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
-            }
-
-            settings.skipUpdateNextTime(false);
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            finish();
-        }
-    }*/
-
-    private String getDate(long time) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(time);
-        String date = DateFormat.format("HH:mm dd-MM-yyyy", cal).toString();
-        return date;
     }
 
     private void log(String message) {

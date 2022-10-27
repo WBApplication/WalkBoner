@@ -108,17 +108,12 @@ public class CelebritiesFragment extends Fragment {
             }
         });
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3);
         celebritiesRecyclerView.setLayoutManager(layoutManager);
 
         loadData();
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loadData();
-            }
-        });
+        swipeRefreshLayout.setOnRefreshListener(() -> loadData());
 
         addInfluencerButton.setOnClickListener(v -> openActivity());
     }
