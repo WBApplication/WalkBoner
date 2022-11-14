@@ -36,7 +36,7 @@ public class GetPosts {
                 post.setPostDescription(document.get("postDescription").toString());
                 post.setPostImage(document.get("postImage").toString());
                 post.setCreatedAt(document.get("createdAt").toString());
-                post.setShowsCelebrity(document.get("showsCelebrity").toString());
+                post.setShowsCelebrity(document.getString("showsCelebrity"));
                 post.setAllowComments(Boolean.parseBoolean(document.get("allowComments").toString()));
                 post.setUserLikedPost(false);
                 post.setPostDocumentUid(document.getId());

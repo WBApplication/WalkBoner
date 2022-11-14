@@ -8,5 +8,35 @@
     <item
         android:id="@+id/delete_popup_button"
         android:title="Usuń"
-        android:visible="false"/>
+        android:visible="false" />
+
+    <item
+        android:id="@+id/moderation_title"
+        android:enabled="false"
+        android:title="Moderacja"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/copy_post_uid_button"
+        android:title="Skopiuj UID"
+        android:titleCondensed="Sko. UID"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/copy_post_user_uid_button"
+        android:contentDescription="Sko. UID Twór."
+        android:title="Skopiuj UID Twórcy"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/delete_post_button"
+        android:contentDescription="Usuń Post"
+        android:title="Usuń Post"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/ban_user_button"
+        android:contentDescription="Ban Twór."
+        android:title="Zbanuj Twórce"
+        android:visible="false" />
 </menu>

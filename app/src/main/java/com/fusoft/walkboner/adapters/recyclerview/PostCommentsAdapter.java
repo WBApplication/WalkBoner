@@ -116,7 +116,7 @@ public class PostCommentsAdapter extends RecyclerView.Adapter<PostCommentsAdapte
 
 
     // stores and recycles views as they are scrolled off screen
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         Avatar userImage;
         MaterialTextView userNameText;
         MaterialTextView contentText;
@@ -130,27 +130,11 @@ public class PostCommentsAdapter extends RecyclerView.Adapter<PostCommentsAdapte
             contentText = itemView.findViewById(R.id.comment_content_text);
             likeText = itemView.findViewById(R.id.comment_like_text);
             commentLikeButton = itemView.findViewById(R.id.comment_like_button);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
         }
     }
 
     // convenience method for getting data at click position
     Comment getComment(int id) {
         return mData.get(id);
-    }
-
-    // allows clicks events to be caught
-    void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
-    }
-
-    // parent activity will implement this method to respond to click events
-    public interface ItemClickListener {
-        void onItemClick(View view, int position);
     }
 }

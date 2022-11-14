@@ -61,7 +61,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_oui4_copy" />
+                    android:src="@drawable/ic_copy_wb" />
             </LinearLayout>
 
             <com.google.android.material.textview.MaterialTextView

@@ -3,29 +3,31 @@ package com.fusoft.walkboner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.fusoft.walkboner.adapters.recyclerview.AlbumsAdapter;
+import com.fusoft.walkboner.adapters.recyclerview.ItemClickListener;
+import com.fusoft.walkboner.adapters.recyclerview.ItemLongClickListener;
 import com.fusoft.walkboner.database.funcions.GetAlbum;
 import com.fusoft.walkboner.models.album.Album;
+import com.fusoft.walkboner.moderation.views.AlbumModBottomSheetKt;
+import com.fusoft.walkboner.singletons.UserSingletone;
 import com.fusoft.walkboner.utils.AnimateChanges;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.gson.Gson;
 
 import java.util.List;
-
-import de.dlyt.yanndroid.oneui.sesl.recyclerview.GridLayoutManager;
-import de.dlyt.yanndroid.oneui.view.RecyclerView;
-import de.dlyt.yanndroid.oneui.view.Toast;
-import de.dlyt.yanndroid.oneui.widget.ProgressBar;
 
 public class PersonAlbumsActivity extends AppCompatActivity {
     private ImageView backgroundImage;
@@ -130,12 +132,28 @@ public class PersonAlbumsActivity extends AppCompatActivity {
                     noAlbumsText.setVisibility(View.VISIBLE);
                 }
 
-                adapter.setClickListener(new AlbumsAdapter.ItemClickListener() {
+                adapter.setClickListener(new ItemClickListener() {
                     @Override
                     public void onItemClick(Album album, int position) {
                         Intent intent = new Intent(PersonAlbumsActivity.this, MediaViewerActivity.class);
                         intent.putExtra("albumImages", new Gson().toJson(album.getAlbumContent()));
                         startActivity(intent);
+                    }
+                });
+
+                adapter.setLongClickListener(new ItemLongClickListener() {
+                    @Override
+                    public void onAlbumLongClicked(Album album) {
+                        boolean isUserAdmin = UserSingletone.getInstance().getUser().isUserAdmin();
+                        boolean isUserMod = UserSingletone.getInstance().getUser().isUserModerator();
+                        if (isUserAdmin || isUserMod) {
+                            AlbumModBottomSheetKt.ShowAlbumModBottomSheet(
+                                    PersonAlbumsActivity.this,
+                                    getLayoutInflater(),
+                                    album.getAlbumUid(),
+                                    album.getCreatedBy()
+                            );
+                        }
                     }
                 });
             }

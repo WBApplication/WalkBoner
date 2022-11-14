@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<de.dlyt.yanndroid.oneui.layout.ToolbarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:expandable="false"
-    app:navigationIcon="@drawable/ic_oui_back"
-    app:title="Utwórz Album">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,14 +15,14 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:text="Zdjęcia i Wideo"
-            android:textColor="@color/sesl_primary_text"
+            android:textColor="@color/primary_text_color"
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/oui_drawer_background"
+            android:background="@drawable/custom_button_background"
             android:padding="8dp"
             app:roundedCorners="all">
 
@@ -33,12 +30,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <de.dlyt.yanndroid.oneui.view.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/meda_picker_recycler_view"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
             </HorizontalScrollView>
-        </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+        </LinearLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
@@ -46,7 +43,7 @@
             android:layout_marginTop="8dp"
             android:padding="8dp"
             android:text="Tytuł Albumu"
-            android:textColor="@color/sesl_primary_text"
+            android:textColor="@color/primary_text_color"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -67,7 +64,7 @@
             android:layout_marginTop="8dp"
             android:padding="8dp"
             android:text="Opis Albumu"
-            android:textColor="@color/sesl_primary_text"
+            android:textColor="@color/primary_text_color"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -91,10 +88,14 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_album_button"
-            style="@style/ButtonStyle.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"
             android:text="Dodaj" />
     </LinearLayout>
-</de.dlyt.yanndroid.oneui.layout.ToolbarLayout>
+
+    <com.fusoft.walkboner.views.LoadingView
+        android:id="@+id/loadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</RelativeLayout>

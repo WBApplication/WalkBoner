@@ -27,8 +27,8 @@ public class AppUpdate {
     }
 
     public interface UpdateListener {
-        void OnUpdateAvailable(String version, String changeLog, String downloadUrl, boolean isRequired);
+        default void OnUpdateAvailable(String version, String changeLog, String downloadUrl, boolean isRequired) {}
 
-        void OnError(String reason);
+        default void OnError(String reason) {}
     }
 }

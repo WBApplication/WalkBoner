@@ -35,6 +35,8 @@ public class MediaViewerActivity extends AppCompatActivity {
 
     private Authentication auth;
 
+    private List<AlbumImage> images;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,8 +59,9 @@ public class MediaViewerActivity extends AppCompatActivity {
     }
 
     private void setup() {
-        List<AlbumImage> images = new Gson().fromJson(getIntent().getStringExtra("albumImages"), new TypeToken<List<AlbumImage>>() {}.getType());
 
+        images = new Gson().fromJson(getIntent().getStringExtra("albumImages"), new TypeToken<List<AlbumImage>>() {
+        }.getType());
         adapter = new MediaViewerViewPager(getSupportFragmentManager(), getLifecycle(), images);
         imagesViewpager.setAdapter(adapter);
 

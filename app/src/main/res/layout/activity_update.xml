@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/app_name"
-            android:textColor="@color/sesl_primary_text"
+            android:textColor="@color/primary_text_color"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -36,7 +36,7 @@
         android:orientation="vertical"
         android:visibility="visible">
 
-        <de.dlyt.yanndroid.oneui.widget.ProgressBar
+        <ProgressBar
             android:id="@+id/loading_update_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,6 +46,7 @@
             android:id="@+id/loading_update_error_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/m3_text_color_on_surface"
             android:text="Błąd"
             android:textSize="16sp"
             android:visibility="gone" />
@@ -59,18 +60,11 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/update" />
-
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Aktualizacja"
-            android:textColor="@color/primary_color"
+            android:textColor="@color/m3_text_color_on_surface"
             android:textSize="21sp"
             android:textStyle="bold" />
 
@@ -78,8 +72,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:textColor="@color/m3_text_color_on_surface"
             android:text="Lista Zmian"
-            android:textColor="@color/sesl_primary_text"
             android:textSize="18sp" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -93,13 +87,13 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/later_button"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Później" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/update_button"
-            style="@style/ButtonStyle.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -119,15 +113,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pobieranie"
-            android:textColor="@color/primary_color"
+            android:textColor="@color/m3_text_color_on_surface"
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <de.dlyt.yanndroid.oneui.widget.ProgressBar
+        <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/update_progress_bar"
-            style="@style/ProgressBarStyle.Horizontal.Large"
+            style="@style/Widget.Material3.LinearProgressIndicator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="12dp"
             android:layout_marginHorizontal="28dp" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -136,7 +131,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="0%"
-            android:textColor="@color/sesl_primary_text"
             android:textSize="18sp" />
     </LinearLayout>
 
@@ -152,7 +146,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Instalacja"
-            android:textColor="@color/primary_color"
+            android:textColor="@color/m3_text_color_on_surface"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -161,7 +155,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Przeprowadź Instalacje"
-            android:textColor="@color/sesl_primary_text"
             android:textSize="18sp" />
     </LinearLayout>
 </LinearLayout>

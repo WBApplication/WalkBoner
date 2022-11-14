@@ -1,10 +1,12 @@
 package com.fusoft.walkboner.utils;
 
 import android.view.View;
-import de.dlyt.yanndroid.oneui.sesl.recyclerview.LinearLayoutManager;
-import de.dlyt.yanndroid.oneui.sesl.recyclerview.LinearSnapHelper;
-import de.dlyt.yanndroid.oneui.sesl.recyclerview.OrientationHelper;
-import de.dlyt.yanndroid.oneui.view.RecyclerView.LayoutManager;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.OrientationHelper;
+import androidx.recyclerview.widget.RecyclerView;
+
 import kotlin.Metadata;
 import kotlin.jvm.internal.Intrinsics;
 import org.jetbrains.annotations.NotNull;
@@ -41,7 +43,7 @@ public class StartSnap extends LinearSnapHelper {
     }
 
     @Nullable
-    public View findSnapView(@NotNull LayoutManager layoutManager) {
+    public View findSnapView(@NotNull RecyclerView.LayoutManager layoutManager) {
         Intrinsics.checkNotNullParameter(layoutManager, "layoutManager");
         if (layoutManager.canScrollVertically()) {
             return this.findFirstView(layoutManager, this.getVerticalHelper(layoutManager));
@@ -51,7 +53,7 @@ public class StartSnap extends LinearSnapHelper {
     }
 
     @Nullable
-    public int[] calculateDistanceToFinalSnap(@NotNull LayoutManager layoutManager, @NotNull View targetView) {
+    public int[] calculateDistanceToFinalSnap(@NotNull RecyclerView.LayoutManager layoutManager, @NotNull View targetView) {
         Intrinsics.checkNotNullParameter(layoutManager, "layoutManager");
         Intrinsics.checkNotNullParameter(targetView, "targetView");
         byte var4 = 2;
@@ -79,7 +81,7 @@ public class StartSnap extends LinearSnapHelper {
     }
 
     @Nullable
-    protected final View findFirstView(@NotNull LayoutManager layoutManager, @NotNull OrientationHelper helper) {
+    protected final View findFirstView(@NotNull RecyclerView.LayoutManager layoutManager, @NotNull OrientationHelper helper) {
         Intrinsics.checkNotNullParameter(layoutManager, "layoutManager");
         Intrinsics.checkNotNullParameter(helper, "helper");
         int childCount = layoutManager.getChildCount();
@@ -131,7 +133,7 @@ public class StartSnap extends LinearSnapHelper {
     }
 
     @NotNull
-    protected final OrientationHelper getVerticalHelper(@NotNull LayoutManager layoutManager) {
+    protected final OrientationHelper getVerticalHelper(@NotNull RecyclerView.LayoutManager layoutManager) {
         Intrinsics.checkNotNullParameter(layoutManager, "layoutManager");
         if (this._verticalHelper == null) {
             this._verticalHelper = OrientationHelper.createVerticalHelper(layoutManager);
@@ -143,7 +145,7 @@ public class StartSnap extends LinearSnapHelper {
     }
 
     @NotNull
-    protected final OrientationHelper getHorizontalHelper(@NotNull LayoutManager layoutManager) {
+    protected final OrientationHelper getHorizontalHelper(@NotNull RecyclerView.LayoutManager layoutManager) {
         Intrinsics.checkNotNullParameter(layoutManager, "layoutManager");
         if (this._horizontalHelper == null) {
             this._horizontalHelper = OrientationHelper.createHorizontalHelper(layoutManager);

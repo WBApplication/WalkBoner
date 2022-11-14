@@ -1,65 +1,33 @@
 package com.fusoft.walkboner.adapters.recyclerview;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.Request;
 import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.Transition;
-import com.fusoft.walkboner.FullPhotoViewerActivity;
-import com.fusoft.walkboner.MainActivity;
-import com.fusoft.walkboner.ProfileActivity;
 import com.fusoft.walkboner.R;
-import com.fusoft.walkboner.database.funcions.LikePost;
-import com.fusoft.walkboner.models.Influencer;
-import com.fusoft.walkboner.models.Post;
-import com.fusoft.walkboner.models.User;
 import com.fusoft.walkboner.models.album.Album;
-import com.fusoft.walkboner.utils.Profile;
-import com.fusoft.walkboner.views.dialogs.ReportDialog;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.textview.MaterialTextView;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
-
-import de.dlyt.yanndroid.oneui.menu.MenuItem;
-import de.dlyt.yanndroid.oneui.menu.PopupMenu;
-import de.dlyt.yanndroid.oneui.utils.OnSingleClickListener;
-import de.dlyt.yanndroid.oneui.view.RecyclerView;
-import de.dlyt.yanndroid.oneui.widget.ProgressBar;
-import eightbitlab.com.blurview.BlurView;
-import eightbitlab.com.blurview.BlurViewFacade;
-import eightbitlab.com.blurview.RenderScriptBlur;
-import kr.co.prnd.readmore.ReadMoreTextView;
-import me.virtualiz.blurshadowimageview.BlurShadowImageView;
 
 public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder> {
 
     private List<Album> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private ItemLongClickListener mLongClickListener;
     private Context context;
 
     // data is passed into the constructor
@@ -106,6 +74,11 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
         holder.itemView.setOnClickListener(v -> {
             if (mClickListener != null) mClickListener.onItemClick(mData.get(position), position);
         });
+
+        holder.itemView.setOnLongClickListener(v -> {
+            if (mLongClickListener != null) mLongClickListener.onAlbumLongClicked(album);
+            return false;
+        });
     }
 
     // total number of rows
@@ -137,8 +110,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
         this.mClickListener = itemClickListener;
     }
 
-    // parent activity will implement this method to respond to click events
-    public interface ItemClickListener {
-        void onItemClick(Album album, int position);
+    public void setLongClickListener(ItemLongClickListener itemLongClickListener) {
+        this.mLongClickListener = itemLongClickListener;
     }
 }

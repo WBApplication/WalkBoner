@@ -3,19 +3,17 @@ package com.fusoft.walkboner.database.funcions.userProfile;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 
 public class SetDescription {
-    public static void Set(String userUid, String description, OnDescriptionChanged listener) {
+    public static void Set(String userDocId, String description, OnDescriptionChanged listener) {
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        firestore.collection("users").whereEqualTo("userUid", userUid).get().addOnSuccessListener(queryDocumentSnapshots -> {
+        firestore.collection("users").document(userDocId).get().addOnSuccessListener(queryDocumentSnapshots -> {
             HashMap<String, Object> map = new HashMap<>();
             map.put("description", description);
-            queryDocumentSnapshots.getDocuments().get(0).getReference().update(map).addOnSuccessListener(unused -> listener.OnChanged()).addOnFailureListener(new OnFailureListener() {
+            queryDocumentSnapshots.getReference().update(map).addOnSuccessListener(unused -> listener.OnChanged()).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     listener.OnError(e.getMessage());

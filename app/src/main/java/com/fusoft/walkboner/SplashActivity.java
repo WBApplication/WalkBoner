@@ -1,20 +1,12 @@
 package com.fusoft.walkboner;
 
 import android.Manifest;
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
-import android.app.ActivityManager;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -24,31 +16,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.fusoft.walkboner.auth.Authentication;
 import com.fusoft.walkboner.auth.AuthenticationListener;
-import com.fusoft.walkboner.auth.UserInfoListener;
 import com.fusoft.walkboner.database.funcions.UnbanUser;
 import com.fusoft.walkboner.database.funcions.UnbanUserListener;
 import com.fusoft.walkboner.models.User;
-import com.fusoft.walkboner.moderation.ModLogger;
-import com.fusoft.walkboner.services.NotificationsService;
 import com.fusoft.walkboner.settings.Settings;
-import com.fusoft.walkboner.utils.AppUpdate;
-import com.fusoft.walkboner.utils.UidGenerator;
+import com.fusoft.walkboner.singletons.UserSingletone;
 import com.google.android.material.textview.MaterialTextView;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 
 import de.dlyt.yanndroid.oneui.dialog.AlertDialog;
 import de.dlyt.yanndroid.oneui.view.Toast;
 
 @SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
-    private MaterialTextView logoText, importantText, bannedText;
+    private String TAG = "SplashActivtiy";
+
+    private MaterialTextView logoText, importantText, bannedText, appDetailsText;
 
     private Authentication authentication;
     private Settings settings;
@@ -99,20 +83,7 @@ public class SplashActivity extends AppCompatActivity {
                 if (success) {
                     log("Successfully to this time");
 
-                    ModLogger.modUid = userData.getUserUid();
-                    ModLogger.modUserName = userData.getUserName();
-
-                    if(!isNotificationsServiceRunning()) {
-                        Intent serviceIntent = new Intent(SplashActivity.this,
-                                NotificationsService.class);
-                        serviceIntent.putExtra("userUid", userData.getUserUid());
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            Toast.makeText(SplashActivity.this, "Tworzenie Service", Toast.LENGTH_SHORT).show();
-                            startForegroundService(serviceIntent);
-
-                            if (isNotificationsServiceRunning()) Toast.makeText(SplashActivity.this, "Service działa w tle!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
+                    UserSingletone.getInstance().setUser(userData);
 
                     if (pinRequired || settings.isBiometricUnlockEnabled()) {
                         log("Pin is Required => Boolean Value: " + pinRequired);
@@ -188,38 +159,25 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(new Intent(SplashActivity.this, AuthActivity.class));
                 finish();
             }
-
-            @Override
-            public void OnLogin(boolean isSuccess, boolean isBanned, boolean pinRequired, @Nullable String reason) {
-
-            }
-
-            @Override
-            public void OnRegister(boolean isSuccess, @Nullable String reason) {
-
-            }
         });
 
         initView();
         setup();
     }
 
-    private boolean isNotificationsServiceRunning() {
-        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for(ActivityManager.RunningServiceInfo service: activityManager.getRunningServices(Integer.MAX_VALUE)) {
-            if(NotificationsService.class.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private void initView() {
-        logoText = (MaterialTextView) findViewById(R.id.logo_text);
+        logoText = findViewById(R.id.logo_text);
         bannedText = findViewById(R.id.banned_text);
         bannedText.setVisibility(View.GONE);
         importantText = findViewById(R.id.important_text);
         importantText.setVisibility(View.GONE);
+        appDetailsText = findViewById(R.id.app_details_text);
+
+        String appDetails = BuildConfig.VERSION_NAME;
+        if (BuildConfig.DEBUG)
+            appDetails = appDetails + "\n" + "DEBUG MODE";
+
+        appDetailsText.setText(appDetails);
 
         errorDialog = new AlertDialog.Builder(SplashActivity.this);
         errorDialog.setTitle("Błąd");
@@ -239,6 +197,6 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void log(String message) {
-        Log.d("Authentication", message);
+        Log.d(TAG, message);
     }
 }

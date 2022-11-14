@@ -5,6 +5,9 @@
     <color name="black_negative">#000</color>
     <color name="black_negative_transparent">#E6000000</color>
     <color name="item_post_details_background">#66000000</color>
+    <color name="custom_button_background_color">?attr/colorSurface</color>
+
+    <color name="primary_text_color">@color/material_dynamic_primary70</color>
 
     <color name="ucrop_color_toolbar">@color/black_negative</color>
     <color name="ucrop_color_statusbar">@color/black_negative</color>

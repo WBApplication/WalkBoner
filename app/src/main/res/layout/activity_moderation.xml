@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<de.dlyt.yanndroid.oneui.layout.ToolbarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:title="Moderacja"
-    app:expandable="false">
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_insetEdge="top"
+        app:liftOnScroll="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            style="@style/Widget.Material3.Toolbar.Surface"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:contentInsetStartWithNavigation="0dp"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:subtitle="Narzędzia Moderacyjne"
+            app:title="@string/app_name" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <de.dlyt.yanndroid.oneui.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -14,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="12dp"
             android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView
@@ -21,86 +40,97 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:text="Komunikacja"
-                android:textStyle="bold"
+                android:textColor="@color/m3_text_color_on_surface"
                 android:textSize="18sp"
-                android:textColor="@color/primary_color"/>
+                android:textStyle="bold" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Chat Grupy Moderacyjnej"/>
+                android:text="Chat Grupy Moderacyjnej" />
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="8dp">
 
-                <de.dlyt.yanndroid.oneui.widget.OptionButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/chat_mod_button"
+                    style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/oui_drawer_background"
-                    app:text="Otwórz Chat"
-                    app:icon="@drawable/ic_oui3_message"/>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+                    android:gravity="start|center"
+                    android:text="Chat"
+                    app:icon="@drawable/ic_forum_wb"
+                    app:iconSize="20dp" />
+            </LinearLayout>
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:text="Użytkownicy"
-                android:textStyle="bold"
+                android:textColor="@color/m3_text_color_on_surface"
                 android:textSize="18sp"
-                android:textColor="@color/primary_color"/>
+                android:textStyle="bold" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Widzisz użytkownika, który łamię politykę aplikacji?\nZareaguj!"/>
+                android:text="Widzisz użytkownika, który łamię politykę aplikacji?\nZareaguj!" />
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp">
+                android:layout_marginVertical="8dp"
+                android:orientation="horizontal">
 
-                <de.dlyt.yanndroid.oneui.widget.OptionButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/ban_user_button"
+                    style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/oui_drawer_background"
-                    app:text="Zbanuj Użytkownika"
-                    app:icon="@drawable/cancel"/>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+                    android:gravity="start|center"
+                    android:text="Zbanuj Użytkownika"
+                    app:icon="@drawable/ic_block_wb"
+                    app:iconSize="20dp" />
+            </LinearLayout>
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp">
+                android:layout_marginVertical="8dp"
+                android:orientation="horizontal">
 
-                <de.dlyt.yanndroid.oneui.widget.OptionButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/unban_user_button"
+                    style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/oui_drawer_background"
-                    app:text="Odbanuj Użytkownika"
-                    app:icon="@drawable/gavel"/>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+                    android:gravity="start|center"
+                    android:text="Odbanuj Użytkownika"
+                    app:icon="@drawable/gavel"
+                    app:iconSize="20dp" />
+            </LinearLayout>
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp">
+                android:layout_marginVertical="8dp"
+                android:orientation="horizontal">
 
-                <de.dlyt.yanndroid.oneui.widget.OptionButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/warning_user_button"
+                    style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/oui_drawer_background"
-                    app:text="Ostrzeż Użytkownika"
-                    app:icon="@drawable/alert_octagon"/>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+                    android:gravity="start|center"
+                    android:text="Ostrzeż Użytkownika"
+                    app:icon="@drawable/alert_octagon"
+                    app:iconSize="20dp" />
+            </LinearLayout>
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
@@ -108,29 +138,32 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="4dp"
                 android:text="Influencerki"
-                android:textStyle="bold"
+                android:textColor="@color/m3_text_color_on_surface"
                 android:textSize="18sp"
-                android:textColor="@color/primary_color"/>
+                android:textStyle="bold" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Użytkownicy sami dodają profile influencerek, ale pierw muszą zostać zatwierdzone, by troll nie miał satysfakcji."/>
+                android:text="Użytkownicy sami dodają profile influencerek, ale pierw muszą zostać zatwierdzone, by troll nie miał satysfakcji." />
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp">
+                android:layout_marginVertical="8dp"
+                android:orientation="horizontal">
 
-                <de.dlyt.yanndroid.oneui.widget.OptionButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/moderate_new_influencers_button"
+                    style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/oui_drawer_background"
-                    app:text="Akceptuj Nowe Profile"
-                    app:icon="@drawable/check"/>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+                    android:gravity="start|center"
+                    android:text="Akceptuj Nowe Profile"
+                    app:icon="@drawable/ic_person_add_wb"
+                    app:iconSize="20dp" />
+            </LinearLayout>
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
@@ -138,57 +171,66 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="4dp"
                 android:text="Materiały"
-                android:textStyle="bold"
+                android:textColor="@color/m3_text_color_on_surface"
                 android:textSize="18sp"
-                android:textColor="@color/primary_color"/>
+                android:textStyle="bold" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Użytkownicy mogą umieszczać własne materiały ale czasami... umieszczają coś innego."/>
+                android:text="Użytkownicy mogą umieszczać własne materiały ale czasami... umieszczają coś innego." />
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp">
+                android:layout_marginVertical="8dp"
+                android:orientation="horizontal">
 
-                <de.dlyt.yanndroid.oneui.widget.OptionButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/delete_post_button"
+                    style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/oui_drawer_background"
-                    app:text="Usuń Post"
-                    app:icon="@drawable/ic_oui4_delete"/>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+                    android:gravity="start|center"
+                    android:text="Usuń Post"
+                    app:icon="@drawable/ic_delete_wb"
+                    app:iconSize="20dp" />
+            </LinearLayout>
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp">
+                android:layout_marginVertical="8dp"
+                android:orientation="horizontal">
 
-                <de.dlyt.yanndroid.oneui.widget.OptionButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/delete_album_button"
+                    style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/oui_drawer_background"
-                    app:text="Usuń Album"
-                    app:icon="@drawable/ic_oui4_delete"/>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+                    android:gravity="start|center"
+                    android:text="Usuń Album"
+                    app:icon="@drawable/ic_delete_wb"
+                    app:iconSize="20dp" />
+            </LinearLayout>
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp">
+                android:layout_marginVertical="8dp"
+                android:orientation="horizontal">
 
-                <de.dlyt.yanndroid.oneui.widget.OptionButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/delete_influencer_button"
+                    style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/oui_drawer_background"
-                    app:text="Usuń Influencera"
-                    app:icon="@drawable/ic_oui4_delete"/>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+                    android:gravity="start|center"
+                    android:text="Usuń Influencera"
+                    app:icon="@drawable/ic_delete_wb"
+                    app:iconSize="20dp" />
+            </LinearLayout>
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
@@ -196,29 +238,32 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="4dp"
                 android:text="Zgłoszenia"
-                android:textStyle="bold"
+                android:textColor="@color/m3_text_color_on_surface"
                 android:textSize="18sp"
-                android:textColor="@color/primary_color"/>
+                android:textStyle="bold" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Użytkownicy to pomocnicy!"/>
+                android:text="Użytkownicy to pomocnicy!" />
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp">
+                android:layout_marginVertical="8dp"
+                android:orientation="horizontal">
 
-                <de.dlyt.yanndroid.oneui.widget.OptionButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/reported_posts_button"
+                    style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/oui_drawer_background"
-                    app:text="Zgłoszone Posty"
-                    app:icon="@drawable/alert_octagon"/>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+                    android:gravity="start|center"
+                    android:text="Zgłoszone Posty"
+                    app:icon="@drawable/ic_report_wb"
+                    app:iconSize="20dp" />
+            </LinearLayout>
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
@@ -226,71 +271,83 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="4dp"
                 android:text="Inne"
-                android:textStyle="bold"
+                android:textColor="@color/m3_text_color_on_surface"
                 android:textSize="18sp"
-                android:textColor="@color/primary_color"/>
+                android:textStyle="bold" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Funkcje, które możesz potrzebować"/>
+                android:text="Funkcje, które możesz potrzebować" />
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp">
+                android:layout_marginVertical="8dp"
+                android:orientation="horizontal">
 
-                <de.dlyt.yanndroid.oneui.widget.OptionButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/find_user_button"
+                    style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/oui_drawer_background"
-                    app:text="Znajdź Użytkownika"
-                    app:icon="@drawable/ic_oui_search"/>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+                    android:gravity="start|center"
+                    android:text="Wyszukaj Użytkownika"
+                    app:icon="@drawable/ic_search_wb"
+                    app:iconSize="20dp" />
+            </LinearLayout>
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp">
+                android:layout_marginVertical="8dp"
+                android:orientation="horizontal">
 
-            <de.dlyt.yanndroid.oneui.widget.OptionButton
-                android:id="@+id/admin_list_button"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/admin_list_button"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center"
+                    android:text="Lista Adminstratorów"
+                    app:icon="@drawable/ic_list_wb"
+                    app:iconSize="20dp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/oui_drawer_background"
-                app:text="Lista Administratorów"
-                app:icon="@drawable/ic_oui_list"/>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+                android:layout_marginVertical="8dp"
+                android:orientation="horizontal">
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp">
-
-                <de.dlyt.yanndroid.oneui.widget.OptionButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/mods_list_button"
+                    style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/oui_drawer_background"
-                    app:text="Lista Moderatorów"
-                    app:icon="@drawable/ic_oui_list"/>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+                    android:gravity="start|center"
+                    android:text="Lista Moderatorów"
+                    app:icon="@drawable/ic_list_wb"
+                    app:iconSize="20dp" />
+            </LinearLayout>
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp">
+                android:layout_marginVertical="8dp"
+                android:orientation="horizontal">
 
-                <de.dlyt.yanndroid.oneui.widget.OptionButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/mod_logs_button"
+                    style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/oui_drawer_background"
-                    app:text="Logi Moderatorskie"
-                    app:icon="@drawable/ic_oui_list"/>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+                    android:gravity="start|center"
+                    android:text="Logi"
+                    app:icon="@drawable/ic_logs_wb"
+                    app:iconSize="20dp" />
+            </LinearLayout>
         </LinearLayout>
     </de.dlyt.yanndroid.oneui.widget.NestedScrollView>
-</de.dlyt.yanndroid.oneui.layout.ToolbarLayout>
+</LinearLayout>

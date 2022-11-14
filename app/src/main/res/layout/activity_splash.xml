@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,9 +16,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
+            android:textColor="@color/primary_text_color"
             android:textSize="36sp"
-            android:textStyle="bold"
-            android:textColor="@color/sesl_primary_text"/>
+            android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/important_text"
@@ -26,10 +26,10 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Trwa to dłużej niż oczekiwano!\nPonawianie próby"
+            android:textColor="#ED2F21"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:textColor="#ED2F21"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/banned_text"
@@ -38,9 +38,24 @@
             android:layout_marginHorizontal="38dp"
             android:gravity="center"
             android:text="Urządzenie Zbanowane"
+            android:textColor="#ED2F21"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:textColor="#ED2F21"
-            android:visibility="visible"/>
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|center">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/app_details_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:padding="8dp"
+            android:gravity="center"
+            android:textStyle="bold" />
     </LinearLayout>
 </RelativeLayout>

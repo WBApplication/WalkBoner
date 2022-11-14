@@ -287,6 +287,7 @@ public class Authentication {
                     userData.setUserBannedTo(doc.get("bannedTo").toString());
                     userData.setShowFirstTimeTip(Boolean.parseBoolean(doc.getString("showFirstTimeTip")));
                     userData.setCreatedAt(Long.parseLong(doc.get("createdAt").toString()));
+                    userData.setUserDocumentId(doc.getId());
                     listener.OnUserDataReceived(userData);
                 }
             }).addOnFailureListener(new OnFailureListener() {

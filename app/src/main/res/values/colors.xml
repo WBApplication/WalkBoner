@@ -5,16 +5,11 @@
     <color name="black_negative">#FFF</color>
     <color name="black_negative_transparent">#E6FFFFFF</color>
     <color name="item_post_details_background">#66FFFFFF</color>
+    <color name="custom_button_background_color">@color/material_dynamic_neutral95</color>
+
+    <color name="primary_text_color">@color/material_dynamic_primary70</color>
 
     <color name="ucrop_color_toolbar">@color/black_negative</color>
     <color name="ucrop_color_statusbar">@color/black_negative</color>
     <color name="ucrop_color_widget_active">@color/primary_color</color>
-
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
 </resources>

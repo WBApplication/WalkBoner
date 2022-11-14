@@ -1,0 +1,74 @@
+## 1.0.0.4 BETA ##
+— Zmiana UI z OneUI (GitHub/Yanndroid) na Material You.
+— Konwersja kodu Java do Kotlin oraz poprawki.
+— Możliwość zmiany pozycji panelu nawigacji.
+— Możliwość zmiany rozmiaru wyświetlanego postu.
+— Dodano widok do postów, który po kliknięciu przekierowuje użytkownika do albumu postaci na zdjęciu posta.
+— Lepszy dostęp do funkcji moderatorskich.
+— Uporządkowano ustawienia.
+
+
+
+## 1.0.0.3 BETA ##
+— Naprawa problemów z powiadomieniami
+— Naprawa problemu z tworzeniem albumów
+    - Po wybraniu > ~13 zdjęć, aplikacja przycinała się na urządzeniu z < 4GB RAM.
+
+
+
+## 1.0.0.2 BETA ##
+— Powiadomienia
+
+— Influencerzy
+    - Dodano funkcje tworzenia albumów dla influencera oraz możliwość wyświetlania ich
+
+— Profil
+    - Dodano funkcję przycinania awataru przed jego wybraniem
+
+
+
+## 1.0.0.1 BETA ##
+— Naprawa Błędów
+    - Kompletne przepisanie funkcji autoryzacji w celu optymalizacji
+
+— Zmiana Interfejsu
+
+— Posty
+    - Dodano funkcje komentowania postów
+
+— Influencerzy
+    - Dodano możliwość tworzenia oraz wyświetlania dodanych influencerek
+
+— Profil
+    - Dodano tekst opisujący powód zbanowania użytkownika oraz długość jego trwania
+
+— Awatary
+    - Dodano obramowanie awatarów sygnalizujące funkcje użytkownika lub jego status (np. ban)
+
+— Ustawienia
+    - Dodano blokadę biometryczną
+    - Dodano możliwość zmiany hasła
+
+
+
+## 1.0.0.0 ALPHA ##
+— Autoryzacja
+    - Logowanie
+    - Rejestracja
+
+— Posty
+    - Tworzenie postów z jednym zdjęciem
+    - Dodawania opisów
+    - Funkcja 'Polub'
+
+— Profil
+    - Wyświetalnie profilu użytkownika
+        - Możliwość zmiany awataru
+        - Wyświetlanie polubionych postów
+        - Wyświetlanie postów użytkownika
+    - Wyświetlanie profilu innych użytkowników
+
+— Ustawienia
+    - Blokada PIN
+    - Tryb Dyskretny
+    - Moderacja

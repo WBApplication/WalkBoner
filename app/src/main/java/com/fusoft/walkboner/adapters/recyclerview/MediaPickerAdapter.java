@@ -1,31 +1,26 @@
 package com.fusoft.walkboner.adapters.recyclerview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
-import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.fusoft.walkboner.R;
-import com.fusoft.walkboner.models.album.AlbumImage;
 import com.fusoft.walkboner.utils.GetPathFromUri;
-import com.fusoft.walkboner.utils.UidGenerator;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import de.dlyt.yanndroid.oneui.menu.MenuItem;
-import de.dlyt.yanndroid.oneui.menu.PopupMenu;
-import de.dlyt.yanndroid.oneui.view.RecyclerView;
-import de.dlyt.yanndroid.oneui.view.Toast;
-import de.dlyt.yanndroid.oneui.widget.RoundLinearLayout;
 
 public class MediaPickerAdapter extends RecyclerView.Adapter<MediaPickerAdapter.ViewHolder> {
 
@@ -67,29 +62,35 @@ public class MediaPickerAdapter extends RecyclerView.Adapter<MediaPickerAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         if (position == mImage.size()) {
             holder.default_select_photo_iv.setOnClickListener(view -> {
                 listener.OnClick(VIEW_TYPE_PICKER, position);
             });
         } else {
             if (holder.recent_photos_iv != null) {
-                Glide.with(holder.recent_photos_iv)
-                        .load(GetPathFromUri.getPath(mContext, (Uri) mImage.get(position).get("imagePath")))
-                        .into(holder.recent_photos_iv);
+                String imagePath = GetPathFromUri.getPath(mContext, (Uri) mImage.get(position).get("imagePath"));
 
-                PopupMenu menu = new PopupMenu(holder.image_more_options_button);
+                /*Bitmap image = ImageUtils.getInstant().getCompressedBitmap(imagePath);*/
+
+                File file = new File(imagePath);
+
+                Picasso.get().load(file).into(holder.recent_photos_iv);
+
+                /*Glide.with(holder.recent_photos_iv)
+                        .load(image)
+                        .into(holder.recent_photos_iv);*/
+
+                PopupMenu menu = new PopupMenu(mContext, holder.image_more_options_button);
                 menu.inflate(R.menu.picked_image_menu);
 
-                menu.setPopupMenuListener(new PopupMenu.PopupMenuListener() {
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
                             case R.id.lock_image_button:
                                 // TODO: Set Min SDK 24
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                    mImage.get(position).replace("isLocked", menuItem.isChecked());
-                                }
+                                mImage.get(position).replace("isLocked", menuItem.isChecked());
                                 listener.OnLockImageClick(position);
                                 return false;
                             case R.id.replace_image_button:
@@ -103,11 +104,6 @@ public class MediaPickerAdapter extends RecyclerView.Adapter<MediaPickerAdapter.
                         }
 
                         return true;
-                    }
-
-                    @Override
-                    public void onMenuItemUpdate(MenuItem menuItem) {
-
                     }
                 });
 

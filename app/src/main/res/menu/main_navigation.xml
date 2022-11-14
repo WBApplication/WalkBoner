@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/userProfileFragment"
+        android:icon="@drawable/ic_person_wb"
+        android:title="Profil" />
+    <item
+        android:id="@+id/notificationsFragment"
+        android:icon="@drawable/ic_notifications_active_wb"
+        android:title="Powiadomienia" />
+    <item
+        android:id="@+id/homeFragment2"
+        android:icon="@drawable/ic_home_wb"
+        android:title="Główna" />
+    <item
+        android:id="@+id/celebritiesFragment"
+        android:icon="@drawable/ic_star_wb"
+        android:title="Influencerzy" />
+</menu>

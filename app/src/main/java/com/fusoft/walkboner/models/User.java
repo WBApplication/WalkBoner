@@ -8,12 +8,21 @@ public class User {
     private String userDescription;
     private String userBanReason;
     private String userBannedTo;
+    private String userDocumentId;
     private boolean isUserVerified;
     private boolean isUserModerator;
     private boolean isUserAdmin;
     private boolean isUserBanned;
     private boolean showFirstTimeTip;
     private long createdAt;
+
+    public String getUserDocumentId() {
+        return userDocumentId;
+    }
+
+    public void setUserDocumentId(String userDocumentId) {
+        this.userDocumentId = userDocumentId;
+    }
 
     public String getUserUid() {
         return userUid;

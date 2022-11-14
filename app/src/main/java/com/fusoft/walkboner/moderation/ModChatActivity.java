@@ -5,9 +5,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.fusoft.walkboner.R;
 import com.fusoft.walkboner.adapters.recyclerview.ModChatAdapter;
@@ -18,6 +21,7 @@ import com.fusoft.walkboner.models.Message;
 import com.fusoft.walkboner.models.User;
 import com.fusoft.walkboner.utils.UidGenerator;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,16 +31,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import de.dlyt.yanndroid.oneui.sesl.recyclerview.LinearLayoutManager;
-import de.dlyt.yanndroid.oneui.utils.OnSingleClickListener;
-import de.dlyt.yanndroid.oneui.view.RecyclerView;
-import de.dlyt.yanndroid.oneui.view.Toast;
-
 public class ModChatActivity extends AppCompatActivity {
     private RecyclerView chatRecyclerView;
     private ImageView pickImageButton;
     private EditText messageEdittext;
-    private ImageView sendButton;
+    private MaterialButton sendButton;
 
     private ArrayList<Message> messagesList = new ArrayList<>();
     HashMap<String, Object> messagesMap;
@@ -71,7 +70,7 @@ public class ModChatActivity extends AppCompatActivity {
         chatRecyclerView = (RecyclerView) findViewById(R.id.chat_recycler_view);
         pickImageButton = (ImageView) findViewById(R.id.pick_image_button);
         messageEdittext = (EditText) findViewById(R.id.message_edittext);
-        sendButton = (ImageView) findViewById(R.id.send_button);
+        sendButton = (MaterialButton) findViewById(R.id.send_button);
     }
 
     private void setup() {
@@ -105,9 +104,9 @@ public class ModChatActivity extends AppCompatActivity {
 
         authentication.getUserData(userInfoListener);
 
-        sendButton.setOnClickListener(new OnSingleClickListener() {
+        sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSingleClick(View view) {
+            public void onClick(View view) {
                 boolean isTextEmpty = messageEdittext.getText().toString().isEmpty();
                 //boolean isTextIsNotOnlyWhiteSpace = messageEdittext.getText().toString().matches("\\w*");
 
@@ -139,7 +138,7 @@ public class ModChatActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
         firestore.collection("modsChat").orderBy("sendedAt", Query.Direction.DESCENDING).addSnapshotListener((value, error) -> {
             if (messagesList != null || !messagesList.isEmpty())
-            messagesList.clear();
+                messagesList.clear();
 
             if (value == null) {
                 Toast.makeText(ModChatActivity.this, "Brak Wiadomości", Toast.LENGTH_SHORT).show();

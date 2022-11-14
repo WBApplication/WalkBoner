@@ -2,7 +2,6 @@ package com.fusoft.walkboner.database.funcions.userProfile;
 
 import androidx.annotation.NonNull;
 
-import com.fusoft.walkboner.UserProfileActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;

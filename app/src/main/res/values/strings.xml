@@ -2,8 +2,47 @@
     <string name="app_name">WalkBoner</string>
 
     <string name="discord_invite_url">EMPTY</string>
-
     <string name="storage_url">gs://walkboner-72c59.appspot.com</string>
-
     <string name="sesl_font_family_regular">sans-serif</string>
+
+    <string name="navigation_settings">Wybierz czy nawigacja ma się wyświetlać na dole czy z boku strony\n\nWymaga ponownego uruchomienia aplikacji.</string>
+    <string name="field_cant_be_empty">Pole nie może być puste!</string>
+    <string name="too_many_chars">Za dużo znaków!</string>
+    <string name="try_again">Spróbuj Ponownie!\n</string>
+    <string name="influencer_sended_successfuly">Pomyślnie wysłano!\nDecyzję dostaniesz w powiadomieniu.</string>
+    <string name="accept_new_infu_title">Akceptuj Nowe Profile</string>
+    <string name="add_inlu_title">Dodaj Influencerkę</string>
+    <string name="you_cant_add_new_influ">Nie możesz dodać nowych influencerek!</string>
+    <string name="you_cant_add_new_influ_reason">Nowi użytkownicy mogą dodawać influencerki po tygodniu czasu od utworzenia konta!</string>
+    <string name="avatar">Avatar</string>
+    <string name="click_to_select_from_gallery">Kliknij by wybrać z galerii</string>
+    <string name="uploading_in_progress">Wgrywanie...</string>
+    <string name="basic_informations">Podstawowe Informacje</string>
+    <string name="first_name">Imię</string>
+    <string name="surname">Nazwisko</string>
+    <string name="nickname_required">Pseudonim (Wymagane)</string>
+    <string name="media_links">Linki do Mediów</string>
+    <string name="instagram">Instagram</string>
+    <string name="tiktok">TikTok</string>
+    <string name="youtube">YouTube</string>
+    <string name="send">Wyślij</string>
+    <string name="authorization">Autoryzacja</string>
+    <string name="registration">Rejestracja</string>
+    <string name="email">E-Mail</string>
+    <string name="user_name">Nazwa Użytkownika</string>
+    <string name="password">Hasło</string>
+    <string name="register">Zarejestruj</string>
+    <string name="or">lub</string>
+    <string name="login">Zaloguj</string>
+    <string name="enter_user_uid">Wpisz UID Użytkownika</string>
+    <string name="user_not_finded">Nie znaleziono użytkownika!</string>
+    <string name="user_already_banned">Użytkownik został już zbanowany!</string>
+    <string name="finded">Znaleziono:</string>
+    <string name="enter_ban_reason">Podaj Powód Bana</string>
+    <string name="reason_should_describe_why_user_is_banned">Powód powinien dokładnie informować czemu użytkownik został zbanowany.</string>
+    <string name="ban_ends_on">Ban kończy się za</string>
+    <string name="no_reason_ban_warning">Bez podstawne zbanowanie użytkownika może skończyć się usunięciem z grupy moderatorskiej</string>
+    <string name="ban">ZBANUJ</string>
+    <string name="post_display_description">Wybierz czy posty mają wyświetlać się w małym czy dużym oknie</string>
+    <string name="unban">Odbanuj</string>
 </resources>

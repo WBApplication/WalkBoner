@@ -5,9 +5,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,28 +21,23 @@ import com.fusoft.walkboner.database.funcions.BanUser;
 import com.fusoft.walkboner.database.funcions.BanUserListener;
 import com.fusoft.walkboner.models.User;
 import com.fusoft.walkboner.utils.Profile;
+import com.fusoft.walkboner.views.LoadingView;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import de.dlyt.yanndroid.oneui.dialog.ProgressDialog;
-import de.dlyt.yanndroid.oneui.view.Toast;
-import de.dlyt.yanndroid.oneui.widget.Spinner;
-
 public class BanUserActivity extends AppCompatActivity {
-    private EditText userToBanUidEdittext;
+    private TextInputEditText userToBanUidEdittext, banReasonEdittext;
     private LinearLayout userFindedDataLinear, userAlreadyBannedLinear, userNotFindedLinear;
     private ImageView userAvatarImage;
     private MaterialTextView userNameText;
-    private EditText banReasonEdittext;
     private Spinner banDurationSpinner;
     private MaterialButton banUserButton;
 
-    private String banReason;
-    private String bannedTo;
+    private String banReason, bannedTo;
 
-    private ProgressDialog loading;
-
+    private LoadingView loading;
     private User currentUser;
 
     @Override
@@ -52,25 +48,29 @@ public class BanUserActivity extends AppCompatActivity {
         setup();
     }
 
+    @Override
+    protected void onDestroy() {
+        loading = null;
+        currentUser = null;
+
+        super.onDestroy();
+    }
+
     private void initView() {
-        userToBanUidEdittext = (EditText) findViewById(R.id.user_to_ban_uid_edittext);
-        userFindedDataLinear = (LinearLayout) findViewById(R.id.user_finded_data_linear);
+        userToBanUidEdittext = findViewById(R.id.user_to_ban_uid_edittext);
+        userFindedDataLinear = findViewById(R.id.user_finded_data_linear);
         userAlreadyBannedLinear = findViewById(R.id.user_already_banned_linear);
         userNotFindedLinear = findViewById(R.id.user_not_finded_linear);
         userFindedDataLinear.setVisibility(View.GONE);
-        userAvatarImage = (ImageView) findViewById(R.id.user_avatar_image);
-        userNameText = (MaterialTextView) findViewById(R.id.user_name_text);
-        banReasonEdittext = (EditText) findViewById(R.id.ban_reason_edittext);
-        banDurationSpinner = (Spinner) findViewById(R.id.ban_duration_spinner);
-        banUserButton = (MaterialButton) findViewById(R.id.ban_user_button);
+        userAvatarImage = findViewById(R.id.user_avatar_image);
+        userNameText = findViewById(R.id.user_name_text);
+        banReasonEdittext = findViewById(R.id.ban_reason_edittext);
+        banDurationSpinner = findViewById(R.id.ban_duration_spinner);
+        banUserButton = findViewById(R.id.ban_user_button);
+        loading = findViewById(R.id.loadingView);
     }
 
     private void setup() {
-        loading = new ProgressDialog(BanUserActivity.this);
-        loading.setIndeterminate(true);
-        loading.setCancelable(false);
-        loading.setCanceledOnTouchOutside(false);
-        loading.setProgressStyle(ProgressDialog.STYLE_CIRCLE);
 
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
@@ -94,10 +94,12 @@ public class BanUserActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 if (editable.toString().length() == 28) {
                     loading.show();
+                    userToBanUidEdittext.setEnabled(false);
                     new Profile().GetProfileForUser(editable.toString(), new UserInfoListener() {
                         @Override
                         public void OnUserDataReceived(User user) {
-                            loading.dismiss();
+                            loading.hide();
+                            userToBanUidEdittext.setEnabled(true);
 
                             if (user.isUserBanned()) {
                                 userAlreadyBannedLinear.setVisibility(View.VISIBLE);
@@ -111,18 +113,20 @@ public class BanUserActivity extends AppCompatActivity {
 
                         @Override
                         public void OnUserNotFinded() {
-                            loading.dismiss();
+                            loading.hide();
+                            userToBanUidEdittext.setEnabled(true);
                             userNotFindedLinear.setVisibility(View.VISIBLE);
                         }
 
                         @Override
                         public void OnError(String reason) {
-                            loading.dismiss();
+                            loading.hide();
+                            userToBanUidEdittext.setEnabled(true);
                             Toast.makeText(BanUserActivity.this, reason, Toast.LENGTH_SHORT).show();
                         }
                     });
                 } else {
-                    loading.dismiss();
+                    loading.hide();
                     currentUser = null;
                     userFindedDataLinear.setVisibility(View.GONE);
                     userAlreadyBannedLinear.setVisibility(View.GONE);
@@ -131,7 +135,14 @@ public class BanUserActivity extends AppCompatActivity {
             }
         });
 
+        // If opened from another activity than moderation
+        if (getIntent().hasExtra("userUid")) {
+            userToBanUidEdittext.setText(getIntent().getStringExtra("userUid"));
+        }
+
         banUserButton.setOnClickListener(v -> {
+            loading.show();
+
             banReason = banReasonEdittext.getText().toString();
 
             switch (banDurationSpinner.getSelectedItemPosition()) {
@@ -162,6 +173,7 @@ public class BanUserActivity extends AppCompatActivity {
                     @Override
                     public void OnUserBanned() {
                         Toast.makeText(BanUserActivity.this, "Pomyślnie zbanowano użytkownika", Toast.LENGTH_SHORT).show();
+                        loading.hide();
                         finish();
                     }
 

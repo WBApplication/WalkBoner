@@ -1,46 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<de.dlyt.yanndroid.oneui.layout.ToolbarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:title="Open Source"
-    app:expanded="true">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        style="@style/Widget.Material3.AppBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_location="appbar_header">
+        android:layout_height="wrap_content"
+        android:minHeight="0dp"
+        android:fitsSystemWindows="true"
+        android:background="@color/material_dynamic_neutral10">
 
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/star"
-            app:tint="@color/primary_color" />
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbarLayout"
+            style="@style/Widget.Material3.CollapsingToolbar.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentScrim="@color/material_dynamic_neutral10"
+            app:expandedTitleTextAppearance="@style/ExpandedProfileAppBarAppearance"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp"
-            android:text="@string/app_name"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@color/sesl_primary_text"/>
+            <!-- Toolbar Expanded Content -->
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/app_version_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="1.0.0"
-            android:textSize="18sp"/>
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="28dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/front_logo" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="@string/app_name"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_text_color"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/app_version_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="1.0.0"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+
+            <com.google.android.material.appbar.MaterialToolbar
+                style="@style/Widget.Material3.Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_collapseMode="pin" />
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <de.dlyt.yanndroid.oneui.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,8 +77,8 @@
             android:layout_marginHorizontal="54dp"
             android:orientation="vertical">
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
-                android:background="@drawable/oui_drawer_background"
+            <LinearLayout
+                android:background="@drawable/custom_button_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -68,7 +97,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="OneUI"
-                        android:textColor="@color/sesl_primary_text"
+                        android:textColor="@color/primary_text_color"
                         android:textStyle="bold"
                         android:textSize="16sp"/>
 
@@ -80,10 +109,10 @@
                         android:text="Yanndroid | UI Design"
                         android:textSize="12sp"/>
                 </LinearLayout>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+            </LinearLayout>
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
-                android:background="@drawable/oui_drawer_background"
+            <LinearLayout
+                android:background="@drawable/custom_button_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -102,7 +131,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Firebase"
-                        android:textColor="@color/sesl_primary_text"
+                        android:textColor="@color/primary_text_color"
                         android:textStyle="bold"
                         android:textSize="16sp"/>
 
@@ -114,10 +143,10 @@
                         android:text="Google | Server"
                         android:textSize="12sp"/>
                 </LinearLayout>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+            </LinearLayout>
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
-                android:background="@drawable/oui_drawer_background"
+            <LinearLayout
+                android:background="@drawable/custom_button_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -136,7 +165,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Lottie"
-                        android:textColor="@color/sesl_primary_text"
+                        android:textColor="@color/primary_text_color"
                         android:textStyle="bold"
                         android:textSize="16sp"/>
 
@@ -148,10 +177,10 @@
                         android:text="Airbnb | Animated Pictures"
                         android:textSize="12sp"/>
                 </LinearLayout>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+            </LinearLayout>
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
-                android:background="@drawable/oui_drawer_background"
+            <LinearLayout
+                android:background="@drawable/custom_button_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -170,7 +199,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="TouchImageView"
-                        android:textColor="@color/sesl_primary_text"
+                        android:textColor="@color/primary_text_color"
                         android:textStyle="bold"
                         android:textSize="16sp"/>
 
@@ -182,10 +211,10 @@
                         android:text="MikeOrtiz | Zoomable ImageView"
                         android:textSize="12sp"/>
                 </LinearLayout>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+            </LinearLayout>
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
-                android:background="@drawable/oui_drawer_background"
+            <LinearLayout
+                android:background="@drawable/custom_button_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -204,7 +233,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="ReadMoreTextView"
-                        android:textColor="@color/sesl_primary_text"
+                        android:textColor="@color/primary_text_color"
                         android:textStyle="bold"
                         android:textSize="16sp"/>
 
@@ -216,10 +245,10 @@
                         android:text="PRNDcompany | Expandable TextView"
                         android:textSize="12sp"/>
                 </LinearLayout>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+            </LinearLayout>
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
-                android:background="@drawable/oui_drawer_background"
+            <LinearLayout
+                android:background="@drawable/custom_button_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -238,7 +267,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="CircularImageView"
-                        android:textColor="@color/sesl_primary_text"
+                        android:textColor="@color/primary_text_color"
                         android:textStyle="bold"
                         android:textSize="16sp"/>
 
@@ -250,10 +279,10 @@
                         android:text="MikhaelLopez | CircularImageView"
                         android:textSize="12sp"/>
                 </LinearLayout>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+            </LinearLayout>
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
-                android:background="@drawable/oui_drawer_background"
+            <LinearLayout
+                android:background="@drawable/custom_button_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -272,7 +301,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="RollingText"
-                        android:textColor="@color/sesl_primary_text"
+                        android:textColor="@color/primary_text_color"
                         android:textStyle="bold"
                         android:textSize="16sp"/>
 
@@ -284,10 +313,10 @@
                         android:text="YvesCheung | Rolling TextView Animation"
                         android:textSize="12sp"/>
                 </LinearLayout>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+            </LinearLayout>
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
-                android:background="@drawable/oui_drawer_background"
+            <LinearLayout
+                android:background="@drawable/custom_button_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -306,7 +335,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Material ViewPager Dots Indicator"
-                        android:textColor="@color/sesl_primary_text"
+                        android:textColor="@color/primary_text_color"
                         android:textStyle="bold"
                         android:textSize="16sp"/>
 
@@ -318,10 +347,10 @@
                         android:text="tommybuonomo | ViewPager Dot Indicator"
                         android:textSize="12sp"/>
                 </LinearLayout>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+            </LinearLayout>
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
-                android:background="@drawable/oui_drawer_background"
+            <LinearLayout
+                android:background="@drawable/custom_button_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -340,7 +369,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="FileDownloader"
-                        android:textColor="@color/sesl_primary_text"
+                        android:textColor="@color/primary_text_color"
                         android:textStyle="bold"
                         android:textSize="16sp"/>
 
@@ -352,10 +381,10 @@
                         android:text="lingochamp | Downloading Media Files"
                         android:textSize="12sp"/>
                 </LinearLayout>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+            </LinearLayout>
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
-                android:background="@drawable/oui_drawer_background"
+            <LinearLayout
+                android:background="@drawable/custom_button_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -374,7 +403,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="ExoPlayer"
-                        android:textColor="@color/sesl_primary_text"
+                        android:textColor="@color/primary_text_color"
                         android:textStyle="bold"
                         android:textSize="16sp"/>
 
@@ -386,10 +415,10 @@
                         android:text="Google | Video Player"
                         android:textSize="12sp"/>
                 </LinearLayout>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+            </LinearLayout>
 
-            <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
-                android:background="@drawable/oui_drawer_background"
+            <LinearLayout
+                android:background="@drawable/custom_button_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -408,7 +437,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="LeakCanary"
-                        android:textColor="@color/sesl_primary_text"
+                        android:textColor="@color/primary_text_color"
                         android:textStyle="bold"
                         android:textSize="16sp"/>
 
@@ -420,7 +449,7 @@
                         android:text="SquareUp | Memory Leak Detection"
                         android:textSize="12sp"/>
                 </LinearLayout>
-            </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </de.dlyt.yanndroid.oneui.widget.NestedScrollView>
-</de.dlyt.yanndroid.oneui.layout.ToolbarLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

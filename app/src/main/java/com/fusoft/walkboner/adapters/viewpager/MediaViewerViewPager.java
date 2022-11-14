@@ -1,20 +1,13 @@
 package com.fusoft.walkboner.adapters.viewpager;
 
-import android.content.Context;
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 
-import com.fusoft.walkboner.fragments.CelebritiesFragment;
-import com.fusoft.walkboner.fragments.HomeFragment;
 import com.fusoft.walkboner.fragments.MediaFragment;
-import com.fusoft.walkboner.fragments.SavedLinksFragment;
 import com.fusoft.walkboner.models.album.AlbumImage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.dlyt.yanndroid.oneui.sesl.viewpager2.adapter.FragmentStateAdapter;

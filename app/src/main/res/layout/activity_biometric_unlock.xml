@@ -1,41 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<de.dlyt.yanndroid.oneui.layout.ToolbarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:expandable="false"
     app:navigationIcon="@drawable/ic_oui_back"
-    app:title="Blokada Biometryczna">
+    app:title="Blokada PIN">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="42dp"
-        android:animateLayoutChanges="true"
         android:orientation="vertical">
 
-        <de.dlyt.yanndroid.oneui.widget.RoundLinearLayout
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/oui_drawer_background"
-            android:orientation="horizontal"
-            android:padding="16dp">
+            app:layout_insetEdge="top"
+            app:liftOnScroll="true">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/biometric_state_text"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Wyłączone"
-                android:textColor="@color/sesl_primary_text"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                style="@style/Widget.Material3.Toolbar.Surface"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:contentInsetStartWithNavigation="0dp"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:subtitle="Blokada Biometryczna"
+                app:title="@string/app_name" />
 
-            <de.dlyt.yanndroid.oneui.widget.Switch
-                android:id="@+id/biometric_toggle_switch"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
-        </de.dlyt.yanndroid.oneui.widget.RoundLinearLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="42dp"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.Material3.CardView.Outlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dip"
+                app:cardMaxElevation="4dip"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/biometric_state_text"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="start|center"
+                        android:text="Wyłączone"
+                        android:textColor="@color/m3_text_color_on_surface"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/biometric_toggle_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
     </LinearLayout>
-</de.dlyt.yanndroid.oneui.layout.ToolbarLayout>
+</RelativeLayout>

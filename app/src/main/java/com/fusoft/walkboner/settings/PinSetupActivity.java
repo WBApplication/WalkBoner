@@ -9,10 +9,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.fusoft.walkboner.R;
+import com.fusoft.walkboner.views.LoadingView;
 import com.fusoft.walkboner.views.dialogs.ErrorDialog;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,20 +25,18 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 
-import de.dlyt.yanndroid.oneui.dialog.ProgressDialog;
-import de.dlyt.yanndroid.oneui.widget.Switch;
 import in.aabhasjindal.otptextview.OTPListener;
 import in.aabhasjindal.otptextview.OtpTextView;
 
 public class PinSetupActivity extends AppCompatActivity {
     private MaterialTextView pinStateText;
-    private Switch pinToggleSwitch;
+    private MaterialSwitch pinToggleSwitch;
     private LinearLayout pinEnabledLinear;
     private MaterialButton savePinButton;
     private MaterialButton settingsSecurityQuestionsButton;
     private OtpTextView otpView;
 
-    private ProgressDialog loading;
+    private LoadingView loading;
 
     private FirebaseFirestore firestore;
     private FirebaseAuth auth;
@@ -56,13 +56,14 @@ public class PinSetupActivity extends AppCompatActivity {
 
     private void initView() {
         pinStateText = (MaterialTextView) findViewById(R.id.pin_state_text);
-        pinToggleSwitch = (Switch) findViewById(R.id.pin_toggle_switch);
+        pinToggleSwitch = findViewById(R.id.pin_toggle_switch);
         pinEnabledLinear = (LinearLayout) findViewById(R.id.pin_enabled_linear);
         savePinButton = (MaterialButton) findViewById(R.id.save_pin_button);
         biometricEnabledDisclaimerText = (MaterialTextView) findViewById(R.id.biometric_enabled_disclaimer_text);
         biometricEnabledDisclaimerText.setVisibility(View.GONE);
         savePinButton.setEnabled(false);
         settingsSecurityQuestionsButton = (MaterialButton) findViewById(R.id.settings_security_questions_button);
+        loading = findViewById(R.id.loadingView);
         otpView = findViewById(R.id.otp_view);
 
         settings = new Settings(PinSetupActivity.this);
@@ -70,12 +71,6 @@ public class PinSetupActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-
-        loading = new ProgressDialog(PinSetupActivity.this);
-        loading.setIndeterminate(true);
-        loading.setProgressStyle(ProgressDialog.STYLE_CIRCLE);
-        loading.setCancelable(false);
-        loading.setCanceledOnTouchOutside(false);
 
         if (settings.isBiometricUnlockEnabled()) {
             biometricEnabledDisclaimerText.setVisibility(View.VISIBLE);
@@ -104,11 +99,11 @@ public class PinSetupActivity extends AppCompatActivity {
                             for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
                                 pinToggleSwitch.setChecked(Boolean.parseBoolean(doc.getString("ENABLED")));
                                 changeStateText(pinToggleSwitch.isChecked());
-                                loading.dismiss();
+                                loading.hide();
                                 return;
                             }
 
-                            loading.dismiss();
+                            loading.hide();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -168,7 +163,7 @@ public class PinSetupActivity extends AppCompatActivity {
                                 documentSnapshot.getReference().collection("pin").document(doc.getId()).update(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
-                                        loading.dismiss();
+                                        loading.hide();
                                         finish();
                                     }
                                 });
@@ -178,7 +173,7 @@ public class PinSetupActivity extends AppCompatActivity {
                             documentSnapshot.getReference().collection("pin").add(map).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
-                                    loading.dismiss();
+                                    loading.hide();
                                     finish();
                                 }
                             });
@@ -217,12 +212,12 @@ public class PinSetupActivity extends AppCompatActivity {
                             doc.getReference().update(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
-                                    loading.dismiss();
+                                    loading.hide();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    loading.dismiss();
+                                    loading.hide();
                                     error(e.getMessage() + "\n\nLinia: 212\n\nSpróbuj ponownie później!");
                                 }
                             });
@@ -230,7 +225,7 @@ public class PinSetupActivity extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            loading.dismiss();
+                            loading.hide();
                             error(e.getMessage() + "\n\nLinia: 220\n\nSpróbuj ponownie później!");
                         }
                     });
@@ -239,7 +234,7 @@ public class PinSetupActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                loading.dismiss();
+                loading.hide();
                 error(e.getMessage() + "\n\nLinia: 229\n\nSpróbuj ponownie później!");
             }
         });

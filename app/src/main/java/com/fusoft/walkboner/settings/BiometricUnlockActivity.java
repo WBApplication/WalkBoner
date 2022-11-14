@@ -6,13 +6,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.fusoft.walkboner.R;
+import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.textview.MaterialTextView;
-
-import de.dlyt.yanndroid.oneui.widget.Switch;
 
 public class BiometricUnlockActivity extends AppCompatActivity {
     private MaterialTextView biometricStateText;
-    private Switch biometricToggleSwitch;
+    private MaterialSwitch biometricToggleSwitch;
 
     private Settings settings;
 
@@ -25,8 +24,8 @@ public class BiometricUnlockActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        biometricStateText = (MaterialTextView) findViewById(R.id.biometric_state_text);
-        biometricToggleSwitch = (Switch) findViewById(R.id.biometric_toggle_switch);
+        biometricStateText = findViewById(R.id.biometric_state_text);
+        biometricToggleSwitch = findViewById(R.id.biometric_toggle_switch);
 
         settings = new Settings(BiometricUnlockActivity.this);
     }

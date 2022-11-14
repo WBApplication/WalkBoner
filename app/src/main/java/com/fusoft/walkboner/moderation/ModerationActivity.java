@@ -7,30 +7,28 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.fusoft.walkboner.R;
-import com.fusoft.walkboner.moderation.utils.CounterListener;
 import com.fusoft.walkboner.moderation.utils.GetInfluencersToModerateCount;
 import com.fusoft.walkboner.moderation.utils.GetReportsToModerateCount;
-
-import de.dlyt.yanndroid.oneui.widget.OptionButton;
+import com.google.android.material.button.MaterialButton;
 
 public class ModerationActivity extends AppCompatActivity {
 
-    private OptionButton chatModButton;
-    private OptionButton banUserButton;
-    private OptionButton unbanUserButton;
-    private OptionButton warningUserButton;
-    private OptionButton moderateNewInfluencersButton;
-    private OptionButton deletePostButton;
-    private OptionButton deleteAlbumButton;
-    private OptionButton deleteInfluencerButton;
-    private OptionButton reportedPostsButton;
-    private OptionButton findUserButton;
-    private OptionButton adminListButton;
-    private OptionButton modsListButton;
+    private MaterialButton chatModButton;
+    private MaterialButton banUserButton;
+    private MaterialButton unbanUserButton;
+    private MaterialButton warningUserButton;
+    private MaterialButton moderateNewInfluencersButton;
+    private MaterialButton deletePostButton;
+    private MaterialButton deleteAlbumButton;
+    private MaterialButton deleteInfluencerButton;
+    private MaterialButton reportedPostsButton;
+    private MaterialButton findUserButton;
+    private MaterialButton adminListButton;
+    private MaterialButton modsListButton;
 
     private GetInfluencersToModerateCount moderateCount;
     private GetReportsToModerateCount reportsCount;
-    private OptionButton modLogsButton;
+    private MaterialButton modLogsButton;
 
     @Override
     protected void onDestroy() {
@@ -53,23 +51,23 @@ public class ModerationActivity extends AppCompatActivity {
         moderateCount = new GetInfluencersToModerateCount();
         reportsCount = new GetReportsToModerateCount();
 
-        chatModButton = (OptionButton) findViewById(R.id.chat_mod_button);
-        banUserButton = (OptionButton) findViewById(R.id.ban_user_button);
-        unbanUserButton = (OptionButton) findViewById(R.id.unban_user_button);
-        warningUserButton = (OptionButton) findViewById(R.id.warning_user_button);
-        moderateNewInfluencersButton = (OptionButton) findViewById(R.id.moderate_new_influencers_button);
-        deletePostButton = (OptionButton) findViewById(R.id.delete_post_button);
-        deleteAlbumButton = (OptionButton) findViewById(R.id.delete_album_button);
-        reportedPostsButton = (OptionButton) findViewById(R.id.reported_posts_button);
-        findUserButton = (OptionButton) findViewById(R.id.find_user_button);
-        adminListButton = (OptionButton) findViewById(R.id.admin_list_button);
-        modsListButton = (OptionButton) findViewById(R.id.mods_list_button);
-        deleteInfluencerButton = (OptionButton) findViewById(R.id.delete_influencer_button);
-        modLogsButton = (OptionButton) findViewById(R.id.mod_logs_button);
+        chatModButton = (MaterialButton) findViewById(R.id.chat_mod_button);
+        banUserButton = (MaterialButton) findViewById(R.id.ban_user_button);
+        unbanUserButton = (MaterialButton) findViewById(R.id.unban_user_button);
+        warningUserButton = (MaterialButton) findViewById(R.id.warning_user_button);
+        moderateNewInfluencersButton = (MaterialButton) findViewById(R.id.moderate_new_influencers_button);
+        deletePostButton = (MaterialButton) findViewById(R.id.delete_post_button);
+        deleteAlbumButton = (MaterialButton) findViewById(R.id.delete_album_button);
+        reportedPostsButton = (MaterialButton) findViewById(R.id.reported_posts_button);
+        findUserButton = (MaterialButton) findViewById(R.id.find_user_button);
+        adminListButton = (MaterialButton) findViewById(R.id.admin_list_button);
+        modsListButton = (MaterialButton) findViewById(R.id.mods_list_button);
+        deleteInfluencerButton = (MaterialButton) findViewById(R.id.delete_influencer_button);
+        modLogsButton = (MaterialButton) findViewById(R.id.mod_logs_button);
     }
 
     private void setup() {
-        moderateCount.GetAmount(new CounterListener() {
+        /*moderateCount.GetAmount(new CounterListener() {
             @Override
             public void OnResponse(int amountOfInfluencersToModerate) {
                 if (amountOfInfluencersToModerate != 0) {
@@ -85,9 +83,9 @@ public class ModerationActivity extends AppCompatActivity {
             public void OnError(String reason) {
 
             }
-        });
+        });*/
 
-        reportsCount.GetAmount(new CounterListener() {
+        /*reportsCount.GetAmount(new CounterListener() {
             @Override
             public void OnResponse(int amountOfInfluencersToModerate) {
                 if (amountOfInfluencersToModerate != 0) {
@@ -103,7 +101,7 @@ public class ModerationActivity extends AppCompatActivity {
             public void OnError(String reason) {
 
             }
-        });
+        });*/
 
         chatModButton.setOnClickListener(v -> {
             openActivity(ModChatActivity.class);
@@ -111,6 +109,10 @@ public class ModerationActivity extends AppCompatActivity {
 
         banUserButton.setOnClickListener(v -> {
             openActivity(BanUserActivity.class);
+        });
+
+        unbanUserButton.setOnClickListener(v -> {
+            openActivity(UnbanUserActivity.class);
         });
 
         moderateNewInfluencersButton.setOnClickListener(v -> {

@@ -3,11 +3,26 @@ package com.fusoft.walkboner.settings;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.fusoft.walkboner.BuildConfig;
 import com.fusoft.walkboner.security.Encrypt;
 
 public class Settings {
 
     private SharedPreferences settings;
+
+    public enum POST_VIEW_TYPE {
+        SMALL_POST(101),
+        BIG_POST(102);
+
+        private final int value;
+        POST_VIEW_TYPE(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
 
     public Settings(Context context) {
         settings = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
@@ -73,12 +88,33 @@ public class Settings {
         settings.edit().putBoolean("privateMode", on).apply();
     }
 
+    public void setPostViewType(POST_VIEW_TYPE viewType) {
+        settings.edit().putInt("postViewType", viewType.getValue()).apply();
+    }
+
+    public POST_VIEW_TYPE getPostViewType() {
+        if (settings.getInt("postViewType", 101) == POST_VIEW_TYPE.SMALL_POST.value) {
+            return POST_VIEW_TYPE.SMALL_POST;
+        } else {
+            return POST_VIEW_TYPE.BIG_POST;
+        }
+    }
+
+    public boolean isNavigationRailEnabled() {
+        return settings.getBoolean("navigationRailEnabled", false);
+    }
+
+    public void setNavigationRailEnabled(boolean on) {
+        settings.edit().putBoolean("navigationRailEnabled", on).apply();
+    }
+
     public Settings resetSettings() {
         toggleBiometricUnlock(false);
         enableCreatingPostDisclaimer();
         toggleSnapPosts(true);
         togglePublishLink(false);
         setPrivateMode(false);
+        setPostViewType(POST_VIEW_TYPE.SMALL_POST);
         return Settings.this;
     }
 }

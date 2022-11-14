@@ -10,16 +10,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.google.android.material.textview.MaterialTextView;
 import com.ortiz.touchview.TouchImageView;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 public class FullPhotoViewerActivity extends AppCompatActivity {
     private TouchImageView image;
-    private LinearLayout errorLinear;
+    private LinearLayout errorLinear, loadingLinear;
     private MaterialTextView errorReasonText;
 
-    private String errorReason;
-
-    private String imageUrl;
-    private String type;
+    private String errorReason = "";
+    private String imageUrl = "";
+    private String type = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class FullPhotoViewerActivity extends AppCompatActivity {
         image = findViewById(R.id.image);
         errorLinear = findViewById(R.id.error_linear);
         errorReasonText = findViewById(R.id.error_reason_text);
+        loadingLinear = findViewById(R.id.loading_linear);
     }
 
     private void setup() {
@@ -53,7 +55,20 @@ public class FullPhotoViewerActivity extends AppCompatActivity {
             errorLinear.setVisibility(View.VISIBLE);
             errorReasonText.setText(errorReason);
         } else {
-            Glide.with(FullPhotoViewerActivity.this).load(imageUrl).into(image);
+            Picasso.get().load(imageUrl).into(image, new Callback() {
+                @Override
+                public void onSuccess() {
+                    loadingLinear.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    loadingLinear.setVisibility(View.GONE);
+                    errorReasonBuilder(e.getMessage());
+                    errorLinear.setVisibility(View.VISIBLE);
+                    errorReasonText.setText(errorReason);
+                }
+            });
         }
 
     }

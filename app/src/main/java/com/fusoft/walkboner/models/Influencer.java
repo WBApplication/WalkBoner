@@ -18,6 +18,7 @@ public class Influencer {
     private String influencerYouTubeLink = "";
     private String influencerTikTokLink = "";
     private String influencerModeratorUid;
+    private String influencerDocumentId = "";
     private boolean isVerified;
     private boolean isPremium;
     private boolean isHidden;

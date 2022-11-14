@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,9 +25,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import de.dlyt.yanndroid.oneui.utils.OnSingleClickListener;
-import de.dlyt.yanndroid.oneui.view.Toast;
-import de.dlyt.yanndroid.oneui.widget.ProgressBar;
 import in.aabhasjindal.otptextview.OTPListener;
 import in.aabhasjindal.otptextview.OtpTextView;
 
@@ -129,12 +128,9 @@ public class UnlockAppActivity extends AppCompatActivity {
             }
         });
 
-        tryBiometricAgainButton.setOnClickListener(new OnSingleClickListener() {
-            @Override
-            public void onSingleClick(View view) {
-                toggleBiometricTry(false);
-                setupBiometric();
-            }
+        tryBiometricAgainButton.setOnClickListener(view -> {
+            toggleBiometricTry(false);
+            setupBiometric();
         });
     }
 

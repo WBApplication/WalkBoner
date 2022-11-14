@@ -91,6 +91,16 @@
         app:text="Premium" />
 
     <de.dlyt.yanndroid.oneui.widget.OptionButton
+        android:id="@+id/update_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="4dp"
+        app:icon="@drawable/ic_oui3_software_update"
+        app:text="Aktualizacja"
+        android:visibility="gone"/>
+
+    <de.dlyt.yanndroid.oneui.widget.OptionButton
         android:id="@+id/logout_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

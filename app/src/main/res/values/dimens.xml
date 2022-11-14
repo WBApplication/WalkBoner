@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item format="float" name="m3_emphasis_disabled" type="dimen">0.38</item>
+    <item format="float" name="m3_emphasis_disabled_background" type="dimen">0.12</item>
+    <item format="float" name="m3_emphasis_high" type="dimen">0.87</item>
+    <item format="float" name="m3_emphasis_high_disabled" type="dimen">0.33</item>
+    <item format="float" name="m3_emphasis_medium" type="dimen">0.60</item>
+    <item format="float" name="m3_emphasis_medium_disabled" type="dimen">0.23</item>
+</resources>

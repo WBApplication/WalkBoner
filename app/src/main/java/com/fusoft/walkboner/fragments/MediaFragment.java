@@ -30,11 +30,8 @@ import com.fusoft.walkboner.MediaViewerActivity;
 import com.fusoft.walkboner.R;
 import com.fusoft.walkboner.views.Player;
 import com.google.android.material.textview.MaterialTextView;
-import com.ortiz.touchview.OnTouchCoordinatesListener;
 import com.ortiz.touchview.OnTouchImageViewListener;
 import com.ortiz.touchview.TouchImageView;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 
 public class MediaFragment extends Fragment {
     private final String TAG = "MediaPlayer";

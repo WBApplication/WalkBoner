@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.fusoft.walkboner.R;
 import com.fusoft.walkboner.adapters.recyclerview.InfluencersAdapter;
+import com.fusoft.walkboner.adapters.recyclerview.ItemClickListener;
 import com.fusoft.walkboner.database.funcions.GetInfluencers;
 import com.fusoft.walkboner.database.funcions.InfluencersListener;
 import com.fusoft.walkboner.database.funcions.SendNotification;
@@ -209,18 +210,21 @@ public class DeleteInfluencerActivity extends AppCompatActivity {
             @Override
             public void OnDataReceived(List<Influencer> influencers) {
                 adapter = new InfluencersAdapter(DeleteInfluencerActivity.this, influencers);
-                influencersRecyclerview.setAdapter(adapter);
+                //influencersRecyclerview.setAdapter(adapter);
                 influencersRecyclerview.setVisibility(View.VISIBLE);
 
-                adapter.setClickListener((influencer, position) -> {
-                    selectedInfluencer = influencer;
+                adapter.setClickListener(new ItemClickListener() {
+                    @Override
+                    public void onItemClick(Influencer influencer, int position) {
+                        selectedInfluencer = influencer;
 
-                    influencersRecyclerview.setVisibility(View.GONE);
-                    confirmLinear.setVisibility(View.VISIBLE);
-                    isMainPage = false;
+                        influencersRecyclerview.setVisibility(View.GONE);
+                        confirmLinear.setVisibility(View.VISIBLE);
+                        isMainPage = false;
 
-                    personNickText.setText(influencer.getInfluencerNickName());
-                    personAddedByUidText.setText("Dodany Przez (UID): " + influencer.getInfluencerAddedBy());
+                        personNickText.setText(selectedInfluencer.getInfluencerNickName());
+                        personAddedByUidText.setText("Dodany Przez (UID): " + selectedInfluencer.getInfluencerAddedBy());
+                    }
                 });
             }
 

@@ -28,16 +28,16 @@ public class MainViewPager extends FragmentStateAdapter {
         switch (position) {
             case 0:
                 return new HomeFragment();
-            case 1:
+            /*case 1:
                 return new CelebritiesFragment();
             case 2:
-                return new SavedLinksFragment();
+                return new SavedLinksFragment();*/
         }
         return null;
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 1;
     }
 }

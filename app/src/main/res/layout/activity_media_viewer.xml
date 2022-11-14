@@ -31,7 +31,7 @@
                     android:id="@+id/more_menu_button"
                     android:layout_width="35dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_oui_more"/>
+                    android:src="@drawable/ic_more_vert_wb"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -48,9 +48,9 @@
                 android:id="@+id/tab_indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:dotsColor="@color/primary_color"
-                app:dotsStrokeColor="@color/primary_color"
-                app:dotsCornerRadius="90dp"
+                app:dotsColor="@color/primary_text_color"
+                app:dotsStrokeColor="@color/primary_text_color"
+                app:dotsCornerRadius="16dp"
                 app:dotsSize="12dp"
                 app:dotsSpacing="4dp"
                 app:dotsStrokeWidth="1.3dp"/>

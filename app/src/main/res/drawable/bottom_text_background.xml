@@ -7,5 +7,5 @@
         android:bottomRightRadius="25dp" />
 
     <solid
-        android:color="@color/black_negative_transparent" />
+        android:color="@color/material_dynamic_neutral90" />
 </shape>

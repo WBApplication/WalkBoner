@@ -2,16 +2,20 @@ package com.fusoft.walkboner.moderation;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.fusoft.walkboner.R;
 import com.fusoft.walkboner.adapters.recyclerview.NewInfluencersAdapter;
 import com.fusoft.walkboner.database.funcions.GetNewInfluencers;
 import com.fusoft.walkboner.database.funcions.InfluencersListener;
 import com.fusoft.walkboner.models.Influencer;
+import com.fusoft.walkboner.views.LoadingView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -20,16 +24,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
-import de.dlyt.yanndroid.oneui.dialog.ProgressDialog;
-import de.dlyt.yanndroid.oneui.sesl.recyclerview.LinearLayoutManager;
-import de.dlyt.yanndroid.oneui.view.RecyclerView;
-import de.dlyt.yanndroid.oneui.view.Toast;
-
 public class AcceptInfluencersProfilesActivity extends AppCompatActivity {
     private RecyclerView newProfilesRecyclerView;
     private NewInfluencersAdapter adapter;
 
-    private ProgressDialog loading;
+    private LoadingView loading;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,12 +40,6 @@ public class AcceptInfluencersProfilesActivity extends AppCompatActivity {
 
     private void initView() {
         newProfilesRecyclerView = (RecyclerView) findViewById(R.id.new_profiles_recycler_view);
-
-        loading = new ProgressDialog(AcceptInfluencersProfilesActivity.this);
-        loading.setIndeterminate(true);
-        loading.setProgressStyle(ProgressDialog.STYLE_CIRCLE);
-        loading.setCancelable(false);
-        loading.setCanceledOnTouchOutside(false);
     }
 
     private void setup() {
@@ -72,7 +65,7 @@ public class AcceptInfluencersProfilesActivity extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                loading.dismiss();
+                                loading.hide();
                                 Toast.makeText(AcceptInfluencersProfilesActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         });
@@ -103,13 +96,13 @@ public class AcceptInfluencersProfilesActivity extends AppCompatActivity {
                 queryDocumentSnapshots.getDocuments().get(0).getReference().delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        loading.dismiss();
+                        loading.hide();
                         adapter.removeFromList(position);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        loading.dismiss();
+                        loading.hide();
                         Toast.makeText(AcceptInfluencersProfilesActivity.this, "Nie udało się usunąć!\n" + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
@@ -117,7 +110,7 @@ public class AcceptInfluencersProfilesActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                loading.dismiss();
+                loading.hide();
                 Toast.makeText(AcceptInfluencersProfilesActivity.this, "Nie znaleziono!\n" + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

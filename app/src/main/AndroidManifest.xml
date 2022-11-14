@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.fusoft.walkboner">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -28,7 +27,7 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/OneUI4Theme"
+        android:theme="@style/AppTheme"
         tools:targetApi="31">
 
         <meta-data
@@ -84,6 +83,12 @@
             android:name=".ProfileActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".AddInfluencerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".moderation.UnbanUserActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".moderation.ModerationActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -103,13 +108,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".FullPhotoViewerActivity" />
         <activity
-            android:name=".AddInfluencerActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".AppDebugActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".UserProfileActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".PasswordResetActivity"
@@ -139,16 +138,19 @@
             android:name=".MediaViewerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".uniload.UniloadActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".moderation.DeleteInfluencerActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".moderation.ModLoggerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".NotificationsActivity"
+            android:name=".ChangeLogActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".settings.PostsUiActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".settings.MainUiActivity"
             android:screenOrientation="portrait" />
     </application>
 

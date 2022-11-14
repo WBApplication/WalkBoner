@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/test" />
+        android:src="@drawable/test2" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:padding="16dp"
                 android:text="Mamiko"
-                android:textColor="@color/sesl_primary_text"
+                android:textColor="@color/primary_text_color"
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:translationX="40dp"
@@ -44,7 +44,6 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="Weronika Heck"
-                android:textColor="@color/sesl_primary_text"
                 android:textSize="18sp"
                 android:translationX="-40dp"
                 android:alpha="0"/>
@@ -82,7 +81,7 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <de.dlyt.yanndroid.oneui.widget.ProgressBar
+            <ProgressBar
                 android:id="@+id/loading_albums_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -95,11 +94,10 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="Brak Albumów :("
-                android:textColor="@color/sesl_primary_text"
                 android:textSize="18sp"
                 android:visibility="gone"/>
 
-            <de.dlyt.yanndroid.oneui.view.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/albums_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -120,7 +118,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_margin="16dp"
-            app:icon="@drawable/ic_oui_plus"
-            app:iconTint="#FFF" />
+            app:icon="@drawable/ic_add_wb" />
     </LinearLayout>
 </RelativeLayout>

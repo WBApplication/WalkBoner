@@ -13,9 +13,9 @@
 
         <ImageView
             android:id="@+id/slow_video_button"
-            android:layout_width="wrap_content"
+            android:layout_width="35dp"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_oui_arrow_left" />
+            android:src="@drawable/ic_chevron_left_wb" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/slow_motion_text"
@@ -28,9 +28,9 @@
 
         <ImageView
             android:id="@+id/fast_video_button"
-            android:layout_width="wrap_content"
+            android:layout_width="35dp"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_oui_arrow_right" />
+            android:src="@drawable/ic_chevron_right_wb" />
     </LinearLayout>
 
     <!-- Play Button -->
@@ -44,15 +44,16 @@
             android:id="@+id/play_pause_button"
             android:layout_width="90dp"
             android:layout_height="90dp"
+            android:layout_margin="16dp"
             app:cardBackgroundColor="#33000000"
-            app:cardCornerRadius="25dp"
-            app:cardElevation="0dp">
+            app:cardCornerRadius="90dp"
+            app:cardElevation="8dp">
 
             <ImageView
                 android:id="@+id/play_pause_image"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
-                android:src="@drawable/ic_oui_play"
+                android:src="@drawable/ic_pause_circle_wb"
                 app:tint="#FFF" />
         </androidx.cardview.widget.CardView>
     </LinearLayout>

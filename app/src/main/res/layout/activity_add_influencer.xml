@@ -1,212 +1,238 @@
 <?xml version="1.0" encoding="utf-8"?>
-<de.dlyt.yanndroid.oneui.layout.ToolbarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:expandable="false"
-    app:title="Dodaj Influencerkę">
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/user_blocked_linear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="24dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nie możesz dodać nowych influencerek!"
-            android:textColor="@color/sesl_primary_text"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            app:layout_insetEdge="top"
+            app:liftOnScroll="true">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/user_blocked_reason_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="Nowi użytkownicy mogą dodawać influencerki po tygodniu czasu od utworzenia konta!"
-            android:textSize="15sp" />
-    </LinearLayout>
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                style="@style/Widget.Material3.Toolbar.Surface"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:contentInsetStartWithNavigation="0dp"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:subtitle="Dodaj Influencera"
+                app:title="@string/app_name" />
 
-    <de.dlyt.yanndroid.oneui.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        </com.google.android.material.appbar.AppBarLayout>
 
         <LinearLayout
+            android:id="@+id/user_blocked_linear"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginHorizontal="24dp"
+            android:gravity="center"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:visibility="gone">
 
             <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:text="Avatar"
-                android:textColor="@color/primary_color"
-                android:textSize="16sp"
+                android:text="@string/you_cant_add_new_influ"
+                android:textColor="@color/m3_text_color_on_surface"
+                android:textSize="18sp"
                 android:textStyle="bold" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:cardBackgroundColor="@color/image_background"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="0dp"
-                    app:layout_constraintDimensionRatio="H,1:1"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:id="@+id/image"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop" />
-                </androidx.cardview.widget.CardView>
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/pick_from_gallery_text"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:gravity="center"
-                    android:text="Kliknij by wybrać z galerii"
-                    android:textSize="16sp"
-                    app:layout_constraintDimensionRatio="H,1:1"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <LinearLayout
-                    android:id="@+id/uploading_image_linear"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:background="@drawable/gradient_black_rev"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:visibility="gone"
-                    app:layout_constraintDimensionRatio="H,1:1"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/uploading_status_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="12dp"
-                        android:gravity="center"
-                        android:text="Wgrywanie..."
-                        android:textSize="16sp" />
-
-                    <de.dlyt.yanndroid.oneui.widget.ProgressBar
-                        android:id="@+id/uploading_progress_bar"
-                        style="@style/ProgressBarStyle.Horizontal.Large"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="24dp"
-                        android:max="100" />
-                </LinearLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
+                android:id="@+id/user_blocked_reason_text"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:text="Podstawowe Informacje"
-                android:textColor="@color/primary_color"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/you_cant_add_new_influ_reason"
+                android:textSize="15sp" />
+        </LinearLayout>
 
-            <EditText
-                android:id="@+id/first_name_edittext"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="4dp"
-                android:hint="Imię"
-                android:inputType="textPersonName"
-                android:imeOptions="actionNext"
-                android:padding="8dp" />
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <EditText
-                android:id="@+id/last_name_edittext"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="4dp"
-                android:hint="Nazwisko"
-                android:inputType="textPersonName"
-                android:imeOptions="actionNext"
-                android:padding="8dp" />
-
-            <EditText
-                android:id="@+id/nick_name_edittext"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="4dp"
-                android:hint="Pseudonim (Wymagane)"
-                android:inputType="textPersonName"
-                android:imeOptions="actionNext"
-                android:padding="8dp" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="4dp"
-                android:text="Linki do Mediów"
-                android:textColor="@color/primary_color"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/instagram_url_edittext"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="4dp"
-                android:hint="Instagram"
-                android:inputType="textUri"
-                android:imeOptions="actionNext"
-                android:padding="8dp" />
-
-            <EditText
-                android:id="@+id/tiktok_url_edittext"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="4dp"
-                android:hint="TikTok"
-                android:inputType="textUri"
-                android:imeOptions="actionNext"
-                android:padding="8dp" />
-
-            <EditText
-                android:id="@+id/youtube_url_edittext"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="4dp"
-                android:hint="YouTube"
-                android:inputType="textUri"
-                android:imeOptions="actionDone"
-                android:padding="8dp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/done_button"
-                style="@style/ButtonStyle.Colored"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="16dp"
-                android:text="Wyślij" />
-        </LinearLayout>
-    </de.dlyt.yanndroid.oneui.widget.NestedScrollView>
-</de.dlyt.yanndroid.oneui.layout.ToolbarLayout>
+                android:layout_marginHorizontal="8dp"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="@string/avatar"
+                    android:textColor="@color/m3_text_color_on_surface"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:cardBackgroundColor="@color/image_background"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintDimensionRatio="H,1:1"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/image"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop" />
+                    </androidx.cardview.widget.CardView>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/pick_from_gallery_text"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="center"
+                        android:text="@string/click_to_select_from_gallery"
+                        android:textSize="16sp"
+                        app:layout_constraintDimensionRatio="H,1:1"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/uploading_image_linear"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/gradient_black_rev"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        app:layout_constraintDimensionRatio="H,1:1"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/uploading_status_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="12dp"
+                            android:gravity="center"
+                            android:text="@string/uploading_in_progress"
+                            android:textSize="16sp" />
+
+                        <com.google.android.material.progressindicator.LinearProgressIndicator
+                            android:id="@+id/uploading_progress_bar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="24dp"
+                            android:max="100" />
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="@string/basic_informations"
+                    android:textColor="@color/m3_text_color_on_surface"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/first_name_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:hint="@string/first_name"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPersonName"
+                    android:padding="8dp" />
+
+                <EditText
+                    android:id="@+id/last_name_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:hint="@string/surname"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPersonName"
+                    android:padding="8dp" />
+
+                <EditText
+                    android:id="@+id/nick_name_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:hint="@string/nickname_required"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPersonName"
+                    android:padding="8dp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="@string/media_links"
+                    android:textColor="@color/m3_text_color_on_surface"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/instagram_url_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:hint="@string/instagram"
+                    android:imeOptions="actionNext"
+                    android:inputType="textUri"
+                    android:padding="8dp" />
+
+                <EditText
+                    android:id="@+id/tiktok_url_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:hint="@string/tiktok"
+                    android:imeOptions="actionNext"
+                    android:inputType="textUri"
+                    android:padding="8dp" />
+
+                <EditText
+                    android:id="@+id/youtube_url_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:hint="@string/youtube"
+                    android:imeOptions="actionDone"
+                    android:inputType="textUri"
+                    android:padding="8dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/done_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/send" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+    <com.fusoft.walkboner.views.LoadingView
+        android:id="@+id/loadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</RelativeLayout>

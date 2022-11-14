@@ -6,21 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.fusoft.walkboner.R;
 import com.fusoft.walkboner.database.GetUserDetails;
 import com.fusoft.walkboner.models.Message;
 import com.fusoft.walkboner.models.User;
 import com.fusoft.walkboner.views.Avatar;
-import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-import de.dlyt.yanndroid.oneui.view.RecyclerView;
 
 public class ModChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final Context context;

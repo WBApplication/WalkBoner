@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<de.dlyt.yanndroid.oneui.layout.ToolbarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:expandable="false"
-    app:navigationIcon="@drawable/ic_oui_back"
-    app:title="Utwórz Post">
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_insetEdge="top"
+        app:liftOnScroll="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            style="@style/Widget.Material3.Toolbar.Surface"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:contentInsetStartWithNavigation="0dp"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:subtitle="Utwórz Post"
+            app:title="@string/app_name" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:id="@+id/main_linear"
@@ -28,12 +45,10 @@
                 android:text="Wgyrwanie..."
                 android:gravity="center"/>
 
-            <de.dlyt.yanndroid.oneui.widget.ProgressBar
+            <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/image_uploading_progress_bar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/ProgressBarStyle.Horizontal.Large"
-                android:progress="20"/>
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <LinearLayout
@@ -47,26 +62,22 @@
                 android:layout_weight="3"
                 android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/description_edt"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="left|top"
-                    android:hint="Opis"
-                    android:lines="4"
-                    android:maxLines="4"
-                    android:minLines="4"
-                    android:padding="8dp" />
+                    app:counterMaxLength="200"
+                    app:counterEnabled="true"
+                    android:hint="Opis">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/max_letters_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:padding="8dp"
-                    android:gravity="right|top"
-                    android:text="0/200"
-                    android:textSize="13dp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/description_edt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="left|top"
+                        android:lines="4"
+                        android:maxLines="4"
+                        android:minLines="4"/>
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -96,9 +107,9 @@
                             android:id="@+id/image"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/ic_oui4_camera"
-                            app:tint="#FFF" />
+                            android:padding="8dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_photo_camera_outlined_wb" />
                     </androidx.cardview.widget.CardView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
@@ -111,7 +122,7 @@
             android:layout_marginBottom="8dp"
             android:padding="8dp"
             android:text="Kto jest na zdjęciu?"
-            android:textColor="@color/sesl_primary_text"
+            android:textColor="@color/m3_text_color_on_surface"
             android:textSize="18dp"
             android:textStyle="bold" />
 
@@ -138,7 +149,7 @@
                 android:textColor="@color/sesl_primary_text"
                 android:textSize="16dp" />
 
-            <de.dlyt.yanndroid.oneui.widget.Switch
+            <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/allow_comments_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -152,11 +163,10 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_button"
-            style="@style/ButtonStyle.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="Dodaj"
             android:enabled="false"/>
     </LinearLayout>
-</de.dlyt.yanndroid.oneui.layout.ToolbarLayout>
+</LinearLayout>

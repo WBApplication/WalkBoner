@@ -28,7 +28,7 @@
             android:layout_height="match_parent"
             android:layout_marginRight="8dp"
             android:layout_weight="1"
-            app:cardBackgroundColor="#26AF00"
+            app:cardBackgroundColor="@color/primary_text_color"
             app:cardCornerRadius="15dip">
 
             <com.google.android.material.textview.MaterialTextView
@@ -38,7 +38,6 @@
                 android:gravity="start|top"
                 android:padding="8dp"
                 android:text="None"
-                android:textColor="#FFF"
                 android:textSize="14sp" />
         </androidx.cardview.widget.CardView>
 

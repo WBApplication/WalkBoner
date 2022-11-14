@@ -1,27 +1,20 @@
 package com.fusoft.walkboner;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.FileUtils;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
 import com.fusoft.walkboner.utils.AppUpdate;
@@ -30,9 +23,6 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.io.File;
-
-import de.dlyt.yanndroid.oneui.dialog.AlertDialog;
-import de.dlyt.yanndroid.oneui.widget.ProgressBar;
 
 public class UpdateActivity extends AppCompatActivity {
 
@@ -52,6 +42,9 @@ public class UpdateActivity extends AppCompatActivity {
 
     private String url;
 
+    private boolean isUpdateLoaded = false;
+    private boolean isRequired = true;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +52,17 @@ public class UpdateActivity extends AppCompatActivity {
 
         initView();
         setup();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isUpdateLoaded) {
+            if (isRequired) {
+                finishAffinity();
+            } else {
+                super.onBackPressed();
+            }
+        }
     }
 
     private void initView() {
@@ -77,7 +81,7 @@ public class UpdateActivity extends AppCompatActivity {
         settings = new com.fusoft.walkboner.settings.Settings(UpdateActivity.this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            if(!getPackageManager().canRequestPackageInstalls()){
+            if (!getPackageManager().canRequestPackageInstalls()) {
                 Intent intent = new Intent(new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES).setData(Uri.parse(String.format("package:%s", getPackageName()))));
                 someActivityResultLauncher.launch(intent);
             }
@@ -88,6 +92,8 @@ public class UpdateActivity extends AppCompatActivity {
         AppUpdate.checkForUpdate(new AppUpdate.UpdateListener() {
             @Override
             public void OnUpdateAvailable(String version, String changeLog, String downloadUrl, boolean isRequired) {
+                isUpdateLoaded = true;
+                UpdateActivity.this.isRequired = isRequired;
                 loadingUpdateLinear.setVisibility(View.GONE);
                 updateDetailsLinear.setVisibility(View.VISIBLE);
 
@@ -147,26 +153,27 @@ public class UpdateActivity extends AppCompatActivity {
                 @Override
                 public void OnError(String reason) {
                     updateProgressBar.setVisibility(View.GONE);
-                    updateProgressText.setText("Błąd: " + reason);
+
+                    if (reason.contains("404")) {
+                        updateProgressText.setText("Błąd: Nie znaleziono pliku aktualizacji.\nMożliwe, że został on usunięty z powodu błędu w nowej wersji i musisz poczekać aż zostanie on naprawiony lub, link do pliku nowej wersji jest nieprawidłowy!\nZgłoś błąd administratorowi na serwerze Discord jeśli nie widzisz nigdzie noty czemu ten błąd może występować!");
+                    } else {
+                        updateProgressText.setText("Błąd: " + reason);
+                    }
                 }
             });
         });
 
         laterButton.setOnClickListener(v -> {
             settings.skipUpdateNextTime(true);
-            startActivity(new Intent(UpdateActivity.this, SplashActivity.class));
             finish();
         });
     }
 
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
 
-                    }
                 }
             });
 

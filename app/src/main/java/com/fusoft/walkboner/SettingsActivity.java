@@ -13,23 +13,22 @@ import com.fusoft.walkboner.models.User;
 import com.fusoft.walkboner.moderation.ModerationActivity;
 import com.fusoft.walkboner.security.BiometricUnlock;
 import com.fusoft.walkboner.settings.BiometricUnlockActivity;
+import com.fusoft.walkboner.settings.MainUiActivity;
 import com.fusoft.walkboner.settings.PinSetupActivity;
+import com.fusoft.walkboner.settings.PostsUiActivity;
 import com.fusoft.walkboner.settings.PublishLinksActivity;
 import com.fusoft.walkboner.settings.Settings;
 import com.fusoft.walkboner.views.dialogs.InfoDialog;
-
-import de.dlyt.yanndroid.oneui.layout.ToolbarLayout;
-import de.dlyt.yanndroid.oneui.widget.RoundLinearLayout;
-import de.dlyt.yanndroid.oneui.widget.Switch;
+import com.google.android.material.button.MaterialButton;
 
 public class SettingsActivity extends AppCompatActivity {
-    private ToolbarLayout settingsToolbar;
-    private RoundLinearLayout pinLockButton;
-    private RoundLinearLayout passwordChangeButton, moderationButton;
-    private Switch discreteSwitch, snapPostsSwitch;
-    private RoundLinearLayout biometricLockButton;
-    private RoundLinearLayout openSourceButton;
-    private RoundLinearLayout publishLinksButton;
+    private MaterialButton pinLockButton;
+    private MaterialButton passwordChangeButton, moderationButton;
+    private MaterialButton biometricLockButton;
+    private MaterialButton openSourceButton;
+    private MaterialButton publishLinksButton;
+    private MaterialButton changeLogButton;
+    private MaterialButton mainUiButton, postUiButton;
 
     private Authentication authentication;
     private Settings settings;
@@ -54,20 +53,17 @@ public class SettingsActivity extends AppCompatActivity {
     private void initView() {
         settings = new Settings(SettingsActivity.this);
 
-        settingsToolbar = (ToolbarLayout) findViewById(R.id.settings_toolbar);
-        pinLockButton = (RoundLinearLayout) findViewById(R.id.pin_lock_button);
-        passwordChangeButton = (RoundLinearLayout) findViewById(R.id.password_change_button);
-        discreteSwitch = (Switch) findViewById(R.id.discrete_switch);
-        discreteSwitch.setChecked(settings.isPrivateMode());
+        pinLockButton = (MaterialButton) findViewById(R.id.pin_lock_button);
+        passwordChangeButton = (MaterialButton) findViewById(R.id.password_change_button);
+        changeLogButton = findViewById(R.id.change_log_button);
+        postUiButton = findViewById(R.id.post_ui_button);
+        mainUiButton = findViewById(R.id.main_ui_button);
 
         publishLinksButton = findViewById(R.id.publish_links_button);
 
-        snapPostsSwitch = findViewById(R.id.snap_posts_switch);
-        snapPostsSwitch.setChecked(settings.shouldSnapPosts());
-
         moderationButton = findViewById(R.id.moderation_button);
-        biometricLockButton = (RoundLinearLayout) findViewById(R.id.biometric_lock_button);
-        openSourceButton = (RoundLinearLayout) findViewById(R.id.open_source_button);
+        biometricLockButton = (MaterialButton) findViewById(R.id.biometric_lock_button);
+        openSourceButton = (MaterialButton) findViewById(R.id.open_source_button);
     }
 
     private void setup() {
@@ -97,12 +93,19 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        snapPostsSwitch.setOnClickListener(v -> {
-            settings.toggleSnapPosts(snapPostsSwitch.isChecked());
+        mainUiButton.setOnClickListener(v -> {
+            startActivity(new Intent(SettingsActivity.this, MainUiActivity.class));
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });
 
-        discreteSwitch.setOnClickListener(v -> {
-            settings.setPrivateMode(discreteSwitch.isChecked());
+        postUiButton.setOnClickListener(v -> {
+            startActivity(new Intent(SettingsActivity.this, PostsUiActivity.class));
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        });
+
+        changeLogButton.setOnClickListener(v -> {
+            startActivity(new Intent(SettingsActivity.this, ChangeLogActivity.class));
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         });
 
         pinLockButton.setOnClickListener(view -> {
@@ -113,10 +116,6 @@ public class SettingsActivity extends AppCompatActivity {
         passwordChangeButton.setOnClickListener(view -> {
             startActivity(new Intent(SettingsActivity.this, PasswordResetActivity.class));
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        });
-
-        settingsToolbar.setNavigationButtonOnClickListener(v -> {
-            finish();
         });
 
         biometricLockButton.setOnClickListener(v -> {

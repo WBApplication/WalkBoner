@@ -13,6 +13,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.fusoft.walkboner.adapters.recyclerview.MediaPickerAdapter;
 import com.fusoft.walkboner.database.ImageUploadListener;
@@ -20,8 +22,7 @@ import com.fusoft.walkboner.database.StorageDirectory;
 import com.fusoft.walkboner.database.UploadImage;
 import com.fusoft.walkboner.utils.GetPathFromUri;
 import com.fusoft.walkboner.utils.UidGenerator;
-import com.github.drjacky.imagepicker.ImagePicker;
-import com.github.drjacky.imagepicker.constant.ImageProvider;
+import com.fusoft.walkboner.views.LoadingView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,10 +34,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import de.dlyt.yanndroid.oneui.dialog.ProgressDialog;
-import de.dlyt.yanndroid.oneui.sesl.recyclerview.GridLayoutManager;
-import de.dlyt.yanndroid.oneui.view.RecyclerView;
 
 public class CreateAlbumActivity extends AppCompatActivity {
     private MediaPickerAdapter adapter;
@@ -54,6 +51,7 @@ public class CreateAlbumActivity extends AppCompatActivity {
     private EditText albumTitleEdittext;
     private EditText albumDescriptionEdittext;
     private MaterialButton addAlbumButton;
+    private LoadingView progressDialog;
 
     private FirebaseFirestore database;
     private FirebaseAuth auth;
@@ -79,6 +77,7 @@ public class CreateAlbumActivity extends AppCompatActivity {
         albumTitleEdittext = (EditText) findViewById(R.id.album_title_edittext);
         albumDescriptionEdittext = (EditText) findViewById(R.id.album_description_edittext);
         addAlbumButton = (MaterialButton) findViewById(R.id.add_album_button);
+        progressDialog = findViewById(R.id.loadingView);
     }
 
     private void setup() {
@@ -134,14 +133,11 @@ public class CreateAlbumActivity extends AppCompatActivity {
         mediaPickerRecyclerView.setAdapter(adapter);
 
         addAlbumButton.setOnClickListener(v -> {
-            ProgressDialog progressDialog = new ProgressDialog(CreateAlbumActivity.this);
-            progressDialog.setTitle("Wgrywanie Zdjęć");
+            progressDialog.setTitle("Tworzenie Albumu");
             progressDialog.setMessage("Postęp (0/" + (adapter.getItemCount() - 1) + ")");
             progressDialog.show();
 
             for (HashMap<String, Object> imageDetails : adapter.getList()) {
-                progressDialog.setIndeterminate(true);
-
                 new UploadImage(CreateAlbumActivity.this, StorageDirectory.ALBUMS_PATH, (Uri) imageDetails.get("imagePath"), new ImageUploadListener() {
                     @Override
                     public void OnImageUploaded(String imageUrl) {
@@ -150,8 +146,7 @@ public class CreateAlbumActivity extends AppCompatActivity {
                         progressDialog.setMessage("Postęp (" + a + "/" + (adapter.getItemCount() - 1) + ")");
 
                         if (imagesUrls.size() == adapter.getItemCount() - 1) {
-                            progressDialog.setTitle("Tworzenie Albumu");
-                            progressDialog.setMessage("To nie potrwa długo");
+                            progressDialog.setMessage("Kończenie");
                             uploadToDatabase();
                         }
                     }
