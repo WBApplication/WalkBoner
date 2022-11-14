@@ -10,8 +10,6 @@ Celem aplikacji jest archiwizacja, publikacja lub tworzenie albumów zdjęć zna
 
 Aplikacja korzysta z następujących bibliotek:
 
-- [OneUI | Yanndroid](https://github.com/OneUIProject/OneUI-Design-Library) (UI)
-
 - [Firebase | Google](https://firebase.google.com/) (Serwer)
 
 - [Glide | Bumptech](https://github.com/bumptech/glide) (Ładowanie Obrazów)
